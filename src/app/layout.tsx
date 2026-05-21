@@ -11,24 +11,27 @@ const BASE_URL = 'https://property-website-rose.vercel.app';
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "eHartanah – Malaysia's Trusted Property Marketplace",
+    default: "eHartanah – Malaysia's AI-Powered Property Platform",
     template: '%s | eHartanah',
   },
   description:
-    'Find your dream property in Malaysia. Browse verified houses, condos, apartments, and commercial spaces for sale and rent in KL, Selangor, Penang, Johor, and more.',
+    'Find your ideal property in Malaysia using AI. Browse subsale homes, bank auction deals, and rent-to-own programmes in KL, Selangor, Penang, Johor, and beyond.',
   keywords: [
     'property Malaysia',
     'rumah untuk dijual',
     'hartanah Malaysia',
+    'hartanah AI',
+    'AI property search Malaysia',
     'house for sale KL',
-    'condo for rent Kuala Lumpur',
-    'property for sale Selangor',
+    'bank auction property Malaysia',
+    'lelong hartanah',
+    'rent to own Malaysia',
+    'sewa beli hartanah',
+    'condo for sale Kuala Lumpur',
+    'property investment Malaysia',
     'real estate Malaysia',
-    'apartment rent Malaysia',
-    'commercial property Malaysia',
+    'beli rumah pertama',
     'new launch condo Malaysia',
-    'bungalow for sale KL',
-    'landed property Selangor',
   ],
   authors: [{ name: 'eHartanah', url: BASE_URL }],
   creator: 'eHartanah',
@@ -43,22 +46,22 @@ export const metadata: Metadata = {
     locale: 'en_MY',
     url: BASE_URL,
     siteName: 'eHartanah',
-    title: "eHartanah – Malaysia's Trusted Property Marketplace",
+    title: "eHartanah – Malaysia's AI-Powered Property Intelligence Platform",
     description:
-      'Search 140,000+ residential and commercial listings across Malaysia. Verified agents, new launches, and affordable homes.',
+      'AI-powered property search for subsale, auction, and rent-to-own in Malaysia. Get instant insights, yield analysis, and auction risk scores.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'eHartanah – Malaysia Property Marketplace',
+        alt: 'eHartanah – Malaysia AI Property Platform',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "eHartanah – Malaysia's Trusted Property Marketplace",
-    description: 'Search 140,000+ properties for sale and rent in Malaysia.',
+    title: "eHartanah – Malaysia's AI-Powered Property Platform",
+    description: 'Search subsale, auction, and rent-to-own properties in Malaysia with AI.',
     images: ['/og-image.jpg'],
   },
   alternates: {
@@ -69,7 +72,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-MY">
-      <body className={`${inter.className} bg-gray-50 text-gray-900 antialiased`}>
+      <body className={`${inter.className} bg-slate-50 text-gray-900 antialiased`}>
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
