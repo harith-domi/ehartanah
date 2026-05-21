@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import SearchBar from '@/components/SearchBar';
 import PropertyCard from '@/components/PropertyCard';
 import FilterSidebar from '@/components/FilterSidebar';
+import SortSelect from '@/components/SortSelect';
 import { properties } from '@/lib/properties';
 
 interface PageProps {
@@ -107,17 +108,9 @@ export default async function BuyPage({ searchParams }: PageProps) {
                 </h1>
                 <p className="text-sm text-gray-500">{filtered.length} {filtered.length === 1 ? 'property' : 'properties'} found</p>
               </div>
-              <div className="flex items-center gap-2">
-                <label className="text-sm text-gray-600">Sort by:</label>
-                <select
-                  defaultValue={sort}
-                  className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-red-400"
-                >
-                  {['newest', 'price-asc', 'price-desc', 'size-asc'].map(s => (
-                    <option key={s} value={s}>{sortLabel(s)}</option>
-                  ))}
-                </select>
-              </div>
+              <Suspense>
+                <SortSelect current={sort} />
+              </Suspense>
             </div>
 
             {filtered.length === 0 ? (

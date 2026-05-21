@@ -3,6 +3,13 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
+const navLinks = [
+  { label: 'Buy',        href: '/buy' },
+  { label: 'Rent',       href: '/rent' },
+  { label: 'New Homes',  href: '/buy?type=condo,apartment' },
+  { label: 'Commercial', href: '/buy?type=shophouse,office,retail' },
+];
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -11,30 +18,18 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div className="flex items-center gap-0">
-              <span className="italic text-red-600 font-black" style={{ fontFamily: 'Georgia, serif', fontSize: '2.8rem', lineHeight: 1, letterSpacing: '-0.04em' }}>e</span>
-              <span className="font-extrabold text-gray-900 text-2xl tracking-tight" style={{ letterSpacing: '0.02em' }}>Hartanah</span>
-            </div>
+          <Link href="/" className="flex items-center gap-0 shrink-0">
+            <span className="italic text-red-600 font-black" style={{ fontFamily: 'Georgia, serif', fontSize: '2.8rem', lineHeight: 1, letterSpacing: '-0.04em' }}>e</span>
+            <span className="font-extrabold text-gray-900 text-2xl tracking-tight" style={{ letterSpacing: '0.02em' }}>Hartanah</span>
           </Link>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
-            <Link href="/buy" className="px-4 py-2 text-gray-700 hover:text-red-600 font-medium text-sm transition-colors rounded-md hover:bg-red-50">
-              Buy
-            </Link>
-            <Link href="/rent" className="px-4 py-2 text-gray-700 hover:text-red-600 font-medium text-sm transition-colors rounded-md hover:bg-red-50">
-              Rent
-            </Link>
-            <Link href="/buy?type=condo,apartment" className="px-4 py-2 text-gray-700 hover:text-red-600 font-medium text-sm transition-colors rounded-md hover:bg-red-50">
-              New Homes
-            </Link>
-            <Link href="/buy?type=shophouse,office,retail" className="px-4 py-2 text-gray-700 hover:text-red-600 font-medium text-sm transition-colors rounded-md hover:bg-red-50">
-              Commercial
-            </Link>
-            <Link href="/agents" className="px-4 py-2 text-gray-700 hover:text-red-600 font-medium text-sm transition-colors rounded-md hover:bg-red-50">
-              Agents
-            </Link>
+            {navLinks.map(({ label, href }) => (
+              <Link key={label} href={href} className="px-4 py-2 text-gray-700 hover:text-red-600 font-medium text-sm transition-colors rounded-md hover:bg-red-50">
+                {label}
+              </Link>
+            ))}
           </nav>
 
           {/* Right side */}
@@ -65,14 +60,14 @@ export default function Navbar() {
         {/* Mobile menu */}
         {mobileOpen && (
           <div className="md:hidden border-t border-gray-100 py-3 space-y-1">
-            {['Buy', 'Rent', 'New Homes', 'Commercial', 'Agents'].map(item => (
+            {navLinks.map(({ label, href }) => (
               <Link
-                key={item}
-                href={`/${item.toLowerCase().replace(' ', '-')}`}
+                key={label}
+                href={href}
                 className="block px-4 py-2.5 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-md font-medium text-sm"
                 onClick={() => setMobileOpen(false)}
               >
-                {item}
+                {label}
               </Link>
             ))}
             <div className="flex gap-3 px-4 pt-2">
