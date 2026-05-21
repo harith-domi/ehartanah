@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPropertyById, properties, formatPrice } from '@/lib/properties';
 import PropertyCard from '@/components/PropertyCard';
+
+const BASE_URL = 'https://property-website-rose.vercel.app';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -10,6 +13,86 @@ interface PageProps {
 
 export async function generateStaticParams() {
   return properties.map(p => ({ id: p.id }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const p = getPropertyById(id);
+  if (!p) return { title: 'Property Not Found' };
+
+  const typeLabel = p.type.charAt(0).toUpperCase() + p.type.slice(1);
+  const action = p.listingType === 'sale' ? 'for Sale' : 'for Rent';
+  const priceStr = formatPrice(p.price, p.listingType);
+  const specsStr = p.bedrooms ? `${p.bedrooms}-bedroom ` : '';
+
+  return {
+    title: `${p.title} – ${priceStr}`,
+    description: `${specsStr}${typeLabel} ${action} in ${p.area}, ${p.state}. ${p.size.toLocaleString()} sqft${p.tenure ? `, ${p.tenure}` : ''}${p.furnishing ? `, ${p.furnishing}` : ''}. ${p.description.slice(0, 120)}...`,
+    keywords: [
+      `${typeLabel} ${action} ${p.area}`,
+      `${typeLabel} ${action} ${p.state}`,
+      `property ${action} ${p.area}`,
+      `${p.bedrooms ? `${p.bedrooms} bedroom ` : ''}${typeLabel} ${p.state}`,
+      `hartanah ${p.area}`,
+      `rumah ${action === 'for Sale' ? 'dijual' : 'disewa'} ${p.area}`,
+    ],
+    openGraph: {
+      title: `${p.title} – ${priceStr} | eHartanah`,
+      description: `${specsStr}${typeLabel} ${action} in ${p.area}, ${p.state}. ${p.size.toLocaleString()} sqft.`,
+      images: [{ url: p.imageUrl, width: 800, alt: p.title }],
+      url: `${BASE_URL}/listings/${p.id}`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${p.title} – ${priceStr}`,
+      description: `${specsStr}${typeLabel} ${action} in ${p.area}, ${p.state}.`,
+      images: [p.imageUrl],
+    },
+    alternates: { canonical: `/listings/${p.id}` },
+  };
+}
+
+function JsonLd({ property }: { property: NonNullable<ReturnType<typeof getPropertyById>> }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: property.title,
+    description: property.description,
+    url: `${BASE_URL}/listings/${property.id}`,
+    image: property.images,
+    datePosted: property.postedAt,
+    offers: {
+      '@type': 'Offer',
+      price: property.price,
+      priceCurrency: 'MYR',
+      availability: 'https://schema.org/InStock',
+      ...(property.listingType === 'rent' && { priceSpecification: { '@type': 'UnitPriceSpecification', price: property.price, priceCurrency: 'MYR', referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' } } }),
+    },
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: property.address,
+      addressLocality: property.area,
+      addressRegion: property.state,
+      addressCountry: 'MY',
+    },
+    floorSize: {
+      '@type': 'QuantitativeValue',
+      value: property.size,
+      unitCode: 'FTK',
+    },
+    numberOfRooms: property.bedrooms,
+    numberOfBathroomsTotal: property.bathrooms,
+    amenityFeature: property.features.map(f => ({ '@type': 'LocationFeatureSpecification', name: f, value: true })),
+    provider: {
+      '@type': 'RealEstateAgent',
+      name: property.agent.name,
+      worksFor: { '@type': 'Organization', name: property.agent.agency },
+      telephone: property.agent.phone,
+    },
+  };
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
 export default async function ListingDetailPage({ params }: PageProps) {
@@ -31,6 +114,8 @@ export default async function ListingDetailPage({ params }: PageProps) {
   const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
 
   return (
+    <>
+      <JsonLd property={property} />
     <div className="bg-gray-50 min-h-screen pb-12">
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-200 py-3 px-4 sm:px-6">
@@ -247,5 +332,6 @@ export default async function ListingDetailPage({ params }: PageProps) {
         )}
       </div>
     </div>
+    </>
   );
 }

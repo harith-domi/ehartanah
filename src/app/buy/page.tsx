@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { Metadata } from 'next';
 import SearchBar from '@/components/SearchBar';
 import PropertyCard from '@/components/PropertyCard';
 import FilterSidebar from '@/components/FilterSidebar';
@@ -6,6 +7,35 @@ import { properties } from '@/lib/properties';
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | undefined }>;
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const location = params.location;
+  const type = params.type;
+
+  const locationStr = location ? ` in ${location}` : ' in Malaysia';
+  const typeStr = type ? ` ${type.charAt(0).toUpperCase() + type.slice(1)}` : ' Property';
+
+  return {
+    title: `${typeStr} for Sale${locationStr}`,
+    description: `Browse verified${typeStr.toLowerCase()} listings for sale${locationStr}. Compare prices, view photos, and contact trusted agents on eHartanah.`,
+    keywords: [
+      `property for sale${locationStr}`,
+      `house for sale Malaysia`,
+      `condo for sale KL`,
+      `rumah untuk dijual Malaysia`,
+      `hartanah untuk dijual`,
+      `buy property Malaysia`,
+    ],
+    openGraph: {
+      title: `${typeStr} for Sale${locationStr} | eHartanah`,
+      description: `Find your perfect${typeStr.toLowerCase()} for sale${locationStr} on eHartanah.`,
+    },
+    alternates: {
+      canonical: `/buy${location ? `?location=${location}` : ''}`,
+    },
+  };
 }
 
 function sortLabel(sort: string) {

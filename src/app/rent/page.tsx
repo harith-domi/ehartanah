@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { Metadata } from 'next';
 import SearchBar from '@/components/SearchBar';
 import PropertyCard from '@/components/PropertyCard';
 import FilterSidebar from '@/components/FilterSidebar';
@@ -6,6 +7,35 @@ import { properties } from '@/lib/properties';
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | undefined }>;
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const location = params.location;
+  const type = params.type;
+
+  const locationStr = location ? ` in ${location}` : ' in Malaysia';
+  const typeStr = type ? ` ${type.charAt(0).toUpperCase() + type.slice(1)}` : ' Property';
+
+  return {
+    title: `${typeStr} for Rent${locationStr}`,
+    description: `Find affordable${typeStr.toLowerCase()} rentals${locationStr}. Fully furnished, partial furnished, and unfurnished options. Contact agents directly on eHartanah.`,
+    keywords: [
+      `property for rent${locationStr}`,
+      `house for rent Malaysia`,
+      `condo for rent KL`,
+      `sewa rumah Malaysia`,
+      `hartanah untuk disewa`,
+      `rent apartment Malaysia`,
+    ],
+    openGraph: {
+      title: `${typeStr} for Rent${locationStr} | eHartanah`,
+      description: `Affordable${typeStr.toLowerCase()} rentals${locationStr} on eHartanah.`,
+    },
+    alternates: {
+      canonical: `/rent${location ? `?location=${location}` : ''}`,
+    },
+  };
 }
 
 export default async function RentPage({ searchParams }: PageProps) {
