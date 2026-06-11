@@ -54,9 +54,9 @@ export default async function AuctionDetailPage({
     <div className="min-h-screen bg-slate-50">
       <div className="bg-white border-b border-gray-100 py-3">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-sm text-gray-500 flex gap-2">
-          <Link href="/" className="hover:text-blue-700">Home</Link>
+          <Link href="/" className="hover:text-emerald-700">Home</Link>
           <span>/</span>
-          <Link href="/auction" className="hover:text-blue-700">Auction</Link>
+          <Link href="/auction" className="hover:text-emerald-700">Auction</Link>
           <span>/</span>
           <span className="text-gray-800 truncate">{property.title}</span>
         </div>
@@ -69,7 +69,7 @@ export default async function AuctionDetailPage({
               <Image src={property.imageUrl} alt={property.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" />
               <div className="absolute top-4 left-4 flex gap-2">
                 <span className={`text-xs font-bold px-2 py-1 rounded-md ${riskColors[property.riskLevel]}`}>{property.riskLevel} Risk</span>
-                <span className="bg-gradient-to-r from-blue-600 to-violet-600 text-white text-xs font-bold px-2 py-1 rounded-md">AI {property.aiScore}/10</span>
+                <span className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold px-2 py-1 rounded-md">AI {property.aiScore}/10</span>
               </div>
             </div>
 
@@ -133,13 +133,13 @@ export default async function AuctionDetailPage({
               </a>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-600 to-violet-700 rounded-2xl p-5 text-white text-center">
+            <div className="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-2xl p-5 text-white text-center">
               <p className="font-bold mb-2 text-sm">AI Risk Assessment</p>
               <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-2">
                 <span className="text-2xl font-bold">{property.aiScore}</span>
               </div>
-              <p className="text-blue-100 text-xs mb-4">AI Score out of 10. Ask our AI for a full risk breakdown.</p>
-              <Link href="/ai-search" className="block bg-white text-blue-700 font-semibold text-sm py-2.5 rounded-xl hover:bg-blue-50 transition-colors">
+              <p className="text-emerald-100 text-xs mb-4">AI Score out of 10. Ask our AI for a full risk breakdown.</p>
+              <Link href="/ai-search" className="block bg-white text-emerald-700 font-semibold text-sm py-2.5 rounded-xl hover:bg-emerald-50 transition-colors">
                 Full AI Analysis
               </Link>
             </div>

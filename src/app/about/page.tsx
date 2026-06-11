@@ -12,14 +12,14 @@ const team = [
     role: 'Chief Executive Officer',
     bio: 'Former VP at CIMB Property Trust with 15 years in Malaysian real estate. Founded eHartanah to bring AI-driven insights to everyday property buyers.',
     initials: 'FA',
-    color: 'from-blue-600 to-blue-800',
+    color: 'from-emerald-600 to-emerald-800',
   },
   {
     name: 'Li Wei Chen',
     role: 'Chief Technology Officer',
     bio: 'Ex-Google engineer (Singapore). Built the AI recommendation engine and auction risk-scoring model that powers eHartanah\'s core intelligence layer.',
     initials: 'LW',
-    color: 'from-violet-600 to-purple-800',
+    color: 'from-teal-600 to-teal-800',
   },
   {
     name: 'Dr. Priya Nair',
@@ -35,7 +35,7 @@ const missions = [
     title: 'Democratise Property Intelligence',
     desc: 'Previously only large property developers and institutional investors had access to detailed market analytics. eHartanah puts the same intelligence — yield data, auction risk scores, market trend reports — in every buyer\'s hands.',
     icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
-    color: 'from-blue-500 to-blue-700',
+    color: 'from-emerald-500 to-emerald-700',
   },
   {
     title: 'Enable First-Time Homeownership',
@@ -55,10 +55,10 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 py-16 overflow-hidden relative">
-        <div className="absolute top-10 right-10 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl" />
+      <div className="bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 py-16 overflow-hidden relative">
+        <div className="absolute top-10 right-10 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative">
-          <div className="inline-flex items-center gap-2 bg-blue-600/20 border border-blue-500/30 text-blue-300 text-xs font-semibold px-4 py-2 rounded-full mb-6">
+          <div className="inline-flex items-center gap-2 bg-emerald-600/20 border border-emerald-500/30 text-emerald-300 text-xs font-semibold px-4 py-2 rounded-full mb-6">
             About Us
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-5 leading-tight">
@@ -105,8 +105,8 @@ export default function AboutPage() {
               { title: 'WhatsApp Consultation', desc: 'Licensed property advisors available daily via WhatsApp for personal guidance.' },
             ].map((feature) => (
               <div key={feature.title} className="flex gap-4">
-                <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -130,7 +130,7 @@ export default function AboutPage() {
                   <span className="text-white font-bold text-xl">{member.initials}</span>
                 </div>
                 <h3 className="font-bold text-gray-900">{member.name}</h3>
-                <p className="text-blue-700 text-xs font-semibold mb-3">{member.role}</p>
+                <p className="text-emerald-700 text-xs font-semibold mb-3">{member.role}</p>
                 <p className="text-gray-500 text-xs leading-relaxed">{member.bio}</p>
               </div>
             ))}
@@ -138,13 +138,13 @@ export default function AboutPage() {
         </section>
 
         {/* Join us CTA */}
-        <section className="bg-gradient-to-r from-blue-600 via-violet-600 to-purple-700 rounded-2xl p-8 text-center">
+        <section className="bg-gradient-to-r from-emerald-600 via-teal-600 to-teal-700 rounded-2xl p-8 text-center">
           <h2 className="text-xl font-bold text-white mb-3">Join the eHartanah Community</h2>
-          <p className="text-blue-100 text-sm mb-6 max-w-md mx-auto">
+          <p className="text-emerald-100 text-sm mb-6 max-w-md mx-auto">
             Whether you&apos;re a first-time buyer, seasoned investor, or a property agent — eHartanah has tools to make your property journey smarter.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link href="/ai-search" className="bg-white text-blue-700 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors text-sm">
+            <Link href="/ai-search" className="bg-white text-emerald-700 font-bold px-6 py-3 rounded-xl hover:bg-emerald-50 transition-colors text-sm">
               Start AI Search
             </Link>
             <Link href="/contact" className="bg-white/10 text-white border border-white/30 font-semibold px-6 py-3 rounded-xl hover:bg-white/20 transition-colors text-sm">

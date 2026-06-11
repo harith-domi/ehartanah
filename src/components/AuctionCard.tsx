@@ -43,7 +43,7 @@ export default function AuctionCard({ property }: { property: AuctionProperty })
           <span className={`text-xs font-semibold px-2 py-1 rounded-md border ${riskColors[property.riskLevel]}`}>
             {property.riskLevel} Risk
           </span>
-          <span className="bg-gradient-to-r from-blue-600 to-violet-600 text-white text-xs font-bold px-2 py-1 rounded-md">
+          <span className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold px-2 py-1 rounded-md">
             AI {property.aiScore}/10
           </span>
         </div>
@@ -108,7 +108,7 @@ export default function AuctionCard({ property }: { property: AuctionProperty })
         {/* CTA */}
         <Link
           href={`/auction/${property.id}`}
-          className="block w-full text-center bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold py-2.5 rounded-xl transition-colors"
+          className="block w-full text-center bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold py-2.5 rounded-xl transition-colors"
         >
           View Details
         </Link>

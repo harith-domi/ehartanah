@@ -25,10 +25,10 @@ export default function RentToOwnCard({ property }: { property: RentToOwnPropert
         />
         {/* Badges */}
         <div className="absolute top-3 left-3 flex gap-1.5">
-          <span className="bg-violet-600 text-white text-xs font-bold px-2 py-1 rounded-md">Rent-to-Own</span>
+          <span className="bg-teal-600 text-white text-xs font-bold px-2 py-1 rounded-md">Rent-to-Own</span>
         </div>
         <div className="absolute top-3 right-3">
-          <span className="bg-gradient-to-r from-blue-600 to-violet-600 text-white text-xs font-bold px-2 py-1 rounded-md">
+          <span className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold px-2 py-1 rounded-md">
             AI Score: {property.aiSuitabilityScore}/10
           </span>
         </div>
@@ -39,7 +39,7 @@ export default function RentToOwnCard({ property }: { property: RentToOwnPropert
         {/* Monthly Rent */}
         <div className="flex items-baseline justify-between mb-1">
           <div>
-            <span className="text-2xl font-bold text-violet-700">RM{property.monthlyRent.toLocaleString()}</span>
+            <span className="text-2xl font-bold text-teal-700">RM{property.monthlyRent.toLocaleString()}</span>
             <span className="text-sm text-gray-500">/month</span>
           </div>
           <div className="text-right">
@@ -68,7 +68,7 @@ export default function RentToOwnCard({ property }: { property: RentToOwnPropert
           </div>
           <div className="text-center border-x border-slate-200">
             <p className="text-xs text-gray-500">Rent Credit</p>
-            <p className="text-sm font-bold text-violet-700">{property.rentCredit}%</p>
+            <p className="text-sm font-bold text-teal-700">{property.rentCredit}%</p>
           </div>
           <div className="text-center">
             <p className="text-xs text-gray-500">Deposit</p>
@@ -80,11 +80,11 @@ export default function RentToOwnCard({ property }: { property: RentToOwnPropert
         <div className="mb-4">
           <div className="flex justify-between text-xs text-gray-500 mb-1.5">
             <span>Rent Credit Accumulation</span>
-            <span className="font-semibold text-violet-700">RM{totalRentCredit.toLocaleString('en-MY', { maximumFractionDigits: 0 })}</span>
+            <span className="font-semibold text-teal-700">RM{totalRentCredit.toLocaleString('en-MY', { maximumFractionDigits: 0 })}</span>
           </div>
-          <div className="h-2 bg-violet-100 rounded-full overflow-hidden">
+          <div className="h-2 bg-teal-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-violet-500 to-purple-600 rounded-full"
+              className="h-full bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"
               style={{ width: `${Math.min(property.rentCredit * 2, 100)}%` }}
             />
           </div>
@@ -94,7 +94,7 @@ export default function RentToOwnCard({ property }: { property: RentToOwnPropert
         {/* CTA */}
         <Link
           href={`/rent-to-own/${property.id}`}
-          className="block w-full text-center bg-gradient-to-r from-violet-600 to-purple-700 hover:opacity-90 text-white text-sm font-semibold py-2.5 rounded-xl transition-opacity"
+          className="block w-full text-center bg-gradient-to-r from-teal-600 to-teal-700 hover:opacity-90 text-white text-sm font-semibold py-2.5 rounded-xl transition-opacity"
         >
           Check My Suitability
         </Link>

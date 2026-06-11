@@ -6,7 +6,7 @@ import Link from 'next/link';
 const articles = [
   {
     category: 'Subsale Guide',
-    color: 'text-blue-700 bg-blue-50',
+    color: 'text-emerald-700 bg-emerald-50',
     title: 'Subsale Property Investment Guide for Malaysians',
     excerpt: 'A complete walkthrough of buying subsale properties in Malaysia — from due diligence and title search to financing options and stamp duty calculations. Learn how to identify undervalued properties and negotiate effectively.',
     readTime: '8 min read',
@@ -22,7 +22,7 @@ const articles = [
   },
   {
     category: 'Rent-to-Own',
-    color: 'text-violet-700 bg-violet-50',
+    color: 'text-teal-700 bg-teal-50',
     title: 'Rent-to-Own Explained: Malaysia\'s Path to Homeownership',
     excerpt: 'Rent-to-Own is no longer just a last resort — it\'s a strategic tool for smart buyers. Learn the legal framework, programme options, and how to negotiate the best rent credit terms and option agreement conditions.',
     readTime: '6 min read',
@@ -98,7 +98,7 @@ export default function InvestmentInsightsClient() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-gray-400">{article.readTime}</span>
-                  <Link href="/ai-search" className="text-blue-700 text-sm font-semibold hover:underline">
+                  <Link href="/ai-search" className="text-emerald-700 text-sm font-semibold hover:underline">
                     Ask AI about this →
                   </Link>
                 </div>
@@ -176,8 +176,8 @@ export default function InvestmentInsightsClient() {
         <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between flex-wrap gap-4 mb-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
-                <svg className="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <svg className="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                 </svg>
               </div>
@@ -196,7 +196,7 @@ export default function InvestmentInsightsClient() {
 
           <div className="h-2 bg-gray-100 rounded-full mb-6 overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-500 ${checkedCount >= 8 ? 'bg-green-500' : checkedCount >= 5 ? 'bg-amber-500' : 'bg-blue-500'}`}
+              className={`h-full rounded-full transition-all duration-500 ${checkedCount >= 8 ? 'bg-green-500' : checkedCount >= 5 ? 'bg-amber-500' : 'bg-emerald-500'}`}
               style={{ width: `${(checkedCount / checklist.length) * 100}%` }}
             />
           </div>
@@ -204,7 +204,7 @@ export default function InvestmentInsightsClient() {
           <div className="space-y-3">
             {checklist.map((item, i) => (
               <label key={i} className="flex items-start gap-3 cursor-pointer group">
-                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 transition-colors ${checked[i] ? 'bg-blue-700 border-blue-700' : 'border-gray-300 group-hover:border-blue-400'}`}>
+                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 transition-colors ${checked[i] ? 'bg-emerald-700 border-emerald-700' : 'border-gray-300 group-hover:border-emerald-400'}`}>
                   {checked[i] && (
                     <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -225,12 +225,12 @@ export default function InvestmentInsightsClient() {
         </section>
 
         {/* AI CTA */}
-        <section className="bg-gradient-to-r from-blue-600 via-violet-600 to-purple-700 rounded-2xl p-8 text-center">
+        <section className="bg-gradient-to-r from-emerald-600 via-teal-600 to-teal-700 rounded-2xl p-8 text-center">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">Get Personalised AI Investment Analysis</h2>
-          <p className="text-blue-100 text-sm mb-6 max-w-lg mx-auto">
+          <p className="text-emerald-100 text-sm mb-6 max-w-lg mx-auto">
             Tell our AI your income, savings, and investment goals. Get a personalised property portfolio strategy in minutes.
           </p>
-          <Link href="/ai-search" className="inline-flex items-center gap-2 bg-white text-blue-700 font-bold px-7 py-3 rounded-xl hover:bg-blue-50 transition-colors text-sm">
+          <Link href="/ai-search" className="inline-flex items-center gap-2 bg-white text-emerald-700 font-bold px-7 py-3 rounded-xl hover:bg-emerald-50 transition-colors text-sm">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>

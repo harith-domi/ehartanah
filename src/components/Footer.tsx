@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Logo from './Logo';
 
 const footerLinks = {
   Platform: [
@@ -39,16 +40,15 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-0 mb-4">
-              <span className="italic text-blue-400 font-black" style={{ fontFamily: 'Georgia, serif', fontSize: '2.6rem', lineHeight: 1, letterSpacing: '-0.04em' }}>e</span>
-              <span className="font-extrabold text-white text-2xl tracking-tight" style={{ letterSpacing: '0.02em' }}>Hartanah</span>
+            <Link href="/" className="inline-block mb-4">
+              <Logo dark />
             </Link>
             <p className="text-sm leading-relaxed mb-5 text-gray-400">
               Malaysia&apos;s AI-Powered Property Intelligence Platform
             </p>
             {/* Social icons */}
             <div className="flex gap-2">
-              <a href="#" aria-label="Facebook" className="w-9 h-9 bg-slate-700 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+              <a href="#" aria-label="Facebook" className="w-9 h-9 bg-slate-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
                 </svg>
@@ -60,7 +60,7 @@ export default function Footer() {
                   <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
                 </svg>
               </a>
-              <a href="#" aria-label="LinkedIn" className="w-9 h-9 bg-slate-700 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
+              <a href="#" aria-label="LinkedIn" className="w-9 h-9 bg-slate-700 hover:bg-emerald-700 rounded-lg flex items-center justify-center transition-colors">
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
                   <circle cx="4" cy="4" r="2"/>

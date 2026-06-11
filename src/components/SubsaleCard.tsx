@@ -31,7 +31,7 @@ export default function SubsaleCard({ property }: { property: SubsaleProperty })
               <span className="bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-md">NEW</span>
             )}
             {property.isFeatured && (
-              <span className="bg-blue-700 text-white text-xs font-bold px-2 py-1 rounded-md">FEATURED</span>
+              <span className="bg-emerald-700 text-white text-xs font-bold px-2 py-1 rounded-md">FEATURED</span>
             )}
             <span className={`text-white text-xs font-semibold px-2 py-1 rounded-md ${property.tenure === 'Freehold' ? 'bg-green-600' : 'bg-gray-500'}`}>
               {property.tenure}
@@ -39,7 +39,7 @@ export default function SubsaleCard({ property }: { property: SubsaleProperty })
           </div>
           {/* For Sale badge */}
           <div className="absolute top-3 right-12">
-            <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded-md">For Sale</span>
+            <span className="bg-emerald-600 text-white text-xs font-semibold px-2 py-1 rounded-md">For Sale</span>
           </div>
           {/* Save button */}
           <button
@@ -57,7 +57,7 @@ export default function SubsaleCard({ property }: { property: SubsaleProperty })
         <div className="p-4">
           {/* Price */}
           <div className="flex items-baseline justify-between gap-2 mb-1">
-            <p className="text-xl font-bold text-blue-700">{formatPrice(property.price)}</p>
+            <p className="text-xl font-bold text-emerald-700">{formatPrice(property.price)}</p>
             <p className="text-xs text-gray-500">RM{property.pricePerSqft}/sqft</p>
           </div>
 

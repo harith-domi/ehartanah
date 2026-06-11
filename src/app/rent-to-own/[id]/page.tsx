@@ -42,9 +42,9 @@ export default async function RentToOwnDetailPage({
     <div className="min-h-screen bg-slate-50">
       <div className="bg-white border-b border-gray-100 py-3">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-sm text-gray-500 flex gap-2">
-          <Link href="/" className="hover:text-blue-700">Home</Link>
+          <Link href="/" className="hover:text-emerald-700">Home</Link>
           <span>/</span>
-          <Link href="/rent-to-own" className="hover:text-blue-700">Rent-to-Own</Link>
+          <Link href="/rent-to-own" className="hover:text-emerald-700">Rent-to-Own</Link>
           <span>/</span>
           <span className="text-gray-800 truncate">{property.title}</span>
         </div>
@@ -56,8 +56,8 @@ export default async function RentToOwnDetailPage({
             <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden">
               <Image src={property.imageUrl} alt={property.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" />
               <div className="absolute top-4 left-4 flex gap-2">
-                <span className="bg-violet-600 text-white text-xs font-bold px-2 py-1 rounded-md">Rent-to-Own</span>
-                <span className="bg-gradient-to-r from-blue-600 to-violet-600 text-white text-xs font-bold px-2 py-1 rounded-md">AI Score: {property.aiSuitabilityScore}/10</span>
+                <span className="bg-teal-600 text-white text-xs font-bold px-2 py-1 rounded-md">Rent-to-Own</span>
+                <span className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold px-2 py-1 rounded-md">AI Score: {property.aiSuitabilityScore}/10</span>
               </div>
             </div>
 
@@ -72,7 +72,7 @@ export default async function RentToOwnDetailPage({
 
               <div className="flex items-baseline gap-4 mb-6">
                 <div>
-                  <p className="text-3xl font-bold text-violet-700">RM{property.monthlyRent.toLocaleString()}<span className="text-base font-normal text-gray-500">/month</span></p>
+                  <p className="text-3xl font-bold text-teal-700">RM{property.monthlyRent.toLocaleString()}<span className="text-base font-normal text-gray-500">/month</span></p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Option Price</p>
@@ -100,10 +100,10 @@ export default async function RentToOwnDetailPage({
           </div>
 
           <div className="space-y-5">
-            <div className="bg-gradient-to-br from-violet-600 to-purple-800 rounded-2xl p-5 text-white">
+            <div className="bg-gradient-to-br from-teal-600 to-teal-800 rounded-2xl p-5 text-white">
               <h3 className="font-bold mb-3 text-sm">Apply for This Programme</h3>
-              <p className="text-violet-100 text-xs mb-4">Speak with our RTO specialist to check your eligibility and get the application process started.</p>
-              <a href="https://wa.me/60123456789" target="_blank" rel="noopener noreferrer" className="block text-center bg-white text-violet-700 font-semibold py-3 rounded-xl mb-3 text-sm hover:bg-violet-50 transition-colors">
+              <p className="text-teal-100 text-xs mb-4">Speak with our RTO specialist to check your eligibility and get the application process started.</p>
+              <a href="https://wa.me/60123456789" target="_blank" rel="noopener noreferrer" className="block text-center bg-white text-teal-700 font-semibold py-3 rounded-xl mb-3 text-sm hover:bg-teal-50 transition-colors">
                 WhatsApp Advisor
               </a>
               <Link href="/ai-search" className="block text-center bg-white/10 border border-white/30 text-white font-semibold py-2.5 rounded-xl text-sm hover:bg-white/20 transition-colors">

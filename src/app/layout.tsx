@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const BASE_URL = 'https://property-website-rose.vercel.app';
+const BASE_URL = 'https://ehartanahmalaysia.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

@@ -19,7 +19,7 @@ export default async function AISearchPage({
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Page header */}
-      <div className="bg-gradient-to-r from-blue-700 to-violet-700 py-10">
+      <div className="bg-gradient-to-r from-emerald-700 to-teal-700 py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
@@ -29,7 +29,7 @@ export default async function AISearchPage({
             </div>
             <h1 className="text-xl font-bold text-white">AI Property Search</h1>
           </div>
-          <p className="text-blue-200 text-sm">Ask anything about Malaysian properties — affordability, yields, auctions, rent-to-own, and more.</p>
+          <p className="text-emerald-200 text-sm">Ask anything about Malaysian properties — affordability, yields, auctions, rent-to-own, and more.</p>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export default async function AISearchPage({
             {/* How it works */}
             <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
               <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 How AI Search Works
@@ -58,7 +58,7 @@ export default async function AISearchPage({
                   'Ask follow-up questions or refine your search anytime',
                 ].map((step, i) => (
                   <li key={i} className="flex gap-3 text-sm">
-                    <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0 text-xs mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-xs mt-0.5">
                       {i + 1}
                     </span>
                     <span className="text-gray-600">{step}</span>
@@ -101,9 +101,9 @@ export default async function AISearchPage({
               <h3 className="font-bold text-gray-900 mb-3">Browse by Category</h3>
               <div className="space-y-2">
                 {[
-                  { label: 'Subsale Properties', href: '/subsale', color: 'text-blue-700 bg-blue-50' },
+                  { label: 'Subsale Properties', href: '/subsale', color: 'text-emerald-700 bg-emerald-50' },
                   { label: 'Auction Deals', href: '/auction', color: 'text-amber-700 bg-amber-50' },
-                  { label: 'Rent-to-Own', href: '/rent-to-own', color: 'text-violet-700 bg-violet-50' },
+                  { label: 'Rent-to-Own', href: '/rent-to-own', color: 'text-teal-700 bg-teal-50' },
                   { label: 'Investment Insights', href: '/investment-insights', color: 'text-green-700 bg-green-50' },
                 ].map((link) => (
                   <Link key={link.href} href={link.href} className={`flex items-center justify-between ${link.color} px-4 py-2.5 rounded-xl text-sm font-medium transition-opacity hover:opacity-80`}>

@@ -38,10 +38,10 @@ export default function RentToOwnPageClient() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Hero */}
-      <div className="bg-gradient-to-r from-violet-700 to-purple-900 py-12">
+      <div className="bg-gradient-to-r from-teal-700 to-teal-900 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Rent-to-Own Properties</h1>
-          <p className="text-violet-200 text-sm mb-8">Live in your home now. Buy it later. From as little as RM5,000 deposit.</p>
+          <p className="text-teal-200 text-sm mb-8">Live in your home now. Buy it later. From as little as RM5,000 deposit.</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl">
             {[
@@ -50,9 +50,9 @@ export default function RentToOwnPageClient() {
               { step: '03', title: 'Buy When Ready', desc: 'Exercise your option anytime during the 3–5 year period' },
             ].map((item) => (
               <div key={item.step} className="bg-white/10 border border-white/20 rounded-2xl p-4">
-                <span className="text-violet-300 font-bold text-xs">STEP {item.step}</span>
+                <span className="text-teal-300 font-bold text-xs">STEP {item.step}</span>
                 <h3 className="text-white font-bold mt-1 mb-1.5 text-sm">{item.title}</h3>
-                <p className="text-violet-200 text-xs leading-relaxed">{item.desc}</p>
+                <p className="text-teal-200 text-xs leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -65,8 +65,8 @@ export default function RentToOwnPageClient() {
             {/* AI Suitability Checker */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
               <h2 className="font-bold text-gray-900 mb-1 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-violet-100 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-violet-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="w-7 h-7 rounded-lg bg-teal-100 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </span>
@@ -82,7 +82,7 @@ export default function RentToOwnPageClient() {
                     value={income}
                     onChange={(e) => setIncome(e.target.value)}
                     placeholder="e.g. 5,000"
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-400"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-teal-400"
                   />
                 </div>
                 <div>
@@ -92,7 +92,7 @@ export default function RentToOwnPageClient() {
                     value={savings}
                     onChange={(e) => setSavings(e.target.value)}
                     placeholder="e.g. 20,000"
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-400"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-teal-400"
                   />
                 </div>
                 <div>
@@ -102,7 +102,7 @@ export default function RentToOwnPageClient() {
                     value={area}
                     onChange={(e) => setArea(e.target.value)}
                     placeholder="e.g. Cheras, PJ"
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-violet-400"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-teal-400"
                   />
                 </div>
               </div>
@@ -110,7 +110,7 @@ export default function RentToOwnPageClient() {
               <button
                 onClick={handleCheck}
                 disabled={!income || checking}
-                className="flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm disabled:opacity-50 hover:opacity-90 transition-opacity"
+                className="flex items-center gap-2 bg-gradient-to-r from-teal-600 to-teal-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm disabled:opacity-50 hover:opacity-90 transition-opacity"
               >
                 {checking ? (
                   <>
@@ -128,9 +128,9 @@ export default function RentToOwnPageClient() {
               </button>
 
               {aiResult && (
-                <div className="mt-5 bg-violet-50 border border-violet-200 rounded-2xl p-5">
+                <div className="mt-5 bg-teal-50 border border-teal-200 rounded-2xl p-5">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-teal-600 to-teal-700 flex items-center justify-center">
                       <span className="text-white font-bold text-lg">{aiResult.score}</span>
                     </div>
                     <div>
@@ -139,7 +139,7 @@ export default function RentToOwnPageClient() {
                     </div>
                   </div>
                   <p className="text-sm text-gray-700 leading-relaxed">{aiResult.recommendation}</p>
-                  <Link href="/ai-search" className="inline-block mt-3 text-violet-700 text-sm font-semibold hover:underline">
+                  <Link href="/ai-search" className="inline-block mt-3 text-teal-700 text-sm font-semibold hover:underline">
                     Get full AI analysis →
                   </Link>
                 </div>
@@ -189,10 +189,10 @@ export default function RentToOwnPageClient() {
 
           {/* Sidebar */}
           <div className="space-y-5">
-            <div className="bg-gradient-to-br from-violet-600 to-purple-800 rounded-2xl p-5 text-white">
+            <div className="bg-gradient-to-br from-teal-600 to-teal-800 rounded-2xl p-5 text-white">
               <h3 className="font-bold mb-2 text-sm">Talk to an RTO Advisor</h3>
-              <p className="text-violet-100 text-xs mb-4">Our licensed advisors specialise in rent-to-own programmes and first-time buyer guidance.</p>
-              <a href="https://wa.me/60123456789" target="_blank" rel="noopener noreferrer" className="block text-center bg-white text-violet-700 font-semibold text-sm py-2.5 rounded-xl">
+              <p className="text-teal-100 text-xs mb-4">Our licensed advisors specialise in rent-to-own programmes and first-time buyer guidance.</p>
+              <a href="https://wa.me/60123456789" target="_blank" rel="noopener noreferrer" className="block text-center bg-white text-teal-700 font-semibold text-sm py-2.5 rounded-xl">
                 WhatsApp Now
               </a>
             </div>
@@ -209,13 +209,13 @@ export default function RentToOwnPageClient() {
                 ].map((row) => (
                   <div key={row.label} className="grid grid-cols-3 gap-1 text-xs">
                     <span className="text-gray-500">{row.label}</span>
-                    <span className="text-violet-700 font-semibold">{row.rto}</span>
+                    <span className="text-teal-700 font-semibold">{row.rto}</span>
                     <span className="text-gray-400">{row.conv}</span>
                   </div>
                 ))}
                 <div className="grid grid-cols-3 text-xs font-bold text-gray-500 border-t pt-2">
                   <span />
-                  <span className="text-violet-700">RTO</span>
+                  <span className="text-teal-700">RTO</span>
                   <span>Mortgage</span>
                 </div>
               </div>

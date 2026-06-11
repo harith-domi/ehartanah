@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import Logo from './Logo';
 
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'AI Search', href: '/ai-search' },
   { label: 'Subsale', href: '/subsale' },
+  { label: 'Rent', href: '/rent' },
   { label: 'Auction', href: '/auction' },
   { label: 'Rent-to-Own', href: '/rent-to-own' },
   { label: 'Insights', href: '/investment-insights' },
@@ -29,9 +31,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-0 shrink-0">
-            <span className="italic text-blue-700 font-black" style={{ fontFamily: 'Georgia, serif', fontSize: '2.6rem', lineHeight: 1, letterSpacing: '-0.04em' }}>e</span>
-            <span className="font-extrabold text-gray-900 text-2xl tracking-tight" style={{ letterSpacing: '0.02em' }}>Hartanah</span>
+          <Link href="/" className="shrink-0">
+            <Logo />
           </Link>
 
           {/* Desktop nav */}
@@ -44,8 +45,8 @@ export default function Navbar() {
                   href={href}
                   className={`px-3 py-2 font-medium text-sm transition-colors rounded-md ${
                     isActive
-                      ? 'text-blue-700 bg-blue-50'
-                      : 'text-gray-600 hover:text-blue-700 hover:bg-blue-50'
+                      ? 'text-emerald-700 bg-emerald-50'
+                      : 'text-gray-600 hover:text-emerald-700 hover:bg-emerald-50'
                   }`}
                 >
                   {label}
@@ -59,7 +60,7 @@ export default function Navbar() {
             <button className="text-sm text-gray-600 hover:text-gray-900 font-medium px-3 py-1.5 transition-colors">
               Log In
             </button>
-            <button className="bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <button className="bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
               List Property
             </button>
           </div>
@@ -89,7 +90,7 @@ export default function Navbar() {
                   key={label}
                   href={href}
                   className={`block px-4 py-2.5 rounded-md font-medium text-sm transition-colors ${
-                    isActive ? 'text-blue-700 bg-blue-50' : 'text-gray-700 hover:text-blue-700 hover:bg-blue-50'
+                    isActive ? 'text-emerald-700 bg-emerald-50' : 'text-gray-700 hover:text-emerald-700 hover:bg-emerald-50'
                   }`}
                   onClick={() => setMobileOpen(false)}
                 >
@@ -99,7 +100,7 @@ export default function Navbar() {
             })}
             <div className="flex gap-3 px-4 pt-2">
               <button className="flex-1 border border-gray-300 text-sm font-medium py-2 rounded-lg hover:bg-gray-50 transition-colors">Log In</button>
-              <button className="flex-1 bg-blue-700 text-white text-sm font-semibold py-2 rounded-lg hover:bg-blue-800 transition-colors">List Property</button>
+              <button className="flex-1 bg-emerald-700 text-white text-sm font-semibold py-2 rounded-lg hover:bg-emerald-800 transition-colors">List Property</button>
             </div>
           </div>
         )}
