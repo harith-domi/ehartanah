@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import ListingCard from '@/components/ListingCard';
-import AuctionCard from '@/components/AuctionCard';
 import { saleListings, rentListings } from '@/lib/listings';
-import { auctionProperties } from '@/lib/data/auction';
 
 const stats = [
   { label: '15,000+ Properties', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-  { label: '500+ Auction Deals', icon: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z' },
+  { label: 'Direct Owner Deals', icon: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z' },
   { label: 'AI-Powered Matching', icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' },
   { label: '24/7 WhatsApp Support', icon: 'M8 12h.01M12 12h.01M16 12h.01M21 3H3a2 2 0 00-2 2v14a2 2 0 002 2h18a2 2 0 002-2V5a2 2 0 00-2-2z' },
 ];
@@ -67,7 +65,6 @@ const benefits = [
 
 const featured = saleListings.slice(0, 3);
 const featuredRentals = rentListings.slice(0, 3);
-const featuredAuctions = auctionProperties.slice(0, 3);
 
 export default function HomePage() {
   return (
@@ -214,8 +211,8 @@ export default function HomePage() {
               },
               {
                 title: 'Bank Auctions (Lelong)',
-                desc: 'AI-scored auction properties at 15%–35% below market value. Get risk ratings and due diligence checklists.',
-                count: '500+ auction deals',
+                desc: 'AI-scored auction properties below market value. Get risk ratings and due diligence checklists.',
+                count: 'Coming soon',
                 href: '/auction',
                 gradient: 'from-amber-500 to-orange-700',
                 btnClass: 'bg-amber-500 hover:bg-amber-600',
@@ -223,8 +220,8 @@ export default function HomePage() {
               },
               {
                 title: 'Rent-to-Own',
-                desc: 'Live in your dream home from just RM5k deposit while building equity. Designed for first-time buyers and those rebuilding credit.',
-                count: '6 programmes available',
+                desc: 'Live in your dream home from a low deposit while building equity. Designed for first-time buyers and those rebuilding credit.',
+                count: 'Coming soon',
                 href: '/rent-to-own',
                 gradient: 'from-teal-600 to-teal-800',
                 btnClass: 'bg-teal-600 hover:bg-teal-700',
@@ -290,29 +287,6 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredRentals.map((p) => (
               <ListingCard key={p.id} listing={p} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED AUCTION */}
-      <section className="bg-slate-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-1">Bank Auctions</p>
-              <h2 className="text-2xl font-bold text-gray-900">Top Auction Deals This Month</h2>
-            </div>
-            <Link href="/auction" className="text-amber-600 hover:text-amber-700 font-semibold text-sm flex items-center gap-1">
-              View All
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredAuctions.map((p) => (
-              <AuctionCard key={p.id} property={p} />
             ))}
           </div>
         </div>

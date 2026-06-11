@@ -1,5 +1,6 @@
 import saleData from './data/sale-listings.json';
 import rentData from './data/rent-listings.json';
+import ownData from './data/own-listings.json';
 
 export interface Listing {
   id: string;
@@ -20,10 +21,15 @@ export interface Listing {
   imageCount: number;
   postedAt: string;
   url: string;
+  featured?: boolean;
 }
 
-export const saleListings = saleData as Listing[];
-export const rentListings = rentData as Listing[];
+const ownListings = ownData as Listing[];
+export const ownSaleListings = ownListings.filter((l) => l.listingType === 'sale');
+export const ownRentListings = ownListings.filter((l) => l.listingType === 'rent');
+
+export const saleListings: Listing[] = [...ownSaleListings, ...(saleData as Listing[])];
+export const rentListings: Listing[] = [...ownRentListings, ...(rentData as Listing[])];
 
 export const totalListings = saleListings.length + rentListings.length;
 
@@ -69,7 +75,11 @@ export function filterListings(listings: Listing[], f: ListingFilters): Listing[
   if (f.sort === 'price-asc') out = [...out].sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
   else if (f.sort === 'price-desc') out = [...out].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
   else if (f.sort === 'size-desc') out = [...out].sort((a, b) => (b.size ?? 0) - (a.size ?? 0));
-  else out = [...out].sort((a, b) => b.postedAt.localeCompare(a.postedAt));
+  else
+    out = [...out].sort(
+      (a, b) =>
+        (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || b.postedAt.localeCompare(a.postedAt)
+    );
 
   return out;
 }

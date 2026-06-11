@@ -36,6 +36,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
     listing.bathrooms !== null ? `${listing.bathrooms} bath` : null,
     formatSize(listing) || null,
   ].filter(Boolean);
+  const location = listing.location || [listing.subarea, listing.region].filter(Boolean).join(', ');
 
   return (
     <Link
@@ -50,6 +51,11 @@ export default function ListingCard({ listing }: { listing: Listing }) {
         <span className="absolute top-3 left-3 bg-black/30 backdrop-blur-sm text-white text-[11px] font-semibold px-2.5 py-1 rounded-md">
           {listing.propertyType || listing.category}
         </span>
+        {listing.featured && (
+          <span className="absolute top-3 right-3 bg-amber-500 text-white text-[11px] font-bold px-2.5 py-1 rounded-md tracking-wide">
+            FEATURED
+          </span>
+        )}
         {listing.imageCount > 0 && (
           <span className="absolute bottom-3 right-3 flex items-center gap-1 bg-black/30 backdrop-blur-sm text-white text-[11px] font-medium px-2 py-1 rounded-md">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,13 +73,15 @@ export default function ListingCard({ listing }: { listing: Listing }) {
         <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 mb-2 group-hover:text-emerald-700 transition-colors">
           {listing.title}
         </h3>
-        <p className="text-gray-500 text-xs flex items-center gap-1 mb-3">
-          <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <span className="truncate">{listing.location || `${listing.subarea}, ${listing.region}`}</span>
-        </p>
+        {location && (
+          <p className="text-gray-500 text-xs flex items-center gap-1 mb-3">
+            <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span className="truncate">{location}</span>
+          </p>
+        )}
         {specs.length > 0 && (
           <p className="text-gray-600 text-xs font-medium mb-3">{specs.join(' · ')}</p>
         )}

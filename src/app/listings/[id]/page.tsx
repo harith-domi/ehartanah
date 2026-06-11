@@ -75,13 +75,15 @@ export default async function ListingDetailPage({
               </div>
 
               <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{listing.title}</h1>
-              <div className="flex items-center gap-1 text-gray-500 text-sm mb-4">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                {listing.location}
-              </div>
+              {listing.location && (
+                <div className="flex items-center gap-1 text-gray-500 text-sm mb-4">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {listing.location}
+                </div>
+              )}
 
               <p className="text-3xl font-bold text-emerald-700 mb-6">
                 {formatPrice(listing.price, listing.listingType)}
@@ -119,7 +121,15 @@ export default async function ListingDetailPage({
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <h3 className="font-bold text-gray-900 mb-4">Contact Owner</h3>
               <p className="font-semibold text-gray-800 mb-1">{listing.advertiser}</p>
-              <p className="text-gray-500 text-sm mb-4">Private Owner</p>
+              <p className="text-gray-500 text-sm mb-4">{listing.featured ? 'Exclusive eHartanah Listing' : 'Private Owner'}</p>
+              {listing.featured && (
+                <Link
+                  href="/contact"
+                  className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 rounded-xl transition-colors text-sm mb-3"
+                >
+                  Enquire Now
+                </Link>
+              )}
               {wa && (
                 <a
                   href={wa}
