@@ -196,7 +196,7 @@ export default function InvestmentInsightsClient() {
 
           <div className="h-2 bg-gray-100 rounded-full mb-6 overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-500 ${checkedCount >= 8 ? 'bg-green-500' : checkedCount >= 5 ? 'bg-amber-500' : 'bg-[#edf2f8]0'}`}
+              className={`h-full rounded-full transition-all duration-500 ${checkedCount >= 8 ? 'bg-green-500' : checkedCount >= 5 ? 'bg-amber-500' : 'bg-[#1e3a5f]'}`}
               style={{ width: `${(checkedCount / checklist.length) * 100}%` }}
             />
           </div>

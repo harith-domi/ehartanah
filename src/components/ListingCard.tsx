@@ -63,7 +63,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
             {listing.propertyType || listing.category}
           </span>
           {listing.featured ? (
-            <span className="absolute top-3 right-3 bg-[#edf2f8]0 text-white text-[11px] font-bold px-2.5 py-1 rounded-md tracking-wide">
+            <span className="absolute top-3 right-3 bg-[#d4a017] text-[#0f2540] text-[11px] font-bold px-2.5 py-1 rounded-md tracking-wide">
               Agency
             </span>
           ) : (

@@ -183,7 +183,7 @@ export default async function ListingDetailPage({
                     src={mapSrc}
                     width="100%"
                     height="100%"
-                    style={{ border: 0, position: 'absolute', inset: 0 }}
+                    className="border-0 absolute inset-0 w-full h-full"
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"

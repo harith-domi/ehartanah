@@ -299,9 +299,8 @@ export default function ChatInterface({ initialQuery }: { initialQuery?: string 
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="e.g. rent in Puchong below RM1500, 3 bedrooms"
-            className="flex-1 resize-none border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors leading-relaxed"
+            className="flex-1 resize-none border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors leading-relaxed max-h-[120px]"
             rows={1}
-            style={{ maxHeight: '120px' }}
           />
           <button
             onClick={() => handleSend()}

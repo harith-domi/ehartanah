@@ -80,7 +80,7 @@ export default function HomePage() {
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-10 left-10 w-72 h-72 bg-[#1e3a5f]/10 rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#1e3a5f]/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#edf2f8]0/5 rounded-full blur-2xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#edf2f8]/5 rounded-full blur-2xl" />
         </div>
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
@@ -121,7 +121,7 @@ export default function HomePage() {
               />
               <button
                 type="submit"
-                className="bg-[#edf2f8]0 hover:bg-[#2d5a8e] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors shrink-0"
+                className="bg-[#d4a017] hover:bg-[#c49012] text-[#0f2540] text-sm font-semibold px-4 py-2 rounded-lg transition-colors shrink-0"
               >
                 Search
               </button>
