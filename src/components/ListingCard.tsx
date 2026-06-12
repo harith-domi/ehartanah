@@ -57,7 +57,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
-            <NoPhotoPlaceholder count={listing.imageCount} url={listing.url} />
+            <NoPhotoPlaceholder count={listing.imageCount} url={listing.url} category={listing.category} />
           )}
           <span className="absolute top-3 left-3 bg-black/30 backdrop-blur-sm text-white text-[11px] font-semibold px-2.5 py-1 rounded-md">
             {listing.propertyType || listing.category}

@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
+import { LanguageProvider } from '@/lib/i18n';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -74,10 +75,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-MY">
       <body className={`${inter.className} bg-slate-50 text-gray-900 antialiased`}>
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <WhatsAppWidget />
+        <LanguageProvider>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <WhatsAppWidget />
+        </LanguageProvider>
       </body>
     </html>
   );

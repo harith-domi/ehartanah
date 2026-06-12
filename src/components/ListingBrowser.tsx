@@ -157,7 +157,7 @@ export default function ListingBrowser({
                   defaultValue={params.minPrice || ''}
                   placeholder="Min"
                   inputMode="numeric"
-                  className="flex-1 sm:w-16 text-sm outline-none bg-transparent"
+                  className="flex-1 min-w-0 sm:w-16 text-sm outline-none bg-transparent"
                 />
                 <span className="text-gray-300">–</span>
                 <input
@@ -165,7 +165,7 @@ export default function ListingBrowser({
                   defaultValue={params.maxPrice || ''}
                   placeholder="Max"
                   inputMode="numeric"
-                  className="flex-1 sm:w-16 text-sm outline-none bg-transparent"
+                  className="flex-1 min-w-0 sm:w-16 text-sm outline-none bg-transparent"
                 />
               </div>
               {/* Sort */}

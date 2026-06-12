@@ -69,7 +69,7 @@ function ListingResultCard({ listing }: { listing: Listing }) {
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
-          <NoPhotoPlaceholder count={listing.imageCount} url={listing.url} size="sm" />
+          <NoPhotoPlaceholder count={listing.imageCount} url={listing.url} size="sm" category={listing.category} />
         )}
         <span className="absolute top-2 left-2 bg-[#0f2540]/80 text-white text-[10px] font-semibold px-2 py-0.5 rounded-md">
           {listing.listingType === 'rent' ? 'For Rent' : 'For Sale'}

@@ -5,9 +5,9 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import { AGENCY_WA } from '@/lib/listings';
+import { useLang } from '@/lib/i18n';
 
 const navLinks = [
-  { en: 'Home',        bm: 'Utama',       href: '/' },
   { en: 'AI Search',   bm: 'Carian AI',   href: '/ai-search' },
   { en: 'Properties',  bm: 'Hartanah',    href: '/browse' },
   { en: 'Auction',     bm: 'Lelongan',    href: '/auction' },
@@ -18,7 +18,7 @@ const navLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState<'en' | 'bm'>('en');
+  const { lang, toggleLang } = useLang();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -26,17 +26,6 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  useEffect(() => {
-    const saved = localStorage.getItem('ehartanah_lang') as 'en' | 'bm' | null;
-    if (saved) setLang(saved);
-  }, []);
-
-  function toggleLang() {
-    const next = lang === 'en' ? 'bm' : 'en';
-    setLang(next);
-    localStorage.setItem('ehartanah_lang', next);
-  }
 
   return (
     <header className={`bg-[#0f2540] sticky top-0 z-50 transition-all duration-200 ${scrolled ? 'shadow-xl shadow-black/30' : 'shadow-md shadow-black/20'}`}>
@@ -77,6 +66,7 @@ export default function Navbar() {
               onClick={toggleLang}
               className="text-xs font-bold px-3 py-1.5 rounded-full border border-white/20 text-[#94b3cc] hover:border-[#d4a017] hover:text-[#d4a017] hover:bg-white/10 transition-all"
               title="Toggle language"
+              aria-label={lang === 'en' ? 'Tukar ke Bahasa Malaysia' : 'Switch to English'}
             >
               {lang === 'en' ? '🇲🇾 BM' : '🇬🇧 EN'}
             </button>
@@ -132,6 +122,7 @@ export default function Navbar() {
               <button
                 onClick={toggleLang}
                 className="border border-white/20 text-xs font-bold px-3 py-2 rounded-full text-[#94b3cc] hover:border-[#d4a017] hover:text-[#d4a017] transition-all"
+                aria-label={lang === 'en' ? 'Tukar ke Bahasa Malaysia' : 'Switch to English'}
               >
                 {lang === 'en' ? '🇲🇾 BM' : '🇬🇧 EN'}
               </button>
