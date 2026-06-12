@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { Listing, formatPrice, formatSize, formatPostedDate, whatsappLink, pricePerSqft, displayBedrooms, displayBathrooms } from '@/lib/listings';
+import { areaPhoto } from '@/lib/areaPhotos';
 import FavouriteButton from './FavouriteButton';
 import NoPhotoPlaceholder from './NoPhotoPlaceholder';
+import T from './T';
 
 const CATEGORY_STYLES: Record<string, { gradient: string; icon: string }> = {
   'Apartment / Condominium': {
@@ -34,6 +36,7 @@ const DEFAULT_STYLE = {
 export default function ListingCard({ listing }: { listing: Listing }) {
   const style = CATEGORY_STYLES[listing.category] ?? DEFAULT_STYLE;
   const coverPhoto = listing.photos?.[0] ?? listing.thumbnailUrl;
+  const nearbyPhoto = coverPhoto ? null : areaPhoto(listing);
   const beds = displayBedrooms(listing);
   const baths = displayBathrooms(listing);
   const specs = [
@@ -58,6 +61,19 @@ export default function ListingCard({ listing }: { listing: Listing }) {
               alt={listing.title}
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
+          ) : nearbyPhoto ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={nearbyPhoto}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover opacity-80"
+              />
+              <span className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm text-white text-[10px] font-semibold px-2 py-1 rounded-md">
+                <T en="Similar property nearby" bm="Hartanah serupa berdekatan" />
+              </span>
+            </>
           ) : (
             <NoPhotoPlaceholder count={listing.imageCount} url={listing.url} category={listing.category} />
           )}

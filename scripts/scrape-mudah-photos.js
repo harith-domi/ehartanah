@@ -20,8 +20,8 @@ const fs = require('fs');
 const path = require('path');
 
 // ─── Config ────────────────────────────────────────────────────────────────
-const DELAY_MS = 1000;          // ms between batches (be respectful to Mudah)
-const CONCURRENCY = 5;          // parallel requests at a time
+const DELAY_MS = 2000;          // ms between batches (slower = fewer Cloudflare blocks)
+const CONCURRENCY = 3;          // parallel requests at a time
 const MAX_PHOTOS = 5;           // max photos to store per listing
 const RESULTS_FILE = path.join(__dirname, 'mudah-photos-results.json');
 
@@ -263,9 +263,16 @@ async function main() {
   const { rent, sale } = loadListings();
   const all = [...rent, ...sale].filter(l => l.url && l.url.includes('mudah.my'));
 
-  // Load existing results if resuming
+  // Load existing results if resuming.
+  // cf-challenge / error entries are NOT treated as done — they get retried.
   const results = SHOULD_RESUME ? loadResults() : {};
-  const alreadyDone = new Set(SHOULD_RESUME ? Object.keys(results) : []);
+  const alreadyDone = new Set(
+    SHOULD_RESUME
+      ? Object.values(results)
+          .filter(r => r.status === 'ok' || r.status === 'expired' || r.status === '410' || r.status === '404')
+          .map(r => r.id)
+      : []
+  );
 
   // Build work queue
   let queue = all
