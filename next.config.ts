@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  // Hide the floating Next.js dev-tools button (dev mode only; never shown in production)
+  devIndicators: false,
 };
 
 export default nextConfig;
