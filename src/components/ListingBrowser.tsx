@@ -1,5 +1,6 @@
 import ListingCard from '@/components/ListingCard';
 import Pagination from '@/components/Pagination';
+import T from '@/components/T';
 import Link from 'next/link';
 import {
   Listing,
@@ -60,9 +61,9 @@ export default function ListingBrowser({
   const activeType = params.type || '';
 
   const typePills = [
-    { label: 'All Properties', value: '' },
-    { label: 'For Rent', value: 'rent' },
-    { label: 'For Sale', value: 'sale' },
+    { label: { en: 'All Properties', bm: 'Semua Hartanah' }, value: '' },
+    { label: { en: 'For Rent', bm: 'Untuk Disewa' }, value: 'rent' },
+    { label: { en: 'For Sale', bm: 'Untuk Dijual' }, value: 'sale' },
   ];
 
   function typeHref(value: string) {
@@ -83,16 +84,25 @@ export default function ListingBrowser({
   const inp = 'border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#d4a017] bg-white h-10';
   const sel = inp + ' cursor-pointer';
 
-  const typeLabel = activeType === 'rent' ? 'Rental' : activeType === 'sale' ? 'Sale' : '';
-  const countLabel = `${total.toLocaleString('en-MY')} ${typeLabel ? typeLabel + ' ' : ''}propert${total === 1 ? 'y' : 'ies'} found`;
+  const countEn =
+    activeType === 'rent' ? `rental propert${total === 1 ? 'y' : 'ies'} found`
+    : activeType === 'sale' ? `sale propert${total === 1 ? 'y' : 'ies'} found`
+    : `propert${total === 1 ? 'y' : 'ies'} found`;
+  const countBm =
+    activeType === 'rent' ? 'hartanah sewaan dijumpai'
+    : activeType === 'sale' ? 'hartanah jualan dijumpai'
+    : 'hartanah dijumpai';
+  const countLabel = (
+    <>{total.toLocaleString('en-MY')} <T en={countEn} bm={countBm} /></>
+  );
 
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#0f2540] to-[#1e3a5f] py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">Browse Properties</h1>
-          <p className="text-[#f0c040] text-sm">{listings.length.toLocaleString('en-MY')} listings across Malaysia — rent and for sale</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1"><T en="Browse Properties" bm="Cari Hartanah" /></h1>
+          <p className="text-[#f0c040] text-sm">{listings.length.toLocaleString('en-MY')} <T en="listings across Malaysia — rent and for sale" bm="listing di seluruh Malaysia — sewa dan jualan" /></p>
         </div>
       </div>
 
@@ -115,7 +125,7 @@ export default function ListingBrowser({
                         : 'bg-gray-100 text-gray-500 hover:bg-[#edf2f8] hover:text-[#0f2540]'
                     }`}
                   >
-                    {label}
+                    <T en={label.en} bm={label.bm} />
                   </Link>
                 );
               })}
@@ -185,14 +195,14 @@ export default function ListingBrowser({
                   defaultChecked={params.privateOnly === 'true'}
                   className="w-4 h-4 accent-[#0f2540]"
                 />
-                Private only
+                <T en="Private only" bm="Pemilik sahaja" />
               </label>
               {/* Apply */}
               <button
                 type="submit"
                 className="bg-[#d4a017] hover:bg-[#c49012] text-[#0f2540] font-bold text-sm px-5 h-10 rounded-xl transition-colors shrink-0"
               >
-                Search
+                <T en="Search" bm="Cari" />
               </button>
               {/* Clear */}
               {(params.q || params.region || params.category || params.minPrice || params.maxPrice || params.beds || params.privateOnly) && (
@@ -200,7 +210,7 @@ export default function ListingBrowser({
                   href={activeType ? `${basePath}?type=${activeType}` : basePath}
                   className="text-xs text-gray-400 hover:text-gray-600 underline whitespace-nowrap"
                 >
-                  Clear filters
+                  <T en="Clear filters" bm="Padam tapisan" />
                 </Link>
               )}
               {/* Count (non-type-filter pages) */}
@@ -219,10 +229,10 @@ export default function ListingBrowser({
             <svg className="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
-            <p className="font-semibold text-gray-500 mb-2">No properties match your filters</p>
-            <p className="text-sm mb-4">Try a different area, wider price range, or fewer filters.</p>
+            <p className="font-semibold text-gray-500 mb-2"><T en="No properties match your filters" bm="Tiada hartanah sepadan dengan tapisan anda" /></p>
+            <p className="text-sm mb-4"><T en="Try a different area, wider price range, or fewer filters." bm="Cuba kawasan lain, julat harga lebih luas, atau kurangkan tapisan." /></p>
             <Link href={activeType ? `${basePath}?type=${activeType}` : basePath} className="text-[#1e3a5f] text-sm font-semibold underline">
-              Clear all filters
+              <T en="Clear all filters" bm="Padam semua tapisan" />
             </Link>
           </div>
         ) : (

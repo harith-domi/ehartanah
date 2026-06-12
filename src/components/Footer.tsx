@@ -1,37 +1,55 @@
 import Link from 'next/link';
 import Logo from './Logo';
+import T from './T';
 import { AGENCY_WA } from '@/lib/listings';
 
-const footerLinks = {
-  Platform: [
-    { label: 'Home', href: '/' },
-    { label: 'AI Search', href: '/ai-search' },
-    { label: 'Subsale', href: '/subsale' },
-    { label: 'Auction', href: '/auction' },
-    { label: 'Rent-to-Own', href: '/rent-to-own' },
-    { label: 'Investment Insights', href: '/investment-insights' },
-  ],
-  'Property Types': [
-    { label: 'Condo for Sale', href: '/subsale' },
-    { label: 'House for Sale', href: '/subsale' },
-    { label: 'Commercial', href: '/subsale' },
-    { label: 'New Launch', href: '/subsale' },
-    { label: 'Auction Properties', href: '/auction' },
-  ],
-  Resources: [
-    { label: 'Panduan Hartanah', href: '/guides' },
-    { label: 'Cara Sewa Beli Rumah', href: '/guides/cara-sewa-beli-rumah-malaysia' },
-    { label: 'Gagal Loan Bank?', href: '/guides/gagal-loan-bank-pilihan-anda' },
-    { label: 'Sewa Beli vs Sewa Biasa', href: '/guides/sewa-beli-vs-sewa-biasa' },
-    { label: 'Investment Insights', href: '/investment-insights' },
-  ],
-  Company: [
-    { label: 'About Us', href: '/about' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Privacy Policy', href: '#' },
-    { label: 'Terms of Service', href: '#' },
-    { label: 'Disclaimer', href: '#' },
-  ],
+interface FooterLink {
+  label: { en: string; bm: string };
+  href: string;
+}
+
+const footerLinks: Record<string, { heading: { en: string; bm: string }; links: FooterLink[] }> = {
+  platform: {
+    heading: { en: 'Platform', bm: 'Platform' },
+    links: [
+      { label: { en: 'Home', bm: 'Utama' }, href: '/' },
+      { label: { en: 'AI Search', bm: 'Carian AI' }, href: '/ai-search' },
+      { label: { en: 'Subsale', bm: 'Subsale' }, href: '/subsale' },
+      { label: { en: 'Auction', bm: 'Lelongan' }, href: '/auction' },
+      { label: { en: 'Rent-to-Own', bm: 'Sewa Beli' }, href: '/rent-to-own' },
+      { label: { en: 'Investment Insights', bm: 'Wawasan Pelaburan' }, href: '/investment-insights' },
+    ],
+  },
+  propertyTypes: {
+    heading: { en: 'Property Types', bm: 'Jenis Hartanah' },
+    links: [
+      { label: { en: 'Condo for Sale', bm: 'Kondo untuk Dijual' }, href: '/subsale' },
+      { label: { en: 'House for Sale', bm: 'Rumah untuk Dijual' }, href: '/subsale' },
+      { label: { en: 'Commercial', bm: 'Komersial' }, href: '/subsale' },
+      { label: { en: 'New Launch', bm: 'Pelancaran Baharu' }, href: '/subsale' },
+      { label: { en: 'Auction Properties', bm: 'Hartanah Lelongan' }, href: '/auction' },
+    ],
+  },
+  resources: {
+    heading: { en: 'Resources', bm: 'Sumber' },
+    links: [
+      { label: { en: 'Property Guides', bm: 'Panduan Hartanah' }, href: '/guides' },
+      { label: { en: 'How Rent-to-Own Works', bm: 'Cara Sewa Beli Rumah' }, href: '/guides/cara-sewa-beli-rumah-malaysia' },
+      { label: { en: 'Rejected by the Bank?', bm: 'Gagal Loan Bank?' }, href: '/guides/gagal-loan-bank-pilihan-anda' },
+      { label: { en: 'RTO vs Normal Rental', bm: 'Sewa Beli vs Sewa Biasa' }, href: '/guides/sewa-beli-vs-sewa-biasa' },
+      { label: { en: 'Investment Insights', bm: 'Wawasan Pelaburan' }, href: '/investment-insights' },
+    ],
+  },
+  company: {
+    heading: { en: 'Company', bm: 'Syarikat' },
+    links: [
+      { label: { en: 'About Us', bm: 'Tentang Kami' }, href: '/about' },
+      { label: { en: 'Contact', bm: 'Hubungi' }, href: '/contact' },
+      { label: { en: 'Privacy Policy', bm: 'Dasar Privasi' }, href: '#' },
+      { label: { en: 'Terms of Service', bm: 'Terma Perkhidmatan' }, href: '#' },
+      { label: { en: 'Disclaimer', bm: 'Penafian' }, href: '#' },
+    ],
+  },
 };
 
 export default function Footer() {
@@ -45,7 +63,7 @@ export default function Footer() {
               <Logo dark />
             </Link>
             <p className="text-sm leading-relaxed mb-5 text-gray-400">
-              Malaysia&apos;s AI-Powered Property Intelligence Platform
+              <T en="Malaysia's AI-Powered Property Intelligence Platform" bm="Platform Kecerdasan Hartanah AI Malaysia" />
             </p>
             {/* Social icons */}
             <div className="flex gap-2">
@@ -76,14 +94,14 @@ export default function Footer() {
           </div>
 
           {/* Link columns */}
-          {Object.entries(footerLinks).map(([heading, links]) => (
-            <div key={heading}>
-              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">{heading}</h4>
+          {Object.entries(footerLinks).map(([key, col]) => (
+            <div key={key}>
+              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider"><T en={col.heading.en} bm={col.heading.bm} /></h4>
               <ul className="space-y-2.5 text-sm">
-                {links.map(({ label, href }) => (
-                  <li key={label}>
+                {col.links.map(({ label, href }) => (
+                  <li key={label.en}>
                     <Link href={href} className="hover:text-white transition-colors hover:underline">
-                      {label}
+                      <T en={label.en} bm={label.bm} />
                     </Link>
                   </li>
                 ))}

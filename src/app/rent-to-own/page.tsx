@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AGENCY_WA } from '@/lib/listings';
 import RTOQuiz from '@/components/RTOQuiz';
+import T from '@/components/T';
 
 export const metadata: Metadata = {
   title: 'Rent-to-Own (Sewa Beli) — Semak Kelayakan Anda',
@@ -16,8 +17,8 @@ export default function RentToOwnPage() {
     <div className="min-h-screen bg-slate-50">
       <div className="bg-gradient-to-br from-[#1e3a5f] to-[#0f2540] py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Rent-to-Own (Sewa Beli)</h1>
-          <p className="text-[#fde68a] text-sm">Own your home step by step — rent while you build equity</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2"><T en="Rent-to-Own (Sewa Beli)" bm="Sewa Beli (Rent-to-Own)" /></h1>
+          <p className="text-[#fde68a] text-sm"><T en="Own your home step by step — rent while you build equity" bm="Miliki rumah anda langkah demi langkah — sewa sambil bina ekuiti" /></p>
         </div>
       </div>
 
@@ -27,26 +28,28 @@ export default function RentToOwnPage() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
         </div>
-        <span className="inline-block bg-[#dce8f0] text-[#1e3a5f] text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide">Coming Soon</span>
-        <h2 className="text-2xl font-bold text-gray-900 mb-3">Rent-to-Own Programmes</h2>
+        <span className="inline-block bg-[#dce8f0] text-[#1e3a5f] text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide"><T en="Coming Soon" bm="Akan Datang" /></span>
+        <h2 className="text-2xl font-bold text-gray-900 mb-3"><T en="Rent-to-Own Programmes" bm="Program Sewa Beli" /></h2>
         <p className="text-gray-500 text-sm leading-relaxed mb-6 max-w-md mx-auto">
-          We&apos;re building rent-to-own programmes for first-time buyers and those rebuilding
-          credit. Register your interest now — our advisors will contact you when it&apos;s ready.
+          <T
+            en="We're building rent-to-own programmes for first-time buyers and those rebuilding credit. Register your interest now — our advisors will contact you when it's ready."
+            bm="Kami sedang membina program sewa beli untuk pembeli kali pertama dan mereka yang membaiki kredit. Daftar minat sekarang — penasihat kami akan hubungi anda apabila ia sedia."
+          />
         </p>
 
         {/* What to expect */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 text-left">
           {[
-            { icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', title: 'Low Deposit', desc: 'Start from 2–5% down, no full loan needed' },
-            { icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', title: 'Bad Credit OK', desc: 'Designed for buyers rebuilding CCRIS' },
-            { icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', title: 'AI Matched', desc: 'AI finds your best-fit programme' },
+            { icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', title: { en: 'Low Deposit', bm: 'Deposit Rendah' }, desc: { en: 'Start from 2–5% down, no full loan needed', bm: 'Mula dari 2–5% sahaja, tak perlu loan penuh' } },
+            { icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', title: { en: 'Bad Credit OK', bm: 'Kredit Bermasalah OK' }, desc: { en: 'Designed for buyers rebuilding CCRIS', bm: 'Direka untuk pembeli yang membaiki CCRIS' } },
+            { icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', title: { en: 'AI Matched', bm: 'Padanan AI' }, desc: { en: 'AI finds your best-fit programme', bm: 'AI cari program paling sesuai untuk anda' } },
           ].map((f) => (
-            <div key={f.title} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+            <div key={f.title.en} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
               <svg className="w-5 h-5 text-[#1e3a5f] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={f.icon} />
               </svg>
-              <p className="font-semibold text-gray-900 text-sm mb-0.5">{f.title}</p>
-              <p className="text-gray-500 text-xs">{f.desc}</p>
+              <p className="font-semibold text-gray-900 text-sm mb-0.5"><T en={f.title.en} bm={f.title.bm} /></p>
+              <p className="text-gray-500 text-xs"><T en={f.desc.en} bm={f.desc.bm} /></p>
             </div>
           ))}
         </div>
@@ -91,10 +94,10 @@ export default function RentToOwnPage() {
             Daftar Minat via WhatsApp
           </a>
           <Link href="/rent" className="bg-[#0f2540] hover:bg-[#0a1e38] text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
-            Browse Rentals
+            <T en="Browse Rentals" bm="Lihat Sewaan" />
           </Link>
           <Link href="/subsale" className="border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
-            Browse Subsale
+            <T en="Browse Subsale" bm="Lihat Subsale" />
           </Link>
         </div>
       </div>
