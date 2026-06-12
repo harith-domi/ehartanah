@@ -49,10 +49,26 @@ export function uniqueCategories(listings: Listing[]): string[] {
   return [...new Set(listings.map((l) => l.category).filter(Boolean))].sort();
 }
 
+// Owner-entered sizes on Mudah are sometimes typos (e.g. a "999,999 sq.ft." room).
+// Treat implausible values as unknown rather than displaying them.
+export function plausibleSize(l: Listing): number | null {
+  if (!l.size) return null;
+  if (l.sizeUnit === 'sq.ft.') {
+    if (l.category === 'Room' && l.size > 2000) return null;
+    if (l.category !== 'Land' && l.size > 50000) return null;
+    // No habitable unit for sale is under 200 sq.ft. — typo like "22" for a 22x70 lot
+    if (l.listingType === 'sale' && l.size < 200) return null;
+    // Even the smallest rentable room exceeds 50 sq.ft.
+    if (l.listingType === 'rent' && l.size < 50) return null;
+  }
+  return l.size;
+}
+
 export function pricePerSqft(l: Listing): number | null {
-  if (l.price === null || l.size === null || l.size === 0) return null;
+  const size = plausibleSize(l);
+  if (l.price === null || size === null) return null;
   if (l.sizeUnit !== 'sq.ft.') return null;
-  return Math.round(l.price / l.size);
+  return Math.round(l.price / size);
 }
 
 export interface ListingFilters {
@@ -118,8 +134,31 @@ export function formatPrice(price: number | null, listingType: 'sale' | 'rent'):
 }
 
 export function formatSize(l: Listing): string {
-  if (l.size === null) return '';
-  return `${l.size.toLocaleString('en-MY')} ${l.sizeUnit}`;
+  const size = plausibleSize(l);
+  if (size === null) return '';
+  return `${size.toLocaleString('en-MY')} ${l.sizeUnit}`;
+}
+
+// For Room rentals, Mudah's bed/bath counts describe the whole unit, not the
+// room being rented — showing "4 beds" on a 100 sq.ft. room listing misleads.
+// Some room ads are miscategorized as Apartment/Condo, so also detect by title
+// and by the contradiction of a room-sized space claiming multiple bedrooms.
+export function isRoomRental(l: Listing): boolean {
+  if (l.listingType !== 'rent') return false;
+  if (l.category === 'Room') return true;
+  if (/\broom\b|\bbilik\b/i.test(l.title)) return true;
+  if (l.size !== null && l.size > 0 && l.size < 250 && l.sizeUnit === 'sq.ft.' && (l.bedrooms ?? 0) >= 2) return true;
+  return false;
+}
+
+export function displayBedrooms(l: Listing): number | null {
+  if (isRoomRental(l)) return null;
+  return l.bedrooms || null;
+}
+
+export function displayBathrooms(l: Listing): number | null {
+  if (isRoomRental(l)) return null;
+  return l.bathrooms || null;
 }
 
 export function formatPostedDate(postedAt: string): string {

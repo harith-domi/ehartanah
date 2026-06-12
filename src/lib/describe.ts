@@ -1,4 +1,4 @@
-import { Listing, formatPrice, pricePerSqft } from './listings';
+import { Listing, formatPrice, pricePerSqft, plausibleSize, displayBedrooms, displayBathrooms } from './listings';
 
 /**
  * Generates a unique, fact-based description for a listing in EN and BM.
@@ -27,16 +27,19 @@ export function describeListing(l: Listing): { en: string; bm: string } {
 
   // ── Facts ──
   // Strip trailing period from unit (e.g. "sq.ft.") so sentences don't end ".."
-  const sizeTxt = l.size ? `${l.size.toLocaleString('en-MY')} ${l.sizeUnit.replace(/\.$/, '')}` : '';
+  const size = plausibleSize(l);
+  const sizeTxt = size ? `${size.toLocaleString('en-MY')} ${l.sizeUnit.replace(/\.$/, '')}` : '';
 
-  const bedsEn =
-    l.bedrooms === 0 ? 'a studio layout' : l.bedrooms !== null ? `${l.bedrooms} bedroom${l.bedrooms === 1 ? '' : 's'}` : '';
-  const bathsEn = l.bathrooms !== null ? `${l.bathrooms} bathroom${l.bathrooms === 1 ? '' : 's'}` : '';
-  const roomsEn = bedsEn && bathsEn ? `${bedsEn} and ${bathsEn}` : bedsEn || '';
+  // 0 means "not stated"; for Room rentals the counts describe the whole unit — skip both
+  const nBeds = displayBedrooms(l);
+  const nBaths = displayBathrooms(l);
+  const bedsEn = nBeds ? `${nBeds} bedroom${nBeds === 1 ? '' : 's'}` : '';
+  const bathsEn = nBaths ? `${nBaths} bathroom${nBaths === 1 ? '' : 's'}` : '';
+  const roomsEn = bedsEn && bathsEn ? `${bedsEn} and ${bathsEn}` : bedsEn || bathsEn;
 
-  const bedsBm = l.bedrooms === 0 ? 'susun atur studio' : l.bedrooms !== null ? `${l.bedrooms} bilik tidur` : '';
-  const bathsBm = l.bathrooms !== null ? `${l.bathrooms} bilik air` : '';
-  const roomsBm = bedsBm && bathsBm ? `${bedsBm} dan ${bathsBm}` : bedsBm || '';
+  const bedsBm = nBeds ? `${nBeds} bilik tidur` : '';
+  const bathsBm = nBaths ? `${nBaths} bilik air` : '';
+  const roomsBm = bedsBm && bathsBm ? `${bedsBm} dan ${bathsBm}` : bedsBm || bathsBm;
 
   // "a" vs "an" for the EN openers
   const art = /^[aeiou]/i.test(typeName) ? 'An' : 'A';

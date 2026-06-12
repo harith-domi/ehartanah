@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Listing, formatPrice, formatSize, formatPostedDate, whatsappLink, pricePerSqft } from '@/lib/listings';
+import { Listing, formatPrice, formatSize, formatPostedDate, whatsappLink, pricePerSqft, displayBedrooms, displayBathrooms } from '@/lib/listings';
 import FavouriteButton from './FavouriteButton';
 import NoPhotoPlaceholder from './NoPhotoPlaceholder';
 
@@ -34,9 +34,11 @@ const DEFAULT_STYLE = {
 export default function ListingCard({ listing }: { listing: Listing }) {
   const style = CATEGORY_STYLES[listing.category] ?? DEFAULT_STYLE;
   const coverPhoto = listing.photos?.[0] ?? listing.thumbnailUrl;
+  const beds = displayBedrooms(listing);
+  const baths = displayBathrooms(listing);
   const specs = [
-    listing.bedrooms !== null ? `${listing.bedrooms} bed` : null,
-    listing.bathrooms !== null ? `${listing.bathrooms} bath` : null,
+    beds ? `${beds} bed` : null,
+    baths ? `${baths} bath` : null,
     formatSize(listing) || null,
   ].filter(Boolean);
   const location = listing.location || [listing.subarea, listing.region].filter(Boolean).join(', ');
