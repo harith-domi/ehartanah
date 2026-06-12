@@ -10,15 +10,15 @@ export const metadata: Metadata = {
 export default function RentToOwnPage() {
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 py-10">
+      <div className="bg-gradient-to-r from-[#0f2540] to-[#0f2540] py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Rent-to-Own</h1>
-          <p className="text-emerald-200 text-sm">Own your home step by step — rent while you build equity</p>
+          <p className="text-[#fde68a] text-sm">Own your home step by step — rent while you build equity</p>
         </div>
       </div>
 
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-24 text-center">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center mx-auto mb-6">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#1e3a5f] to-[#0f2540] flex items-center justify-center mx-auto mb-6">
           <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
@@ -29,10 +29,10 @@ export default function RentToOwnPage() {
           credit. In the meantime, explore thousands of subsale and rental properties.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
-          <Link href="/rent" className="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
+          <Link href="/rent" className="bg-[#0f2540] hover:bg-[#0a1e38] text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
             Browse Rentals
           </Link>
-          <Link href="/subsale" className="border border-emerald-200 text-emerald-700 hover:bg-emerald-50 font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
+          <Link href="/subsale" className="border border-[#d4a017]/40 text-[#1e3a5f] hover:bg-[#edf2f8] font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
             Browse Subsale
           </Link>
           <Link href="/contact" className="border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold px-6 py-3 rounded-xl transition-colors text-sm">

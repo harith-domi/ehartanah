@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 export default function AuctionPage() {
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 py-10">
+      <div className="bg-gradient-to-r from-[#0f2540] to-[#0f2540] py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Bank Auctions (Lelong)</h1>
-          <p className="text-emerald-200 text-sm">AI-scored auction deals below market value</p>
+          <p className="text-[#fde68a] text-sm">AI-scored auction deals below market value</p>
         </div>
       </div>
 
@@ -29,10 +29,10 @@ export default function AuctionPage() {
           diligence checklists. In the meantime, explore thousands of subsale and rental properties.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
-          <Link href="/subsale" className="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
+          <Link href="/subsale" className="bg-[#0f2540] hover:bg-[#0a1e38] text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
             Browse Subsale
           </Link>
-          <Link href="/rent" className="border border-emerald-200 text-emerald-700 hover:bg-emerald-50 font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
+          <Link href="/rent" className="border border-[#d4a017]/40 text-[#1e3a5f] hover:bg-[#edf2f8] font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
             Browse Rentals
           </Link>
           <Link href="/contact" className="border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold px-6 py-3 rounded-xl transition-colors text-sm">

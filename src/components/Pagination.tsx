@@ -29,8 +29,8 @@ export default function Pagination({
     pages.push(p);
   }
 
-  const linkClass = 'px-3 py-2 rounded-lg text-sm font-medium border border-gray-200 bg-white text-gray-700 hover:border-emerald-400 hover:text-emerald-700 transition-colors';
-  const activeClass = 'px-3 py-2 rounded-lg text-sm font-semibold bg-emerald-700 text-white border border-emerald-700';
+  const linkClass = 'px-3 py-2 rounded-lg text-sm font-medium border border-gray-200 bg-white text-gray-700 hover:border-[#d4a017] hover:text-[#1e3a5f] transition-colors';
+  const activeClass = 'px-3 py-2 rounded-lg text-sm font-semibold bg-[#0f2540] text-white border border-[#0f2540]';
 
   return (
     <nav className="flex items-center justify-center gap-2 mt-10 flex-wrap" aria-label="Pagination">

@@ -30,10 +30,20 @@ export default function ContactPageClient() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    const lines = [
+      `*Pertanyaan dari eHartanah*`,
+      `Nama: ${form.name}`,
+      `Email: ${form.email}`,
+      form.phone ? `Telefon: ${form.phone}` : null,
+      form.inquiryType ? `Jenis: ${form.inquiryType}` : null,
+      `Mesej: ${form.message}`,
+    ].filter(Boolean).join('\n');
+    const waUrl = `https://wa.me/60149999309?text=${encodeURIComponent(lines)}`;
     setTimeout(() => {
-      setSubmitted(true);
       setLoading(false);
-    }, 1200);
+      setSubmitted(true);
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    }, 600);
   };
 
   const isValid = form.name && form.email && form.message;
@@ -53,7 +63,7 @@ export default function ContactPageClient() {
           </p>
           <button
             onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', inquiryType: '', message: '' }); }}
-            className="text-emerald-700 font-semibold text-sm hover:underline"
+            className="text-[#1e3a5f] font-semibold text-sm hover:underline"
           >
             Send another message
           </button>
@@ -72,7 +82,7 @@ export default function ContactPageClient() {
                   onChange={handleChange}
                   required
                   placeholder="Your full name"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-emerald-400 transition-colors"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors"
                 />
               </div>
               <div>
@@ -84,7 +94,7 @@ export default function ContactPageClient() {
                   onChange={handleChange}
                   required
                   placeholder="you@example.com"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-emerald-400 transition-colors"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors"
                 />
               </div>
             </div>
@@ -97,7 +107,7 @@ export default function ContactPageClient() {
                   value={form.phone}
                   onChange={handleChange}
                   placeholder="+60 12-345 6789"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-emerald-400 transition-colors"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors"
                 />
               </div>
               <div>
@@ -106,7 +116,7 @@ export default function ContactPageClient() {
                   name="inquiryType"
                   value={form.inquiryType}
                   onChange={handleChange}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-emerald-400 transition-colors bg-white"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors bg-white"
                 >
                   <option value="">Select type...</option>
                   {inquiryTypes.map((t) => <option key={t} value={t}>{t}</option>)}
@@ -122,13 +132,13 @@ export default function ContactPageClient() {
                 required
                 rows={5}
                 placeholder="Tell us how we can help you..."
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-emerald-400 transition-colors resize-none"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors resize-none"
               />
             </div>
             <button
               type="submit"
               disabled={!isValid || loading}
-              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-[#0f2540] hover:bg-[#0a1e38] text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>

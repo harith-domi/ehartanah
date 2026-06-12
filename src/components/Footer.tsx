@@ -48,7 +48,7 @@ export default function Footer() {
             </p>
             {/* Social icons */}
             <div className="flex gap-2">
-              <a href="#" aria-label="Facebook" className="w-9 h-9 bg-slate-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center transition-colors">
+              <a href="#" aria-label="Facebook" className="w-9 h-9 bg-slate-700 hover:bg-[#1e3a5f] rounded-lg flex items-center justify-center transition-colors">
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
                 </svg>
@@ -60,7 +60,7 @@ export default function Footer() {
                   <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
                 </svg>
               </a>
-              <a href="#" aria-label="LinkedIn" className="w-9 h-9 bg-slate-700 hover:bg-emerald-700 rounded-lg flex items-center justify-center transition-colors">
+              <a href="#" aria-label="LinkedIn" className="w-9 h-9 bg-slate-700 hover:bg-[#0f2540] rounded-lg flex items-center justify-center transition-colors">
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
                   <circle cx="4" cy="4" r="2"/>
@@ -98,7 +98,7 @@ export default function Footer() {
             <p className="text-gray-400 text-sm">Chat with our property advisors on WhatsApp — available daily 8am–10pm</p>
           </div>
           <a
-            href="https://wa.me/60123456789"
+            href="https://wa.me/60149999309"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors whitespace-nowrap text-sm"

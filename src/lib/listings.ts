@@ -19,19 +19,22 @@ export interface Listing {
   advertiser: string;
   phone: string;
   imageCount: number;
+  thumbnailUrl?: string;
+  photos?: string[];
   postedAt: string;
   url: string;
   featured?: boolean;
 }
 
-const ownListings = ownData as Listing[];
+export const ownListings = ownData as Listing[];
 export const ownSaleListings = ownListings.filter((l) => l.listingType === 'sale');
 export const ownRentListings = ownListings.filter((l) => l.listingType === 'rent');
 
 export const saleListings: Listing[] = [...ownSaleListings, ...(saleData as Listing[])];
 export const rentListings: Listing[] = [...ownRentListings, ...(rentData as Listing[])];
 
-export const totalListings = saleListings.length + rentListings.length;
+export const allListings: Listing[] = [...saleListings, ...rentListings];
+export const totalListings = allListings.length;
 
 export function getListing(id: string): Listing | undefined {
   return saleListings.find((l) => l.id === id) ?? rentListings.find((l) => l.id === id);
@@ -45,6 +48,12 @@ export function uniqueCategories(listings: Listing[]): string[] {
   return [...new Set(listings.map((l) => l.category).filter(Boolean))].sort();
 }
 
+export function pricePerSqft(l: Listing): number | null {
+  if (l.price === null || l.size === null || l.size === 0) return null;
+  if (l.sizeUnit !== 'sq.ft.') return null;
+  return Math.round(l.price / l.size);
+}
+
 export interface ListingFilters {
   q?: string;
   region?: string;
@@ -53,6 +62,7 @@ export interface ListingFilters {
   maxPrice?: number;
   beds?: number;
   sort?: string;
+  privateOnly?: boolean;
 }
 
 export function filterListings(listings: Listing[], f: ListingFilters): Listing[] {
@@ -71,10 +81,13 @@ export function filterListings(listings: Listing[], f: ListingFilters): Listing[
   if (f.minPrice) out = out.filter((l) => l.price !== null && l.price >= f.minPrice!);
   if (f.maxPrice) out = out.filter((l) => l.price !== null && l.price <= f.maxPrice!);
   if (f.beds) out = out.filter((l) => l.bedrooms !== null && l.bedrooms >= f.beds!);
+  if (f.privateOnly) out = out.filter((l) => !l.featured);
 
   if (f.sort === 'price-asc') out = [...out].sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
   else if (f.sort === 'price-desc') out = [...out].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
   else if (f.sort === 'size-desc') out = [...out].sort((a, b) => (b.size ?? 0) - (a.size ?? 0));
+  else if (f.sort === 'psf-asc') out = [...out].sort((a, b) => (pricePerSqft(a) ?? Infinity) - (pricePerSqft(b) ?? Infinity));
+  else if (f.sort === 'psf-desc') out = [...out].sort((a, b) => (pricePerSqft(b) ?? 0) - (pricePerSqft(a) ?? 0));
   else
     out = [...out].sort(
       (a, b) =>

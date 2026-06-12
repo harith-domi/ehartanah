@@ -1,26 +1,8 @@
-import type { Metadata } from 'next';
-import ListingBrowser, { BrowseParams } from '@/components/ListingBrowser';
-import { saleListings } from '@/lib/listings';
+import { redirect } from 'next/navigation';
+import type { BrowseParams } from '@/components/ListingBrowser';
 
-export const metadata: Metadata = {
-  title: 'Subsale Properties in Malaysia',
-  description:
-    'Browse thousands of subsale properties for sale across Malaysia — KL and Selangor. Direct from private owners. Filter by price, location, and property type.',
-};
-
-export default async function SubsalePage({
-  searchParams,
-}: {
-  searchParams: Promise<BrowseParams>;
-}) {
+export default async function SubsalePage({ searchParams }: { searchParams: Promise<BrowseParams> }) {
   const params = await searchParams;
-  return (
-    <ListingBrowser
-      listings={saleListings}
-      basePath="/subsale"
-      title="Subsale Properties in Malaysia"
-      subtitle={`${saleListings.length.toLocaleString('en-MY')} verified listings direct from private owners — no agent fees`}
-      params={params}
-    />
-  );
+  const qs = new URLSearchParams({ type: 'sale', ...Object.fromEntries(Object.entries(params).filter(([, v]) => v)) }).toString();
+  redirect(`/browse?${qs}`);
 }
