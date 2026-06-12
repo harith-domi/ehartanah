@@ -129,6 +129,9 @@ export function formatPostedDate(postedAt: string): string {
   return d.toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+export const AGENCY_PHONE = '60149999309';
+export const AGENCY_WA = `https://wa.me/${AGENCY_PHONE}`;
+
 export function whatsappLink(phone: string): string | null {
   const digits = phone.replace(/\D/g, '');
   if (!digits) return null;

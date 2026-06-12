@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import ChatInterface from '@/components/ChatInterface';
 import Link from 'next/link';
 import { EXAMPLE_PROMPTS } from '@/lib/mockAIResponses';
+import { AGENCY_WA } from '@/lib/listings';
 
 export const metadata: Metadata = {
   title: 'AI Property Search',
@@ -84,7 +85,7 @@ export default async function AISearchPage({
               <h3 className="font-bold text-gray-900 mb-2">Prefer Talking to a Human?</h3>
               <p className="text-sm text-gray-600 mb-4">Our licensed property advisors are available daily 8am–10pm via WhatsApp.</p>
               <a
-                href="https://wa.me/60149999309"
+                href={AGENCY_WA}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2.5 rounded-xl transition-colors text-sm"

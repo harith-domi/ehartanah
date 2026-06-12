@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ContactPageClient from '@/components/ContactPageClient';
+import { AGENCY_WA } from '@/lib/listings';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
@@ -34,7 +35,7 @@ export default function ContactPage() {
                 Chat with our property advisors directly. Most queries answered within 30 minutes during business hours.
               </p>
               <a
-                href="https://wa.me/60149999309"
+                href={AGENCY_WA}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2.5 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-5 rounded-xl transition-colors"

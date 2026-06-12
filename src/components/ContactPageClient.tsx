@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { AGENCY_WA } from '@/lib/listings';
 
 const inquiryTypes = [
   'Buy Property',
@@ -38,7 +39,7 @@ export default function ContactPageClient() {
       form.inquiryType ? `Jenis: ${form.inquiryType}` : null,
       `Mesej: ${form.message}`,
     ].filter(Boolean).join('\n');
-    const waUrl = `https://wa.me/60149999309?text=${encodeURIComponent(lines)}`;
+    const waUrl = `${AGENCY_WA}?text=${encodeURIComponent(lines)}`;
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);

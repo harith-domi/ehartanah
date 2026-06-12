@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { AGENCY_WA } from '@/lib/listings';
 
-const WA_NUMBER = '60149999309';
 const WA_MSG = encodeURIComponent('Salam! Saya ingin tanya mengenai hartanah di eHartanah. Boleh bantu saya?');
 
 export default function WhatsAppWidget() {
@@ -16,7 +16,7 @@ export default function WhatsAppWidget() {
         </div>
       )}
       <a
-        href={`https://wa.me/${WA_NUMBER}?text=${WA_MSG}`}
+        href={`${AGENCY_WA}?text=${WA_MSG}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"

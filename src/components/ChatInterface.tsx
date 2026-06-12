@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { EXAMPLE_PROMPTS } from '@/lib/mockAIResponses';
 import type { Listing } from '@/lib/listings';
+import NoPhotoPlaceholder from './NoPhotoPlaceholder';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -52,25 +53,23 @@ function ListingResultCard({ listing }: { listing: Listing }) {
 
   const area = listing.subarea || listing.region || '';
 
+  const coverPhoto = listing.photos?.[0] ?? listing.thumbnailUrl;
+
   return (
     <Link
       href={`/listings/${listing.id}`}
       className="group flex flex-col bg-white border border-gray-200 hover:border-[#d4a017] rounded-xl overflow-hidden transition-all hover:shadow-md"
     >
       <div className="relative h-32 bg-gradient-to-br from-[#1e3a5f] to-[#0f2540] shrink-0">
-        {listing.thumbnailUrl ? (
+        {coverPhoto ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={listing.thumbnailUrl}
+            src={coverPhoto}
             alt={listing.title}
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <svg className="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-          </div>
+          <NoPhotoPlaceholder count={listing.imageCount} url={listing.url} size="sm" />
         )}
         <span className="absolute top-2 left-2 bg-[#0f2540]/80 text-white text-[10px] font-semibold px-2 py-0.5 rounded-md">
           {listing.listingType === 'rent' ? 'For Rent' : 'For Sale'}

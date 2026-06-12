@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Logo from './Logo';
+import { AGENCY_WA } from '@/lib/listings';
 
 const footerLinks = {
   Platform: [
@@ -98,7 +99,7 @@ export default function Footer() {
             <p className="text-gray-400 text-sm">Chat with our property advisors on WhatsApp — available daily 8am–10pm</p>
           </div>
           <a
-            href="https://wa.me/60149999309"
+            href={AGENCY_WA}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors whitespace-nowrap text-sm"

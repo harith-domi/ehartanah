@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Logo from './Logo';
+import { AGENCY_WA } from '@/lib/listings';
 
 const navLinks = [
   { en: 'Home',        bm: 'Utama',       href: '/' },
@@ -82,7 +83,7 @@ export default function Navbar() {
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/60149999309"
+              href={AGENCY_WA}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white text-sm font-bold px-4 py-2 rounded-full transition-all shadow-sm hover:shadow-md"
@@ -135,7 +136,7 @@ export default function Navbar() {
                 {lang === 'en' ? '🇲🇾 BM' : '🇬🇧 EN'}
               </button>
               <a
-                href="https://wa.me/60149999309"
+                href={AGENCY_WA}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-1.5 bg-green-500 text-white text-sm font-bold py-2 rounded-full"

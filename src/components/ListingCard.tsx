@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Listing, formatPrice, formatSize, formatPostedDate, whatsappLink, pricePerSqft } from '@/lib/listings';
 import FavouriteButton from './FavouriteButton';
+import NoPhotoPlaceholder from './NoPhotoPlaceholder';
 
 const CATEGORY_STYLES: Record<string, { gradient: string; icon: string }> = {
   'Apartment / Condominium': {
@@ -56,21 +57,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
-            /* Placeholder: layered design so it looks intentional */
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-              {/* Subtle grid pattern overlay */}
-              <div className="absolute inset-0 opacity-10"
-                style={{ backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(255,255,255,.4) 19px,rgba(255,255,255,.4) 20px),repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(255,255,255,.4) 19px,rgba(255,255,255,.4) 20px)' }}
-              />
-              <svg className="w-12 h-12 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={style.icon} />
-              </svg>
-              {listing.url && (
-                <span className="text-white/80 text-[11px] font-semibold bg-black/20 px-2.5 py-1 rounded-full backdrop-blur-sm">
-                  View photos on source ↗
-                </span>
-              )}
-            </div>
+            <NoPhotoPlaceholder count={listing.imageCount} url={listing.url} />
           )}
           <span className="absolute top-3 left-3 bg-black/30 backdrop-blur-sm text-white text-[11px] font-semibold px-2.5 py-1 rounded-md">
             {listing.propertyType || listing.category}
