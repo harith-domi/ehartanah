@@ -53,7 +53,7 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => {
-              const isActive = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
+              const isActive = link.href === '/' ? pathname === '/' : pathname === link.href || pathname.startsWith(link.href + '/');
               return (
                 <Link
                   key={link.href}
@@ -114,7 +114,7 @@ export default function Navbar() {
         {mobileOpen && (
           <div className="md:hidden border-t border-white/10 py-3 space-y-1">
             {navLinks.map((link) => {
-              const isActive = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
+              const isActive = link.href === '/' ? pathname === '/' : pathname === link.href || pathname.startsWith(link.href + '/');
               return (
                 <Link
                   key={link.href}

@@ -180,11 +180,15 @@ export default function ChatInterface({ initialQuery }: { initialQuery?: string 
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, thinking]);
 
+  const initialFiredRef = useRef(false);
   useEffect(() => {
-    if (initialQuery && messages.length === 0) {
+    if (initialQuery && !initialFiredRef.current) {
+      initialFiredRef.current = true;
       handleSend(initialQuery);
     }
-  }, [initialQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+  // handleSend is intentionally excluded: we only want this to fire once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSend = async (text: string = input) => {
     const trimmed = text.trim();
@@ -197,6 +201,7 @@ export default function ChatInterface({ initialQuery }: { initialQuery?: string 
 
     try {
       const res = await fetch(`/api/ai-search?q=${encodeURIComponent(trimmed)}`);
+      if (!res.ok) throw new Error(`Search failed (${res.status})`);
       const data = await res.json();
       const aiMessage: Message = {
         role: 'assistant',

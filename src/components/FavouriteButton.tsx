@@ -7,6 +7,7 @@ export default function FavouriteButton({ id }: { id: string }) {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const favs: string[] = JSON.parse(localStorage.getItem(KEY) || '[]');
     setSaved(favs.includes(id));
   }, [id]);

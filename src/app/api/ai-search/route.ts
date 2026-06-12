@@ -2,20 +2,30 @@ import { NextRequest, NextResponse } from 'next/server';
 import { filterListings, rentListings, saleListings, ownListings, Listing } from '@/lib/listings';
 import { getMockAIResponse } from '@/lib/mockAIResponses';
 
+// Longer/specific entries first so they match before shorter aliases (e.g. "subang jaya" before "subang")
 const MALAYSIAN_AREAS = [
-  'klcc', 'ampang', 'cheras', 'subang jaya', 'subang', 'petaling jaya', ' pj ', 'bangsar',
-  'mont kiara', 'damansara', 'puchong', 'setapak', 'shah alam', 'kepong', 'sri petaling',
-  'wangsa maju', 'bukit jalil', 'sri hartamas', 'ttdi', 'sentul', 'selayang', 'rawang',
-  'klang', 'cyberjaya', 'putrajaya', 'sunway', 'ara damansara', 'kota damansara', 'penang',
-  'georgetown', 'johor bahru', 'iskandar', 'melaka', 'ipoh', 'kuching', 'kota kinabalu',
-  'kerinchi', 'midvalley', 'mid valley', 'kuchai', 'salak south', 'seri kembangan',
-  'kajang', 'semenyih', 'chow kit', 'brickfields', 'pudu', 'imbi', 'desa petaling',
-  'kuala lumpur', ' kl ', 'selangor', 'johor', 'sabah', 'sarawak', 'miri', 'sandakan',
-  'pantai', 'bukit bintang', 'masjid india', 'titiwangsa', 'jalan ipoh', 'jalan kuching',
-  'sri putramas', 'prima setapak', 'fortune park', 'vista impiana', 'neo cyber',
-  'prisma cheras', 'desa wangsa', 'las palmas', 'empire damansara', 'domain',
-  'royal domain', 'solok seri kenangan', 'setia alam', 'puncak alam', 'sungai long',
-  'batu caves', 'port klang', 'bandar saujana', 'tanjong duabelas', 'damansara damai',
+  // Kuala Lumpur districts
+  'kuala lumpur', 'klcc', 'bukit bintang', 'chow kit', 'brickfields', 'masjid india',
+  'titiwangsa', 'jalan ipoh', 'jalan kuching', 'wangsa maju', 'kepong', 'setapak',
+  'prima setapak', 'sentul', 'imbi', 'pudu', 'pantai', 'kerinchi',
+  // Selangor
+  'subang jaya', 'petaling jaya', 'shah alam', 'klang', 'port klang',
+  'ara damansara', 'kota damansara', 'damansara damai', 'damansara', 'bangsar',
+  'mont kiara', 'sri hartamas', 'ttdi', 'ampang', 'cheras', 'puchong',
+  'bukit jalil', 'sri petaling', 'desa petaling', 'salak south', 'seri kembangan',
+  'kajang', 'semenyih', 'selayang', 'rawang', 'batu caves', 'sunway',
+  'cyberjaya', 'putrajaya', 'setia alam', 'puncak alam', 'sungai long',
+  'bandar saujana', 'tanjong duabelas',
+  // Building / development names
+  'sri putramas', 'fortune park', 'vista impiana', 'neo cyber', 'prisma cheras',
+  'desa wangsa', 'las palmas', 'empire damansara', 'royal domain',
+  'solok seri kenangan', 'mid valley', 'midvalley',
+  // Short aliases (after longer forms to avoid partial clobbering)
+  'kl', 'pj',
+  // Other states
+  'selangor', 'penang', 'georgetown', 'johor bahru', 'iskandar', 'johor',
+  'melaka', 'ipoh', 'kuching', 'kota kinabalu', 'miri', 'sandakan',
+  'sabah', 'sarawak',
 ];
 
 const ADVISORY_KEYWORDS = [
@@ -34,11 +44,12 @@ function extractParams(q: string) {
   else if (/\b(buy|sale|beli|subsale|for sale|purchase|jual|selling)\b/.test(lower)) type = 'sale';
   else if (/\b(agency|agent|ejen|our listing|your listing)\b/.test(lower)) type = 'agency';
 
-  // Location
+  // Location — word-boundary match so "pj" doesn't fire inside "pjk" or similar
   let location = '';
   for (const area of MALAYSIAN_AREAS) {
-    if (lower.includes(area)) {
-      location = area.trim();
+    const escaped = area.replace(/[-\s]+/g, '[\\s-]+');
+    if (new RegExp(`\\b${escaped}\\b`).test(lower)) {
+      location = area;
       break;
     }
   }
@@ -47,13 +58,14 @@ function extractParams(q: string) {
   let minPrice: number | undefined;
   let maxPrice: number | undefined;
 
-  const maxMatch = lower.match(/(?:below|under|max|budget|less than|bawah|kurang dari|tidak melebihi)\s*(?:rm)?\s*(\d[\d,]*)/);
+  // Safe price regex — digit groups bounded to prevent ReDoS on crafted input
+  const maxMatch = lower.match(/(?:below|under|max|budget|less than|bawah|kurang dari|tidak melebihi)\s*(?:rm)?\s*(\d{1,3}(?:,\d{3}){0,4})/);
   if (maxMatch) maxPrice = parseInt(maxMatch[1].replace(/,/g, ''));
 
-  const minMatch = lower.match(/(?:above|over|min|more than|lebih dari|at least|sekurang)\s*(?:rm)?\s*(\d[\d,]*)/);
+  const minMatch = lower.match(/(?:above|over|min|more than|lebih dari|at least|sekurang)\s*(?:rm)?\s*(\d{1,3}(?:,\d{3}){0,4})/);
   if (minMatch) minPrice = parseInt(minMatch[1].replace(/,/g, ''));
 
-  const rangeMatch = lower.match(/(?:rm)?\s*(\d[\d,]+)\s*(?:to|-)\s*(?:rm)?\s*(\d[\d,]+)/);
+  const rangeMatch = lower.match(/(?:rm)?\s*(\d{1,3}(?:,\d{3}){0,4})\s*(?:to|-)\s*(?:rm)?\s*(\d{1,3}(?:,\d{3}){0,4})/);
   if (rangeMatch && !minMatch && !maxMatch) {
     minPrice = parseInt(rangeMatch[1].replace(/,/g, ''));
     maxPrice = parseInt(rangeMatch[2].replace(/,/g, ''));

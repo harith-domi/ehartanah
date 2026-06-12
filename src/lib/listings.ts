@@ -78,8 +78,8 @@ export function filterListings(listings: Listing[], f: ListingFilters): Listing[
   }
   if (f.region && f.region !== 'All') out = out.filter((l) => l.region === f.region);
   if (f.category && f.category !== 'All') out = out.filter((l) => l.category === f.category);
-  if (f.minPrice) out = out.filter((l) => l.price !== null && l.price >= f.minPrice!);
-  if (f.maxPrice) out = out.filter((l) => l.price !== null && l.price <= f.maxPrice!);
+  if (f.minPrice) out = out.filter((l) => l.price !== null && l.price >= (f.minPrice as number));
+  if (f.maxPrice) out = out.filter((l) => l.price !== null && l.price <= (f.maxPrice as number));
   if (f.beds) out = out.filter((l) => l.bedrooms !== null && l.bedrooms >= f.beds!);
   if (f.privateOnly) out = out.filter((l) => !l.featured);
 
@@ -118,14 +118,16 @@ export function formatPrice(price: number | null, listingType: 'sale' | 'rent'):
 
 export function formatSize(l: Listing): string {
   if (l.size === null) return '';
-  const n = Number.isInteger(l.size) ? l.size.toLocaleString('en-MY') : l.size.toLocaleString('en-MY');
-  return `${n} ${l.sizeUnit}`;
+  return `${l.size.toLocaleString('en-MY')} ${l.sizeUnit}`;
 }
 
 export function formatPostedDate(postedAt: string): string {
   if (!postedAt) return '';
   const d = new Date(postedAt.replace(' ', 'T'));
-  if (isNaN(d.getTime())) return '';
+  if (isNaN(d.getTime())) {
+    console.warn(`[eHartanah] Invalid date format: "${postedAt}"`);
+    return '';
+  }
   return d.toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
