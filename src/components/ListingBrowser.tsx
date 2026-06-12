@@ -133,17 +133,39 @@ export default function ListingBrowser({
             </div>
           )}
 
-          {/* Filter row */}
+          {/* Filter row — on mobile only search + Search are visible; the rest
+              collapses behind a Filters toggle (CSS-only checkbox + peer) */}
           <form method="GET" action={basePath} className="py-3">
             {params.type && <input type="hidden" name="type" value={params.type} />}
-            <div className="flex flex-wrap gap-2 items-center">
-              {/* Search */}
+            <input type="checkbox" id="filter-toggle" className="peer hidden" />
+
+            {/* Always-visible compact row */}
+            <div className="flex gap-2 items-center">
               <input
                 name="q"
                 defaultValue={params.q || ''}
                 placeholder="Area, building, keyword…"
-                className={`${inp} w-full sm:w-52`}
+                className={`${inp} flex-1 min-w-0 sm:flex-none sm:w-52`}
               />
+              <button
+                type="submit"
+                className="bg-[#d4a017] hover:bg-[#c49012] text-[#0f2540] font-bold text-sm px-4 sm:px-5 h-10 rounded-xl transition-colors shrink-0"
+              >
+                <T en="Search" bm="Cari" />
+              </button>
+              <label
+                htmlFor="filter-toggle"
+                className="sm:hidden flex items-center gap-1 border border-gray-200 text-gray-600 text-sm font-semibold px-3 h-10 rounded-xl cursor-pointer select-none shrink-0"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                <T en="Filters" bm="Tapis" />
+              </label>
+            </div>
+
+            {/* Collapsible advanced filters — hidden on mobile until toggled */}
+            <div className="hidden peer-checked:flex sm:flex flex-wrap gap-2 items-center mt-2">
               {/* Region */}
               <select name="region" defaultValue={params.region || 'All'} className={`${sel} flex-1 sm:flex-none`}>
                 <option value="All">All States</option>
@@ -178,8 +200,8 @@ export default function ListingBrowser({
                   className="flex-1 min-w-0 sm:w-16 text-sm outline-none bg-transparent"
                 />
               </div>
-              {/* Sort */}
-              <select name="sort" defaultValue={params.sort || 'newest'} className={`${sel} hidden sm:block`}>
+              {/* Sort — now also available on mobile inside the expanded panel */}
+              <select name="sort" defaultValue={params.sort || 'newest'} className={`${sel} flex-1 sm:flex-none`}>
                 <option value="newest">Newest first</option>
                 <option value="price-asc">Price: Low → High</option>
                 <option value="price-desc">Price: High → Low</option>
@@ -197,13 +219,6 @@ export default function ListingBrowser({
                 />
                 <T en="Private only" bm="Pemilik sahaja" />
               </label>
-              {/* Apply */}
-              <button
-                type="submit"
-                className="bg-[#d4a017] hover:bg-[#c49012] text-[#0f2540] font-bold text-sm px-5 h-10 rounded-xl transition-colors shrink-0"
-              >
-                <T en="Search" bm="Cari" />
-              </button>
               {/* Clear */}
               {(params.q || params.region || params.category || params.minPrice || params.maxPrice || params.beds || params.privateOnly) && (
                 <Link
