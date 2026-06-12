@@ -137,6 +137,21 @@ async function fetchPhotos(id, url) {
       return { id, photos: [], status: 'expired' };
     }
 
+    // Extract the seller's description text (if present)
+    const description = await page.evaluate(() => {
+      // Mudah renders the ad body in a dedicated section; try common containers
+      const candidates = [
+        document.querySelector('[class*="description"]'),
+        document.querySelector('[data-testid*="description"]'),
+        document.querySelector('#ad_view_ad_highlights'),
+      ].filter(Boolean);
+      for (const el of candidates) {
+        const text = (el.innerText || '').trim();
+        if (text.length > 40) return text.slice(0, 2000);
+      }
+      return '';
+    });
+
     // Extract every rnudah.com image URL from the rendered DOM + embedded JSON
     const photos = await page.evaluate(() => {
       const found = new Set();
@@ -169,7 +184,7 @@ async function fetchPhotos(id, url) {
       .filter(u => !u.includes('image_logo') && !u.includes('/avatar/') && !u.includes('/grids/'))
       .slice(0, MAX_PHOTOS);
 
-    return { id, photos: cleaned, status: 'ok' };
+    return { id, photos: cleaned, description, status: 'ok' };
 
   } catch (err) {
     const status = err.message?.slice(0, 60) || 'error';
@@ -205,12 +220,12 @@ function applyPhotosToJson(results) {
   function patch(listings) {
     return listings.map(l => {
       const r = results[l.id];
-      if (r && r.photos.length > 0) {
+      if (r && (r.photos.length > 0 || r.description)) {
         updated++;
         return {
           ...l,
-          thumbnailUrl: r.photos[0],
-          photos: r.photos,
+          ...(r.photos.length > 0 && { thumbnailUrl: r.photos[0], photos: r.photos }),
+          ...(r.description && { description: r.description }),
         };
       }
       return l;

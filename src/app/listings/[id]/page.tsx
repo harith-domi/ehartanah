@@ -15,6 +15,8 @@ import {
 } from '@/lib/listings';
 import ListingCard from '@/components/ListingCard';
 import PhotoGallery from '@/components/PhotoGallery';
+import T from '@/components/T';
+import { describeListing } from '@/lib/describe';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
 
@@ -32,7 +34,7 @@ export async function generateMetadata({
   if (!listing) return { title: 'Listing Not Found' };
   return {
     title: `${listing.title} — ${formatPrice(listing.price, listing.listingType)}`,
-    description: `${listing.propertyType || listing.category} in ${listing.location}. ${formatPrice(listing.price, listing.listingType)}. Listed by ${listing.advertiser} on eHartanah.`,
+    description: describeListing(listing).en.slice(0, 160),
   };
 }
 
@@ -64,7 +66,7 @@ export default async function ListingDetailPage({
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',
     name: listing.title,
-    description: `${listing.propertyType || listing.category} ${listing.listingType === 'rent' ? 'for rent' : 'for sale'} in ${listing.location || listing.subarea || listing.region || 'Malaysia'}`,
+    description: describeListing(listing).en,
     url: `${BASE_URL}/listings/${listing.id}`,
     ...(listing.price !== null && { price: listing.price, priceCurrency: 'MYR' }),
     ...(listing.size !== null && {
@@ -170,6 +172,23 @@ export default async function ListingDetailPage({
                 </div>
               )}
             </div>
+
+            {/* Description — real Mudah text when scraped, generated otherwise */}
+            {(() => {
+              const desc = describeListing(listing);
+              return (
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                  <h3 className="font-bold text-gray-900 text-sm mb-3"><T en="About This Property" bm="Tentang Hartanah Ini" /></h3>
+                  {listing.description ? (
+                    <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{listing.description}</p>
+                  ) : (
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      <T en={desc.en} bm={desc.bm} />
+                    </p>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Google Maps */}
             {(listing.location || listing.subarea) && (

@@ -21,6 +21,7 @@ export interface Listing {
   imageCount: number;
   thumbnailUrl?: string;
   photos?: string[];
+  description?: string;
   postedAt: string;
   url: string;
   featured?: boolean;
