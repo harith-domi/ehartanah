@@ -19,11 +19,11 @@ const footerLinks = {
     { label: 'Auction Properties', href: '/auction' },
   ],
   Resources: [
-    { label: 'Property Guide', href: '/investment-insights' },
-    { label: 'Rental Yield Calculator', href: '/investment-insights' },
-    { label: 'Auction Guide', href: '/investment-insights' },
-    { label: 'Financing Tips', href: '/investment-insights' },
-    { label: 'FAQ', href: '/investment-insights' },
+    { label: 'Panduan Hartanah', href: '/guides' },
+    { label: 'Cara Sewa Beli Rumah', href: '/guides/cara-sewa-beli-rumah-malaysia' },
+    { label: 'Gagal Loan Bank?', href: '/guides/gagal-loan-bank-pilihan-anda' },
+    { label: 'Sewa Beli vs Sewa Biasa', href: '/guides/sewa-beli-vs-sewa-biasa' },
+    { label: 'Investment Insights', href: '/investment-insights' },
   ],
   Company: [
     { label: 'About Us', href: '/about' },

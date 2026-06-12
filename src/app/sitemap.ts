@@ -1,9 +1,19 @@
 import { MetadataRoute } from 'next';
+import { guides } from '@/lib/guides';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const guideEntries: MetadataRoute.Sitemap = guides.map((g) => ({
+    url: `${BASE_URL}/guides/${g.slug}`,
+    lastModified: new Date(g.publishedAt),
+    changeFrequency: 'monthly',
+    priority: 0.75,
+  }));
+
   return [
+    { url: `${BASE_URL}/guides`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    ...guideEntries,
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
     { url: `${BASE_URL}/ai-search`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.95 },
     { url: `${BASE_URL}/subsale`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },

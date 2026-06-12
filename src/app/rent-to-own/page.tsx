@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AGENCY_WA } from '@/lib/listings';
+import RTOQuiz from '@/components/RTOQuiz';
 
 export const metadata: Metadata = {
-  title: 'Rent-to-Own Properties — Coming Soon',
+  title: 'Rent-to-Own (Sewa Beli) — Semak Kelayakan Anda',
   description:
-    'Rent-to-own property programmes are coming soon to eHartanah. Browse subsale and rental listings in the meantime.',
+    'Semak kelayakan sewa beli rumah anda dalam 1 minit. Deposit rendah, tak perlu lulus loan bank dulu. Sesuai untuk pembeli kali pertama dan yang membaiki kredit.',
 };
 
 const WA_MSG = encodeURIComponent('Salam! Saya berminat dengan program Sewa Beli di eHartanah. Boleh hubungi saya apabila ia tersedia?');
@@ -49,6 +50,33 @@ export default function RentToOwnPage() {
             </div>
           ))}
         </div>
+
+        {/* Eligibility quiz */}
+        <div className="mb-10">
+          <RTOQuiz />
+        </div>
+
+        {/* Cross-promo: rent-to-own for cars */}
+        <a
+          href="https://keretasewabeli.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block bg-gradient-to-r from-[#0f2540] to-[#1e3a5f] rounded-2xl p-5 mb-10 text-left hover:opacity-95 transition-opacity"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-[#d4a017] flex items-center justify-center shrink-0">
+              <svg className="w-6 h-6 text-[#0f2540]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+              </svg>
+            </div>
+            <div className="min-w-0">
+              <p className="text-white font-bold text-sm">Perlukan kereta secara sewa beli juga?</p>
+              <p className="text-[#94b3cc] text-xs mt-0.5">
+                Lawati KeretaSewaBeli.com — platform sewa beli kereta tanpa loan bank, 127+ kereta tersedia ↗
+              </p>
+            </div>
+          </div>
+        </a>
 
         <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
           <a
