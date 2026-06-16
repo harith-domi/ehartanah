@@ -5,7 +5,11 @@ import { areaPhotoByRegionCategory } from '@/lib/areaPhotos';
 import FavouriteButton from '@/components/FavouriteButton';
 import AuctionCountdown from '@/components/AuctionCountdown';
 import AuctionShareButton from '@/components/AuctionShareButton';
+import AuctionGuide from '@/components/AuctionGuide';
 import T from '@/components/T';
+
+// 90% LTV, 30yr, 4.5% p.a. pre-computed factor
+const MONTHLY_FACTOR = 0.00456;
 
 export const metadata: Metadata = {
   title: 'Bank Auction Properties (Lelong) Malaysia — eHartanah',
@@ -219,6 +223,7 @@ export default async function AuctionPage({
                     const photo = l.photos?.[0] ?? areaPhotoByRegionCategory(l.region, l.category);
                     const isClosed = group === 'closed';
                     const rpPct = l.marketValue > 0 ? Math.round((l.reservePrice / l.marketValue) * 100) : 0;
+                    const estMonthly = Math.round(l.reservePrice * MONTHLY_FACTOR);
                     const waText = encodeURIComponent(`Salam! Saya berminat dengan unit lelongan: ${l.propertyType} di ${l.address} — Harga Rizab ${formatRM(l.reservePrice)}. Boleh dapatkan maklumat lanjut?`);
 
                     return (
@@ -330,9 +335,17 @@ export default async function AuctionPage({
                           </div>
 
                           {l.rentalRange && (
-                            <p className="text-xs text-gray-500 mb-3">
+                            <p className="text-xs text-gray-500 mb-2">
                               <span className="font-semibold text-gray-700"><T en="Est. Rental" bm="Sewa Anggaran" />:</span> {l.rentalRange}
                             </p>
+                          )}
+
+                          {/* Est. monthly installment */}
+                          {!isClosed && (
+                            <div className="bg-[#0f2540]/5 rounded-lg px-3 py-2 mb-3 flex items-center justify-between">
+                              <span className="text-[10px] text-gray-500">Est. monthly (90% LTV, 30yr, 4.5%)</span>
+                              <span className="text-xs font-black text-[#0f2540]">RM {estMonthly.toLocaleString('en-MY')}/mo</span>
+                            </div>
                           )}
 
                           {/* Countdown + region */}
@@ -374,6 +387,9 @@ export default async function AuctionPage({
         )}
 
         {/* Footer CTA */}
+        {/* Auction 101 guide */}
+        <AuctionGuide />
+
         <div className="mt-4 bg-amber-50 border border-amber-100 rounded-2xl p-6 text-center">
           <p className="text-sm font-semibold text-amber-800 mb-1">
             <T en="Want next week's hot auction list?" bm="Mahu senarai lelongan panas minggu depan?" />

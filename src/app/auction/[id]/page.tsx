@@ -5,6 +5,7 @@ import { auctionListings, getAuctionListing } from '@/lib/listings';
 import FavouriteButton from '@/components/FavouriteButton';
 import AuctionCountdown from '@/components/AuctionCountdown';
 import AuctionShareButton from '@/components/AuctionShareButton';
+import MortgageCalculator from '@/components/MortgageCalculator';
 import T from '@/components/T';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
@@ -229,6 +230,9 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                 </div>
               </div>
             </div>
+
+            {/* Mortgage calculator */}
+            <MortgageCalculator reservePrice={l.reservePrice} />
           </div>
         </div>
 
