@@ -1,7 +1,7 @@
 [
   {
     "id": "auction-003",
-    "title": "Service Apartment - No. B2-2-8",
+    "title": "Service Apartment",
     "address": "No. B2-2-8, Arcoris, No. 10, Jalan Kiara, Mont' Kiara, 50480, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -25,7 +25,7 @@
   },
   {
     "id": "auction-004",
-    "title": "Service Apartment - No. D-46-10",
+    "title": "Service Apartment",
     "address": "No. D-46-10, Residensi Era, No. 208, Jalan Segambut, Segambut, 51200 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -49,7 +49,7 @@
   },
   {
     "id": "auction-005",
-    "title": "Service Apartment - No. A-29-10",
+    "title": "Service Apartment",
     "address": "No. A-29-10, Residensi Trofi 1 [on-site is Trion @ KL / Tower A (BOLT)], No. 1, Jalan Dua, Sungai Besi, 55200 Kuala Lumpur.",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -73,7 +73,7 @@
   },
   {
     "id": "auction-006",
-    "title": "Service Apartment - Unit No. A-16-11",
+    "title": "Service Apartment",
     "address": "Unit No. A-16-11, Wisma Infinitum, Jalan Dewan Sultan Sulaiman, Off Jalan TAR, 50300, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -97,7 +97,7 @@
   },
   {
     "id": "auction-007",
-    "title": "Service Apartment - No. A1-18-6",
+    "title": "Service Apartment",
     "address": "No. A1-18-6, Parklane OUG Service Apartment - Block A1, No 1, Jalan 1/152, Taman OUG Parklane, 58200 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -122,7 +122,7 @@
   {
     "id": "auction-010",
     "title": "Terrace",
-    "address": "",
+    "address": "No. 39, Jalan Denai Selatan, SouthLake, Desa Parkcity, 52200, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "House",
     "propertyType": "Terrace",
@@ -146,7 +146,7 @@
   {
     "id": "auction-012",
     "title": "Semi-D",
-    "address": "",
+    "address": "No. 2, Jalan Semanja 3/2, Taman Semanja, 43000 Kajang, Selango",
     "region": "Kuala Lumpur",
     "category": "House",
     "propertyType": "Semi-D",
@@ -169,11 +169,11 @@
   },
   {
     "id": "auction-013",
-    "title": "Land",
-    "address": "",
+    "title": "Bungalow",
+    "address": "No. 7, Jalan Diamond 10, Diamond Residence, 43500 Semenyih, Selangor",
     "region": "Selangor",
-    "category": "Land",
-    "propertyType": "Land",
+    "category": "House",
+    "propertyType": "Bungalow",
     "size": 5457,
     "sizeUnit": "sq.ft.",
     "tenure": "Freehold",
@@ -193,11 +193,11 @@
   },
   {
     "id": "auction-014",
-    "title": "Land",
-    "address": "",
+    "title": "Bungalow",
+    "address": "No. 39, Jalan Puteri 6/7, Bandar Puteri, 47100 Puchong, Selangor",
     "region": "Selangor",
-    "category": "Land",
-    "propertyType": "Land",
+    "category": "House",
+    "propertyType": "Bungalow",
     "size": 1647,
     "sizeUnit": "sq.ft.",
     "tenure": "Freehold",
@@ -218,7 +218,7 @@
   {
     "id": "auction-015",
     "title": "Terrace",
-    "address": "",
+    "address": "No. 8, Jalan Aruna 2, Taman M Aruna, 48000 Rawang, Selangor",
     "region": "Selangor",
     "category": "House",
     "propertyType": "Terrace",
@@ -241,7 +241,7 @@
   },
   {
     "id": "auction-019",
-    "title": "Service Apartment - No. B2-2-8",
+    "title": "Service Apartment",
     "address": "No. B2-2-8, Arcoris, No. 10, Jalan Kiara, Mont' Kiara, 50480, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -265,7 +265,7 @@
   },
   {
     "id": "auction-020",
-    "title": "Service Apartment - Unit No. B1-31-6",
+    "title": "Service Apartment",
     "address": "Unit No. B1-31-6, I-Suite 2, Persiaran Multimedia, I-City, Seksyen 7, 40000 Shah Alam, Selangor",
     "region": "Selangor",
     "category": "Apartment / Condominium",
@@ -289,7 +289,7 @@
   },
   {
     "id": "auction-021",
-    "title": "Service Apartment - Unit No. A-38-02",
+    "title": "Service Apartment",
     "address": "Unit No. A-38-02, Residensi Sentral Kuchai, No. 2B, Jalan Kuchai Maju 9, Taman Kuchai Jaya, 58200, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -313,7 +313,7 @@
   },
   {
     "id": "auction-022",
-    "title": "Service Apartment - Unit No. N-11-09",
+    "title": "Service Apartment",
     "address": "Unit No. N-11-09, Residensi M Oscar, No. 2, Jalan Kesateria, Sri Petaling, 57100, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -337,7 +337,7 @@
   },
   {
     "id": "auction-023",
-    "title": "Service Apartment - No. E-26-08",
+    "title": "Service Apartment",
     "address": "No. E-26-08, Block E, Residensi M Vertika, No. 555, Jalan Cheras, 56000 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -361,7 +361,7 @@
   },
   {
     "id": "auction-024",
-    "title": "Service Apartment - No. C-46-13A",
+    "title": "Service Apartment",
     "address": "No. C-46-13A, Block C, Residensi Skyline, No. 3, Jalan San Peng, Pudu, 55200 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -385,7 +385,7 @@
   },
   {
     "id": "auction-025",
-    "title": "Service Apartment - Unit No. B-37-07",
+    "title": "Service Apartment",
     "address": "Unit No. B-37-07, D’Quince Residences, Jalan PJU 8/8, Damansara Perdana, 47820 Petaling Jaya, Selangor",
     "region": "Selangor",
     "category": "Apartment / Condominium",
@@ -409,7 +409,7 @@
   },
   {
     "id": "auction-026",
-    "title": "Service Apartment - No. 21-2",
+    "title": "Service Apartment",
     "address": "No. 21-2, The Annex, Medan Connaught, No. 1, Jalan 3/144A, 56000 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -433,7 +433,7 @@
   },
   {
     "id": "auction-027",
-    "title": "Service Apartment - Unit No. 28-08",
+    "title": "Service Apartment",
     "address": "Unit No. 28-08, Quill Residence, No. 1018, Jalan Sultan Ismail, 50250, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -457,7 +457,7 @@
   },
   {
     "id": "auction-028",
-    "title": "Service Apartment - No. A-41-16",
+    "title": "Service Apartment",
     "address": "No. A-41-16, Ampang Tiga, No. 6, Jalan Nipah, Ampang, 55000 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -481,7 +481,7 @@
   },
   {
     "id": "auction-029",
-    "title": "Service Apartment - Unit No. D-28-08",
+    "title": "Service Apartment",
     "address": "Unit No. D-28-08, Residensi Parkhill, No. 12, Lebuhraya Bukit Jalil, 57000 Bukit Jalil, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -505,7 +505,7 @@
   },
   {
     "id": "auction-030",
-    "title": "Service Apartment - No. A-29-10",
+    "title": "Service Apartment",
     "address": "No. A-29-10, Residensi Trofi 1 [on-site is Trion @ KL / Tower A (BOLT)], No. 1, Jalan Dua, Sungai Besi, 55200 Kuala Lumpur.",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -529,7 +529,7 @@
   },
   {
     "id": "auction-031",
-    "title": "Service Apartment - No. A-16-07",
+    "title": "Service Apartment",
     "address": "No. A-16-07, You 3, Jalan You City. You City, 43200 Cheras, Selangor",
     "region": "Selangor",
     "category": "Apartment / Condominium",
@@ -553,7 +553,7 @@
   },
   {
     "id": "auction-032",
-    "title": "Service Apartment - No. A-07-07",
+    "title": "Service Apartment",
     "address": "No. A-07-07, Block Amani @ Amanja, Jalan Desa 2/2, Desa Aman Puri, 52100 Kepong, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -577,7 +577,7 @@
   },
   {
     "id": "auction-033",
-    "title": "Service Apartment - No. MK3-32-08",
+    "title": "Service Apartment",
     "address": "No. MK3-32-08, 32nd Floor, Tower MK3, Arte Mont Kiara, Jalan Sultan Haji Ahmad Shah, 50480 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -601,7 +601,7 @@
   },
   {
     "id": "auction-034",
-    "title": "Service Apartment - Unit No. A-26-02",
+    "title": "Service Apartment",
     "address": "Unit No. A-26-02, Expressionz Professional Suites, No. 30, Jalan 1/65A, Off Jalan Tun Razak, 50400, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -625,7 +625,7 @@
   },
   {
     "id": "auction-035",
-    "title": "Service Apartment - No. N-08-11",
+    "title": "Service Apartment",
     "address": "No. N-08-11, North Suites, The Robertson, No. 2, Jalan Robertson, 50150 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -649,7 +649,7 @@
   },
   {
     "id": "auction-036",
-    "title": "Service Apartment - Unit No. A-09-03",
+    "title": "Service Apartment",
     "address": "Unit No. A-09-03, Block A, Residensi Suria Garden @ Puchong, Jalan Puchong Utama 2, Taman Puchong Utama, 47100 Puchong, Selangor",
     "region": "Selangor",
     "category": "Apartment / Condominium",
@@ -673,7 +673,7 @@
   },
   {
     "id": "auction-037",
-    "title": "Service Apartment - Unit No. A-09-03A",
+    "title": "Service Apartment",
     "address": "Unit No. A-09-03A, Residensi Tria Seputeh, 9 Seputeh, No. 26, Jalan Telok Datok, Off Jalan Kelang Lama, 58000, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -697,7 +697,7 @@
   },
   {
     "id": "auction-038",
-    "title": "Service Apartment - No. D-46-10",
+    "title": "Service Apartment",
     "address": "No. D-46-10, Residensi Era, No. 208, Jalan Segambut, Segambut, 51200 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -721,7 +721,7 @@
   },
   {
     "id": "auction-039",
-    "title": "Service Apartment - Unit No. A-16-11",
+    "title": "Service Apartment",
     "address": "Unit No. A-16-11, Wisma Infinitum, Jalan Dewan Sultan Sulaiman, Off Jalan TAR, 50300, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -745,7 +745,7 @@
   },
   {
     "id": "auction-040",
-    "title": "Service Apartment - Unit No. B-27-05",
+    "title": "Service Apartment",
     "address": "Unit No. B-27-05, Emporis, Persiaran Surian, Seksyen 3, Taman Sains Selangor, Kota Damansara, 47810 Petaling Jaya, Selangor",
     "region": "Selangor",
     "category": "Apartment / Condominium",
@@ -769,7 +769,7 @@
   },
   {
     "id": "auction-041",
-    "title": "Service Apartment - No. B-43A-13A",
+    "title": "Service Apartment",
     "address": "No. B-43A-13A, Residensi M Centura, No.17, Jalan Sentul Perdana, Setapak, 51000 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -793,7 +793,7 @@
   },
   {
     "id": "auction-042",
-    "title": "Service Apartment - No. B-19-02",
+    "title": "Service Apartment",
     "address": "No. B-19-02, Residensi Paisley, Jalan MP 1, Tropicana Metropark, 47500 Subang Jaya, Selangor",
     "region": "Selangor",
     "category": "Apartment / Condominium",
@@ -817,7 +817,7 @@
   },
   {
     "id": "auction-043",
-    "title": "Service Apartment - No. 25-05",
+    "title": "Service Apartment",
     "address": "No. 25-05, Residensi Peel, No. 2, Lorong Peel, Maluri, 55100 Kuala Lumpur.",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -841,7 +841,7 @@
   },
   {
     "id": "auction-044",
-    "title": "Service Apartment - No. T3-07-06",
+    "title": "Service Apartment",
     "address": "No. T3-07-06, Arte + @ Jalan Ampang, No. 3, Lorong Ampang 1, 55000 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -865,7 +865,7 @@
   },
   {
     "id": "auction-045",
-    "title": "Service Apartment - Unit No. B-13-6",
+    "title": "Service Apartment",
     "address": "Unit No. B-13-6, The Elements @ Ampang, Jalan Bemban, Off Jalan Ampang, 55000, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -889,7 +889,7 @@
   },
   {
     "id": "auction-046",
-    "title": "Service Apartment - No. A1-18-6",
+    "title": "Service Apartment",
     "address": "No. A1-18-6, Parklane OUG Service Apartment - Block A1, No 1, Jalan 1/152, Taman OUG Parklane, 58200 Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Apartment / Condominium",
@@ -913,7 +913,7 @@
   },
   {
     "id": "auction-047",
-    "title": "Service Apartment - No. C-07-10",
+    "title": "Service Apartment",
     "address": "No. C-07-10, Block C, Residensi Suasana @ Damai, No. 6, Jalan PJU 10/1, Damansara Damai, 47830 Petaling Jaya, Selangor",
     "region": "Selangor",
     "category": "Apartment / Condominium",
@@ -937,7 +937,7 @@
   },
   {
     "id": "auction-048",
-    "title": "Service Apartment - No. E-08-03",
+    "title": "Service Apartment",
     "address": "No. E-08-03, Block E, Pangsapuri Nadayu 801, No. 1, Jalan Zuhrah U5/163, Subang Murni, Seksyen U5, 40150 Shah Alam, Selangor",
     "region": "Selangor",
     "category": "Apartment / Condominium",
@@ -961,11 +961,11 @@
   },
   {
     "id": "auction-051",
-    "title": "Shop",
-    "address": "",
+    "title": "Shop Lot",
+    "address": "No. 62A, Jalan Bukit Bintang, 55100, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Commercial Property",
-    "propertyType": "Shop",
+    "propertyType": "Shop Lot",
     "size": 1525,
     "sizeUnit": "sq.ft.",
     "tenure": "Freehold",
@@ -985,11 +985,11 @@
   },
   {
     "id": "auction-052",
-    "title": "Shop",
-    "address": "",
+    "title": "Shop Lot",
+    "address": "Unit No. 148, Jalan Dataran Cheras 9, Dataran Perniagaan Cheras, 43200 Cheras, Selangor",
     "region": "Selangor",
     "category": "Commercial Property",
-    "propertyType": "Shop",
+    "propertyType": "Shop Lot",
     "size": 1539,
     "sizeUnit": "sq.ft.",
     "tenure": "Leasehold",
@@ -1009,11 +1009,11 @@
   },
   {
     "id": "auction-053",
-    "title": "Shop",
-    "address": "",
+    "title": "Shop Lot",
+    "address": "No. 28, Jalan MR 1/3, M-Residensi Galleria, 48020 Rawang, Selangor",
     "region": "Selangor",
     "category": "Commercial Property",
-    "propertyType": "Shop",
+    "propertyType": "Shop Lot",
     "size": 1920,
     "sizeUnit": "sq.ft.",
     "tenure": "Freehold",
@@ -1033,11 +1033,11 @@
   },
   {
     "id": "auction-054",
-    "title": "Shop",
-    "address": "",
+    "title": "Shop Lot",
+    "address": "No. 5094, Jalan 18/62, Taman Sri Serdang, 43300 Seri Kembangan, Selangor",
     "region": "Selangor",
     "category": "Commercial Property",
-    "propertyType": "Shop",
+    "propertyType": "Shop Lot",
     "size": 1765,
     "sizeUnit": "sq.ft.",
     "tenure": "Leasehold",
@@ -1057,11 +1057,11 @@
   },
   {
     "id": "auction-055",
-    "title": "Shop",
-    "address": "",
+    "title": "Shop Lot",
+    "address": "No. 42-00 & 42-01, Jalan Damai Perdana 6/1A, Bandar Damai Perdana, 56000, Kuala Lumpur",
     "region": "Kuala Lumpur",
     "category": "Commercial Property",
-    "propertyType": "Shop",
+    "propertyType": "Shop Lot",
     "size": 1540,
     "sizeUnit": "sq.ft.",
     "tenure": "Freehold",
