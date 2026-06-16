@@ -1,6 +1,34 @@
 import saleData from './data/sale-listings.json';
 import rentData from './data/rent-listings.json';
 import ownData from './data/own-listings.json';
+import auctionData from './data/auction-listings.json';
+
+export interface AuctionListing {
+  id: string;
+  title: string;
+  address: string;
+  region: string;
+  category: string;
+  propertyType: string;
+  size: number | null;
+  sizeUnit: string;
+  tenure: string;
+  reservePrice: number;
+  marketValue: number;
+  savings: number;
+  savingsPct: number;
+  roi: number | null;
+  rentalRange: string | null;
+  auctionDate: string | null;
+  listingType: 'auction';
+  price: number;
+  featured: boolean;
+  imageCount: number;
+  photos: string[];
+  postedAt: string;
+}
+
+export const auctionListings = auctionData as AuctionListing[];
 
 export interface Listing {
   id: string;
