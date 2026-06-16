@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { filterListings, rentListings, saleListings, ownListings, Listing } from '@/lib/listings';
+import { filterListings, rentListings, saleListings, ownListings, auctionListings, Listing, AuctionListing } from '@/lib/listings';
 import { getMockAIResponse } from '@/lib/mockAIResponses';
 
 // Longer/specific entries first so they match before shorter aliases (e.g. "subang jaya" before "subang")
@@ -15,7 +15,7 @@ const MALAYSIAN_AREAS = [
   'bukit jalil', 'sri petaling', 'desa petaling', 'salak south', 'seri kembangan',
   'kajang', 'semenyih', 'selayang', 'rawang', 'batu caves', 'sunway',
   'cyberjaya', 'putrajaya', 'setia alam', 'puncak alam', 'sungai long',
-  'bandar saujana', 'tanjong duabelas',
+  'bandar saujana', 'tanjong duabelas', 'segambut',
   // Building / development names
   'sri putramas', 'fortune park', 'vista impiana', 'neo cyber', 'prisma cheras',
   'desa wangsa', 'las palmas', 'empire damansara', 'royal domain',
@@ -38,9 +38,10 @@ const ADVISORY_KEYWORDS = [
 function extractParams(q: string) {
   const lower = ` ${q.toLowerCase()} `;
 
-  // Listing type
-  let type: 'rent' | 'sale' | 'agency' | 'both' = 'both';
-  if (/\b(rent|sewa|for rent|sewaan|rental|sewa rumah|cari sewa)\b/.test(lower)) type = 'rent';
+  // Listing type — auction detected first (most specific)
+  let type: 'rent' | 'sale' | 'agency' | 'auction' | 'both' = 'both';
+  if (/\b(lelong|auction|lelongan|bank auction|forced sale|lelong bank)\b/.test(lower)) type = 'auction';
+  else if (/\b(rent|sewa|for rent|sewaan|rental|sewa rumah|cari sewa)\b/.test(lower)) type = 'rent';
   else if (/\b(buy|sale|beli|subsale|for sale|purchase|jual|selling)\b/.test(lower)) type = 'sale';
   else if (/\b(agency|agent|ejen|our listing|your listing)\b/.test(lower)) type = 'agency';
 
@@ -58,7 +59,6 @@ function extractParams(q: string) {
   let minPrice: number | undefined;
   let maxPrice: number | undefined;
 
-  // Safe price regex — digit groups bounded to prevent ReDoS on crafted input
   const maxMatch = lower.match(/(?:below|under|max|budget|less than|bawah|kurang dari|tidak melebihi)\s*(?:rm)?\s*(\d{1,3}(?:,\d{3}){0,4})/);
   if (maxMatch) maxPrice = parseInt(maxMatch[1].replace(/,/g, ''));
 
@@ -83,7 +83,6 @@ function extractParams(q: string) {
   const hasBeds = !!beds;
   const hasPropertyIntent = hasLocation || hasPrice || hasBeds || type !== 'both';
 
-  // Only go advisory if it's a pure question with no property search signals
   const isAdvisory = hasAdvisory && !hasPropertyIntent;
 
   const searchQ = location || q.trim();
@@ -91,7 +90,34 @@ function extractParams(q: string) {
   return { type, location, minPrice, maxPrice, beds, isAdvisory, searchQ };
 }
 
+function filterAuctionListings(listings: AuctionListing[], params: ReturnType<typeof extractParams>): AuctionListing[] {
+  let out = listings;
+
+  if (params.location) {
+    const loc = params.location.toLowerCase();
+    out = out.filter(
+      (l) => l.address.toLowerCase().includes(loc) || l.region.toLowerCase().includes(loc)
+    );
+  }
+
+  if (params.minPrice !== undefined) out = out.filter((l) => l.reservePrice >= params.minPrice!);
+  if (params.maxPrice !== undefined) out = out.filter((l) => l.reservePrice <= params.maxPrice!);
+
+  // Sort by discount descending by default
+  out = [...out].sort((a, b) => b.savingsPct - a.savingsPct);
+
+  return out;
+}
+
 function buildBrowseUrl(params: ReturnType<typeof extractParams>): string {
+  if (params.type === 'auction') {
+    const qp = new URLSearchParams();
+    if (params.location) qp.set('q', params.location);
+    if (params.maxPrice) qp.set('maxRP', String(params.maxPrice));
+    if (params.minPrice) qp.set('minRP', String(params.minPrice));
+    const qs = qp.toString();
+    return qs ? `/auction?${qs}` : '/auction';
+  }
   const base = params.type === 'sale' ? '/subsale' : '/rent';
   const qp = new URLSearchParams();
   if (params.location) qp.set('q', params.location);
@@ -105,15 +131,39 @@ function buildBrowseUrl(params: ReturnType<typeof extractParams>): string {
 export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get('q') || '';
   if (!q.trim()) {
-    return NextResponse.json({ text: 'Please ask me something about Malaysian property.', listings: [] });
+    return NextResponse.json({ text: 'Please ask me something about Malaysian property.', listings: [], auctionListings: [] });
   }
 
   const params = extractParams(q);
 
   if (params.isAdvisory) {
-    return NextResponse.json({ text: getMockAIResponse(q), listings: [], browseUrl: null });
+    return NextResponse.json({ text: getMockAIResponse(q), listings: [], auctionListings: [], browseUrl: null });
   }
 
+  // ── Auction search ────────────────────────────────────────────────────
+  if (params.type === 'auction') {
+    const results = filterAuctionListings(auctionListings, params);
+    const top = results.slice(0, 6);
+    const count = results.length;
+    const browseUrl = buildBrowseUrl(params);
+
+    const areaLabel = params.location
+      ? ` in **${params.location.replace(/\b\w/g, (c) => c.toUpperCase())}**`
+      : '';
+    const priceLabel = params.maxPrice
+      ? ` under **RM ${params.maxPrice.toLocaleString()}**`
+      : params.minPrice
+      ? ` above **RM ${params.minPrice.toLocaleString()}**`
+      : '';
+
+    const text = count === 0
+      ? `No auction listings found${areaLabel}${priceLabel}. Try a wider area or price range — new listings are added every week.`
+      : `Found **${count} bank auction (lelong) propert${count === 1 ? 'y' : 'ies'}**${areaLabel}${priceLabel} — reserve prices up to **${Math.max(...top.map(l => l.savingsPct))}% below market value**. Top picks:`;
+
+    return NextResponse.json({ text, listings: [], auctionListings: top, browseUrl, total: count });
+  }
+
+  // ── Regular listing search ────────────────────────────────────────────
   const filters = {
     q: params.searchQ,
     minPrice: params.minPrice,
@@ -158,5 +208,5 @@ export async function GET(req: NextRequest) {
     text = `Found **${count.toLocaleString()} ${typeLabel} listings**${areaLabel}${priceLabel}${bedLabel}. Top picks:`;
   }
 
-  return NextResponse.json({ text, listings: topListings, browseUrl, total: count });
+  return NextResponse.json({ text, listings: topListings, auctionListings: [], browseUrl, total: count });
 }

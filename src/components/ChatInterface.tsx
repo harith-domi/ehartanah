@@ -3,13 +3,14 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { EXAMPLE_PROMPTS } from '@/lib/mockAIResponses';
-import type { Listing } from '@/lib/listings';
+import type { Listing, AuctionListing } from '@/lib/listings';
 import NoPhotoPlaceholder from './NoPhotoPlaceholder';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
   listings?: Listing[];
+  auctionListings?: AuctionListing[];
   browseUrl?: string | null;
   total?: number;
   timestamp: Date;
@@ -40,6 +41,12 @@ function renderBold(text: string) {
   );
 }
 
+function formatRM(n: number): string {
+  if (n >= 1_000_000) return `RM ${(n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1)}M`;
+  if (n >= 1_000) return `RM ${(n / 1_000).toFixed(0)}K`;
+  return `RM ${n.toLocaleString('en-MY')}`;
+}
+
 function ListingResultCard({ listing }: { listing: Listing }) {
   const priceStr = listing.price === null
     ? 'Price on request'
@@ -52,7 +59,6 @@ function ListingResultCard({ listing }: { listing: Listing }) {
   ].filter(Boolean).join(' · ');
 
   const area = listing.subarea || listing.region || '';
-
   const coverPhoto = listing.photos?.[0] ?? listing.thumbnailUrl;
 
   return (
@@ -103,9 +109,100 @@ function ListingResultCard({ listing }: { listing: Listing }) {
   );
 }
 
+function AuctionResultCard({ listing }: { listing: AuctionListing }) {
+  const photo = listing.photos?.[0];
+
+  return (
+    <Link
+      href={`/auction/${listing.id}`}
+      className="group flex flex-col bg-white border border-gray-200 hover:border-orange-400 rounded-xl overflow-hidden transition-all hover:shadow-md"
+    >
+      {/* Photo */}
+      <div className="relative h-32 bg-gray-800 shrink-0 overflow-hidden">
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photo}
+            alt={listing.address}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-700 to-orange-800" />
+        )}
+        <div className="absolute inset-0 bg-black/20" />
+
+        {/* Date banner */}
+        {listing.auctionDate && (
+          <div className="absolute top-0 left-0 flex items-center">
+            <div className="w-1.5 h-9 bg-gray-900" />
+            <div className="bg-orange-500 px-2 h-9 flex items-center">
+              <span className="text-white font-black text-xs tracking-tight">{listing.auctionDate}</span>
+            </div>
+          </div>
+        )}
+
+        {/* SAVE badge */}
+        <div className="absolute bottom-2 left-2">
+          <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded tracking-wide">
+            SAVE {listing.savingsPct}%
+          </span>
+        </div>
+
+        {/* Type badge */}
+        <div className="absolute bottom-2 right-2">
+          <span className="bg-black/40 backdrop-blur-sm text-white text-[10px] font-semibold px-2 py-0.5 rounded">
+            {listing.propertyType}
+          </span>
+        </div>
+
+        {/* Auction label top-right */}
+        <span className="absolute top-2 right-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">
+          Lelong
+        </span>
+      </div>
+
+      {/* Body */}
+      <div className="p-3 flex flex-col gap-1 flex-1">
+        <div className="flex items-baseline justify-between gap-1">
+          <p className="font-black text-[#0f2540] text-sm">{formatRM(listing.reservePrice)}</p>
+          <p className="text-[11px] text-gray-400 line-through shrink-0">{formatRM(listing.marketValue)}</p>
+        </div>
+
+        {/* RP vs MV bar */}
+        <div className="h-1.5 rounded-full bg-gray-100 overflow-hidden">
+          <div
+            className="h-full rounded-full bg-[#0f2540]"
+            style={{ width: `${Math.round((listing.reservePrice / listing.marketValue) * 100)}%` }}
+          />
+        </div>
+
+        <p className="text-gray-700 text-[11px] font-medium leading-snug line-clamp-2 mt-0.5">{listing.address}</p>
+
+        <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+          {listing.size && (
+            <span className="text-[10px] text-gray-400">{listing.size.toLocaleString()} ft²</span>
+          )}
+          {listing.roi && (
+            <span className="text-[10px] text-green-600 font-semibold">ROI {listing.roi}%</span>
+          )}
+          <span className="text-[10px] text-gray-400 ml-auto">{listing.region}</span>
+        </div>
+      </div>
+
+      <div className="px-3 pb-3">
+        <span className="block w-full text-center bg-orange-500 group-hover:bg-orange-600 text-white text-xs font-semibold py-1.5 rounded-lg transition-colors">
+          View Auction →
+        </span>
+      </div>
+    </Link>
+  );
+}
+
 function MessageBubble({ message }: { message: Message }) {
   const isUser = message.role === 'user';
   const lines = message.content.split('\n\n');
+  const hasListings = (message.listings?.length ?? 0) > 0;
+  const hasAuctions = (message.auctionListings?.length ?? 0) > 0;
 
   return (
     <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} mb-4`}>
@@ -136,11 +233,20 @@ function MessageBubble({ message }: { message: Message }) {
           )}
         </div>
 
-        {/* Listing cards */}
-        {!isUser && message.listings && message.listings.length > 0 && (
+        {/* Regular listing cards */}
+        {!isUser && hasListings && (
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {message.listings.map((l) => (
+            {message.listings!.map((l) => (
               <ListingResultCard key={l.id} listing={l} />
+            ))}
+          </div>
+        )}
+
+        {/* Auction listing cards */}
+        {!isUser && hasAuctions && (
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {message.auctionListings!.map((l) => (
+              <AuctionResultCard key={l.id} listing={l} />
             ))}
           </div>
         )}
@@ -207,6 +313,7 @@ export default function ChatInterface({ initialQuery }: { initialQuery?: string 
         role: 'assistant',
         content: data.text || 'Sorry, I had trouble searching. Please try again.',
         listings: data.listings ?? [],
+        auctionListings: data.auctionListings ?? [],
         browseUrl: data.browseUrl ?? null,
         total: data.total ?? 0,
         timestamp: new Date(),
@@ -260,7 +367,9 @@ export default function ChatInterface({ initialQuery }: { initialQuery?: string 
               </svg>
             </div>
             <h3 className="font-semibold text-gray-800 mb-2">Find properties by just asking</h3>
-            <p className="text-sm text-gray-500 mb-6 max-w-sm">Tell me your budget, location, and what you need — I&apos;ll find matching properties instantly.</p>
+            <p className="text-sm text-gray-500 mb-6 max-w-sm">
+              Ask about rentals, subsale, or bank auction (lelong) properties — I&apos;ll find matching listings instantly.
+            </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-lg">
               {EXAMPLE_PROMPTS.slice(0, 6).map((prompt) => (
                 <button
@@ -303,7 +412,7 @@ export default function ChatInterface({ initialQuery }: { initialQuery?: string 
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="e.g. rent in Puchong below RM1500, 3 bedrooms"
+            placeholder="e.g. lelong in KL under RM500k, or rent in Puchong below RM1500"
             className="flex-1 resize-none border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors leading-relaxed max-h-[120px]"
             rows={1}
           />
