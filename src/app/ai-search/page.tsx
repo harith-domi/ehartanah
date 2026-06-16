@@ -73,9 +73,13 @@ export default async function AISearchPage({
               <h3 className="font-bold text-gray-900 mb-4">Try These Questions</h3>
               <div className="space-y-2">
                 {EXAMPLE_PROMPTS.map((prompt) => (
-                  <div key={prompt} className="text-xs bg-slate-50 text-gray-700 border border-gray-100 px-3 py-2.5 rounded-xl">
+                  <Link
+                    key={prompt}
+                    href={`/ai-search?q=${encodeURIComponent(prompt)}`}
+                    className="block text-xs bg-slate-50 hover:bg-[#edf2f8] hover:border-[#d4a017] text-gray-700 border border-gray-100 px-3 py-2.5 rounded-xl transition-colors cursor-pointer"
+                  >
                     &ldquo;{prompt}&rdquo;
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

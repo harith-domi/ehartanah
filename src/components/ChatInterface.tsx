@@ -13,7 +13,20 @@ interface Message {
   auctionListings?: AuctionListing[];
   browseUrl?: string | null;
   total?: number;
+  followUps?: string[];
   timestamp: Date;
+}
+
+function getFollowUps(data: { listings?: Listing[]; auctionListings?: AuctionListing[]; total?: number }): string[] {
+  if ((data.auctionListings?.length ?? 0) > 0) {
+    return ['Show only in KL', 'Under RM400K', 'Highest discount first', "What's the deposit needed?"];
+  }
+  if ((data.listings?.length ?? 0) > 0) {
+    const isRent = (data.listings![0] as Listing).listingType === 'rent';
+    if (isRent) return ['Under RM1,000/mo', 'With 2 bedrooms', 'Near LRT', 'Show cheaper options'];
+    return ['Below RM500K', 'With good rental yield', 'Near good schools', 'Subsale only'];
+  }
+  return ['Show me lelong deals', 'Rent in KL under RM1,500', 'Best areas to invest in Malaysia'];
 }
 
 function ThinkingDots() {
@@ -198,7 +211,7 @@ function AuctionResultCard({ listing }: { listing: AuctionListing }) {
   );
 }
 
-function MessageBubble({ message }: { message: Message }) {
+function MessageBubble({ message, onFollowUp }: { message: Message; onFollowUp: (q: string) => void }) {
   const isUser = message.role === 'user';
   const lines = message.content.split('\n\n');
   const hasListings = (message.listings?.length ?? 0) > 0;
@@ -267,6 +280,21 @@ function MessageBubble({ message }: { message: Message }) {
           </Link>
         )}
 
+        {/* Follow-up suggestion chips */}
+        {!isUser && (message.followUps?.length ?? 0) > 0 && (
+          <div className="flex flex-wrap gap-1.5 w-full">
+            {message.followUps!.map((q) => (
+              <button
+                key={q}
+                onClick={() => onFollowUp(q)}
+                className="text-xs bg-white border border-gray-200 hover:border-[#d4a017] hover:bg-[#fefce8] text-gray-600 hover:text-[#0f2540] px-3 py-1.5 rounded-full transition-colors"
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+        )}
+
         <span className="text-xs text-gray-400 px-1">
           {message.timestamp.toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit' })}
         </span>
@@ -316,6 +344,7 @@ export default function ChatInterface({ initialQuery }: { initialQuery?: string 
         auctionListings: data.auctionListings ?? [],
         browseUrl: data.browseUrl ?? null,
         total: data.total ?? 0,
+        followUps: getFollowUps(data),
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, aiMessage]);
@@ -385,7 +414,7 @@ export default function ChatInterface({ initialQuery }: { initialQuery?: string 
         ) : (
           <>
             {messages.map((msg, i) => (
-              <MessageBubble key={i} message={msg} />
+              <MessageBubble key={i} message={msg} onFollowUp={handleSend} />
             ))}
             {thinking && (
               <div className="flex gap-3 mb-4">

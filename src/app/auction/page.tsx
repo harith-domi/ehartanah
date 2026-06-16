@@ -157,7 +157,7 @@ export default async function AuctionPage({
                 <T en="Search" bm="Cari" />
               </button>
               <Link
-                href="/ai-search?q=auction+lelong"
+                href={`/ai-search?q=${encodeURIComponent('Show me bank auction lelong properties')}`}
                 className="shrink-0 flex items-center gap-1.5 bg-[#0f2540] hover:bg-[#1e3a5f] text-white text-sm font-semibold px-4 h-11 rounded-xl transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
