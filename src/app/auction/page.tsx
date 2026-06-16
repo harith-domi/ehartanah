@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { auctionListings, AuctionListing } from '@/lib/listings';
+import { auctionListings, AuctionListing, AGENCY_PHONE } from '@/lib/listings';
 import { areaPhotoByRegionCategory } from '@/lib/areaPhotos';
 import FavouriteButton from '@/components/FavouriteButton';
 import AuctionCountdown from '@/components/AuctionCountdown';
@@ -435,7 +435,7 @@ export default async function AuctionPage({
                         {/* ── Action row ── */}
                         <div className="px-3 lg:px-4 pb-3 lg:pb-4 flex gap-2">
                           <a
-                            href={`https://wa.me/60133677921?text=${waText}`}
+                            href={`https://wa.me/${AGENCY_PHONE}?text=${waText}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex-1 flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white text-xs font-semibold py-2.5 lg:py-3 rounded-xl transition-colors"
@@ -476,7 +476,7 @@ export default async function AuctionPage({
             />
           </p>
           <a
-            href={`https://wa.me/60133677921?text=${encodeURIComponent('Salam! Saya ingin dapat senarai lelongan mingguan daripada eHartanah.')}`}
+            href={`https://wa.me/${AGENCY_PHONE}?text=${encodeURIComponent('Salam! Saya ingin dapat senarai lelongan mingguan daripada eHartanah.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-colors"

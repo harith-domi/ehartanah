@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { auctionListings, getAuctionListing } from '@/lib/listings';
+import { auctionListings, getAuctionListing, AGENCY_PHONE } from '@/lib/listings';
 import FavouriteButton from '@/components/FavouriteButton';
 import AuctionCountdown from '@/components/AuctionCountdown';
 import AuctionShareButton from '@/components/AuctionShareButton';
@@ -48,7 +48,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
   const waText = encodeURIComponent(
     `Salam! Saya berminat dengan unit lelongan: ${l.propertyType} di ${l.address} — Harga Rizab ${formatRM(l.reservePrice)}. Boleh dapatkan maklumat lanjut?`
   );
-  const waHref = `https://wa.me/60133677921?text=${waText}`;
+  const waHref = `https://wa.me/${AGENCY_PHONE}?text=${waText}`;
   const pageUrl = `${BASE_URL}/auction/${l.id}`;
 
   const similar = auctionListings

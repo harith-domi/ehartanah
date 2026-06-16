@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { AGENCY_PHONE } from '@/lib/listings';
 
 const FAQ = [
   {
@@ -79,7 +80,7 @@ export default function AuctionGuide() {
           <p className="text-xs text-amber-700 mt-0.5">Our team has guided many first-time lelong buyers. Let us help.</p>
         </div>
         <a
-          href={`https://wa.me/60133677921?text=${encodeURIComponent('Salam! Saya ingin tahu lebih lanjut tentang cara membeli hartanah lelongan bank.')}`}
+          href={`https://wa.me/${AGENCY_PHONE}?text=${encodeURIComponent('Salam! Saya ingin tahu lebih lanjut tentang cara membeli hartanah lelongan bank.')}`}
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors"
