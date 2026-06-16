@@ -114,25 +114,22 @@ export interface ListingFilters {
   privateOnly?: boolean;
 }
 
-const ABBR: Record<string, string> = {
-  '\bkl\b': 'kuala lumpur',
-  '\bpj\b': 'petaling jaya',
-  '\bkk\b': 'kota kinabalu',
-  '\bjb\b': 'johor bahru',
-};
-
-function normalizeQ(q: string): string {
-  let s = q.toLowerCase();
-  for (const [pat, rep] of Object.entries(ABBR)) s = s.replace(new RegExp(pat, 'g'), rep);
-  return s;
+// Expand listing fields so both "KL" and "Kuala Lumpur" always appear in the haystack.
+// This lets users search either form without breaking compound names like "KL Sentral".
+function expandHay(s: string): string {
+  return s
+    .replace(/kuala lumpur/gi, 'kuala lumpur kl')
+    .replace(/petaling jaya/gi, 'petaling jaya pj')
+    .replace(/johor bahru/gi, 'johor bahru jb')
+    .replace(/kota kinabalu/gi, 'kota kinabalu kk');
 }
 
 export function filterListings(listings: Listing[], f: ListingFilters): Listing[] {
   let out = listings;
   if (f.q) {
-    const tokens = normalizeQ(f.q).split(',').map((t) => t.trim()).filter(Boolean);
+    const tokens = f.q.toLowerCase().split(',').map((t) => t.trim()).filter(Boolean);
     out = out.filter((l) => {
-      const hay = [l.title, l.location, l.subarea].join(' ').toLowerCase();
+      const hay = expandHay([l.title, l.location, l.subarea].join(' ').toLowerCase());
       return tokens.every((t) => hay.includes(t));
     });
   }
