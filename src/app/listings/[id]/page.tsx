@@ -19,6 +19,7 @@ import ListingCard from '@/components/ListingCard';
 import PhotoGallery from '@/components/PhotoGallery';
 import BackButton from '@/components/BackButton';
 import T from '@/components/T';
+import EnquiryForm from '@/components/EnquiryForm';
 import { describeListing } from '@/lib/describe';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
@@ -221,24 +222,21 @@ export default async function ListingDetailPage({
 
           {/* Sidebar */}
           <div className="space-y-5">
+            <EnquiryForm
+              listingId={listing.id}
+              listingTitle={listing.title}
+              listingPrice={formatPrice(listing.price, listing.listingType)}
+              listingType={listing.listingType === 'rent' ? 'rent' : 'sale'}
+            />
+
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-              <h3 className="font-bold text-gray-900 mb-4">Contact Owner</h3>
-              <p className="font-semibold text-gray-800 mb-1">{listing.advertiser}</p>
-              <p className="text-gray-500 text-sm mb-4">{listing.featured ? 'Exclusive eHartanah Listing' : 'Private Owner'}</p>
-              {listing.featured && (
-                <Link
-                  href="/contact"
-                  className="flex items-center justify-center gap-2 bg-[#0f2540] hover:bg-[#0a1e38] text-white font-semibold py-3 rounded-xl transition-colors text-sm mb-3"
-                >
-                  Enquire Now
-                </Link>
-              )}
+              <h3 className="font-bold text-gray-900 mb-3 text-sm">Or contact directly</h3>
               {wa && (
                 <a
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition-colors text-sm mb-3"
+                  className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm mb-2"
                 >
                   WhatsApp Owner
                 </a>
@@ -246,7 +244,7 @@ export default async function ListingDetailPage({
               {listing.phone && (
                 <a
                   href={`tel:${listing.phone}`}
-                  className="block text-center border border-[#d4a017]/40 text-[#1e3a5f] font-semibold py-2.5 rounded-xl hover:bg-[#edf2f8] transition-colors text-sm"
+                  className="block text-center border border-gray-200 text-gray-700 font-semibold py-2.5 rounded-xl hover:bg-slate-50 transition-colors text-sm"
                 >
                   Call {listing.phone}
                 </a>

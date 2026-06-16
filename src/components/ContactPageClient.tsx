@@ -28,9 +28,25 @@ export default function ContactPageClient() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          inquiry_type: form.inquiryType,
+          message: form.message,
+          source: 'contact_form',
+        }),
+      });
+    } catch {
+      // Non-fatal — still open WhatsApp even if save fails
+    }
     const lines = [
       `*Pertanyaan dari eHartanah*`,
       `Nama: ${form.name}`,
@@ -39,12 +55,9 @@ export default function ContactPageClient() {
       form.inquiryType ? `Jenis: ${form.inquiryType}` : null,
       `Mesej: ${form.message}`,
     ].filter(Boolean).join('\n');
-    const waUrl = `${AGENCY_WA}?text=${encodeURIComponent(lines)}`;
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-      window.open(waUrl, '_blank', 'noopener,noreferrer');
-    }, 600);
+    window.open(`${AGENCY_WA}?text=${encodeURIComponent(lines)}`, '_blank', 'noopener,noreferrer');
+    setLoading(false);
+    setSubmitted(true);
   };
 
   const isValid = form.name && form.email && form.message;

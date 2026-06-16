@@ -7,6 +7,7 @@ import AuctionCountdown from '@/components/AuctionCountdown';
 import AuctionShareButton from '@/components/AuctionShareButton';
 import MortgageCalculator from '@/components/MortgageCalculator';
 import T from '@/components/T';
+import EnquiryForm from '@/components/EnquiryForm';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
 
@@ -248,30 +249,16 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
 
           {/* ── Sidebar — desktop only (lg+) ── */}
           <div className="hidden lg:flex flex-col gap-4">
-            {/* CTA card */}
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 sticky top-20">
-              <p className="font-bold text-gray-900 mb-1">
-                <T en="Interested in this property?" bm="Berminat dengan hartanah ini?" />
-              </p>
-              <p className="text-xs text-gray-500 mb-4">
-                <T
-                  en="Contact our team for full due diligence and auction assistance."
-                  bm="Hubungi pasukan kami untuk usaha wajar penuh dan bantuan lelongan."
-                />
-              </p>
-
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition-colors text-sm mb-3"
-              >
-                {WA_ICON}
-                <T en="Enquire via WhatsApp" bm="Tanya via WhatsApp" />
-              </a>
+            <div className="sticky top-20 flex flex-col gap-4">
+              <EnquiryForm
+                listingId={l.id}
+                listingTitle={`${l.propertyType} — ${l.address.split(',')[0]}`}
+                listingPrice={`Reserve ${formatRM(l.reservePrice)}`}
+                listingType="auction"
+              />
 
               {/* Price summary */}
-              <div className="bg-amber-50 rounded-xl p-3 space-y-2 text-sm">
+              <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-500"><T en="Reserve Price" bm="Harga Rizab" /></span>
                   <span className="font-bold text-[#1e3a5f]">{formatRM(l.reservePrice)}</span>
@@ -285,10 +272,10 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                   <span className="font-black text-green-600">{formatRM(l.savings)} ({l.savingsPct}%)</span>
                 </div>
               </div>
-            </div>
 
-            {/* Loan calculator — desktop sidebar */}
-            <MortgageCalculator reservePrice={l.reservePrice} />
+              {/* Loan calculator — desktop sidebar */}
+              <MortgageCalculator reservePrice={l.reservePrice} />
+            </div>
           </div>
         </div>
 
