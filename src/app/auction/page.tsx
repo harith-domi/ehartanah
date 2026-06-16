@@ -142,7 +142,7 @@ export default async function AuctionPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
           <form method="GET" action="/auction" className="space-y-2">
 
-            {/* Row 1 — search input + submit (always full-width row) */}
+            {/* Row 1 — search input + submit + AI button */}
             <div className="flex gap-2">
               <input
                 name="q"
@@ -156,6 +156,15 @@ export default async function AuctionPage({
               >
                 <T en="Search" bm="Cari" />
               </button>
+              <Link
+                href="/ai-search?q=auction+lelong"
+                className="shrink-0 flex items-center gap-1.5 bg-[#0f2540] hover:bg-[#1e3a5f] text-white text-sm font-semibold px-4 h-11 rounded-xl transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.344.346a5 5 0 01-1.414 1.414l-.344-.344a5 5 0 01-1.414-1.414z" />
+                </svg>
+                <span className="hidden sm:inline"><T en="Ask AI" bm="Tanya AI" /></span>
+              </Link>
             </div>
 
             {/* Row 2 — 3 dropdowns (2-col on mobile, 3-col on sm+) */}
