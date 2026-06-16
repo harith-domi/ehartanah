@@ -13,9 +13,10 @@ export default function AuctionCountdown({ dateStr }: { dateStr: string }) {
   useEffect(() => {
     const target = parseDate(dateStr);
     if (!target) { setState('closed'); return; }
+    const t = target;
 
     function tick() {
-      const ms = target.getTime() - Date.now();
+      const ms = t.getTime() - Date.now();
       if (ms <= 0) { setState('closed'); return; }
       setState({
         days: Math.floor(ms / 86_400_000),
