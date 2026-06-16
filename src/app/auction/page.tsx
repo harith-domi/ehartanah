@@ -272,7 +272,7 @@ export default async function AuctionPage({
                       >
                         {/* ── Photo ── */}
                         <Link href={`/auction/${l.id}`}>
-                          <div className="relative h-52 lg:h-64 bg-gray-800 overflow-hidden">
+                          <div className="relative h-44 lg:h-52 bg-gray-800 overflow-hidden">
                             {photo ? (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img
@@ -298,9 +298,9 @@ export default async function AuctionPage({
                             {/* Date banner */}
                             {l.auctionDate && !isClosed && (
                               <div className="absolute top-0 left-0 flex items-center">
-                                <div className="w-2 h-12 lg:h-16 bg-gray-900" />
-                                <div className="bg-orange-500 px-3 lg:px-4 h-12 lg:h-16 flex items-center">
-                                  <span className="text-white font-black text-xl lg:text-3xl tracking-tight leading-none">
+                                <div className="w-1.5 h-10 lg:h-12 bg-gray-900" />
+                                <div className="bg-orange-500 px-2.5 lg:px-3 h-10 lg:h-12 flex items-center">
+                                  <span className="text-white font-black text-sm lg:text-xl tracking-tight leading-none">
                                     {l.auctionDate}
                                   </span>
                                 </div>
@@ -309,23 +309,23 @@ export default async function AuctionPage({
 
                             {/* EST stamp */}
                             {!isClosed && (
-                              <div className="absolute top-2 right-3 w-12 h-12 lg:w-16 lg:h-16 flex items-center justify-center">
+                              <div className="absolute top-2 right-3 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center">
                                 <div
                                   className="absolute inset-0 bg-amber-100 border-2 border-amber-300"
                                   style={{ clipPath: 'polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)' }}
                                 />
-                                <span className="relative text-[10px] lg:text-xs font-black text-amber-800 tracking-wide">EST.</span>
+                                <span className="relative text-[9px] lg:text-[10px] font-black text-amber-800 tracking-wide">EST.</span>
                               </div>
                             )}
 
                             {/* Save badge */}
-                            <div className="absolute bottom-3 left-3">
-                              <span className="bg-red-500 text-white text-xs lg:text-sm font-black px-3 lg:px-4 py-1 lg:py-1.5 rounded-md tracking-wide">
+                            <div className="absolute bottom-2.5 left-3">
+                              <span className="bg-red-500 text-white text-[11px] lg:text-xs font-black px-2.5 lg:px-3 py-0.5 lg:py-1 rounded-md tracking-wide">
                                 SAVE {l.savingsPct}%
                               </span>
                             </div>
-                            <div className="absolute bottom-3 right-3">
-                              <span className="bg-black/40 backdrop-blur-sm text-white text-[11px] lg:text-xs font-semibold px-2 lg:px-3 py-1 rounded-md">
+                            <div className="absolute bottom-2.5 right-3">
+                              <span className="bg-black/40 backdrop-blur-sm text-white text-[10px] lg:text-[11px] font-semibold px-2 lg:px-2.5 py-0.5 lg:py-1 rounded-md">
                                 {l.propertyType}
                               </span>
                             </div>
@@ -333,31 +333,31 @@ export default async function AuctionPage({
                         </Link>
 
                         {/* ── Body ── */}
-                        <div className="p-4 lg:p-5 flex flex-col flex-1">
+                        <div className="p-3 lg:p-4 flex flex-col flex-1">
                           {/* Reserve price + MV */}
-                          <div className="flex items-end justify-between mb-2">
+                          <div className="flex items-end justify-between mb-1.5">
                             <div>
-                              <p className="text-[11px] lg:text-xs text-gray-400">
+                              <p className="text-[10px] text-gray-400">
                                 <T en="Reserve Price" bm="Harga Rizab" />
                               </p>
-                              <p className="text-xl lg:text-2xl font-black text-[#1e3a5f]">{formatRM(l.reservePrice)}</p>
+                              <p className="text-lg lg:text-xl font-black text-[#1e3a5f]">{formatRM(l.reservePrice)}</p>
                             </div>
                             <div className="text-right">
-                              <p className="text-[11px] lg:text-xs text-gray-400">
+                              <p className="text-[10px] text-gray-400">
                                 <T en="Market Value" bm="Nilai Pasaran" />
                               </p>
-                              <p className="text-sm lg:text-base font-semibold text-gray-400 line-through">{formatRM(l.marketValue)}</p>
+                              <p className="text-sm font-semibold text-gray-400 line-through">{formatRM(l.marketValue)}</p>
                             </div>
                           </div>
 
                           {/* RP vs MV bar */}
-                          <div className="h-2 rounded-full bg-gray-100 overflow-hidden mb-3">
+                          <div className="h-1.5 rounded-full bg-gray-100 overflow-hidden mb-2.5">
                             <div className="h-full rounded-full bg-[#1e3a5f]" style={{ width: `${rpPct}%` }} />
                           </div>
 
                           {/* Address */}
                           <Link href={`/auction/${l.id}`}>
-                            <h3 className="font-semibold text-gray-900 text-sm lg:text-base leading-snug mb-3 flex items-start gap-1 hover:text-[#1e3a5f] transition-colors">
+                            <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-2.5 flex items-start gap-1 hover:text-[#1e3a5f] transition-colors">
                               <svg className="w-3.5 h-3.5 shrink-0 mt-0.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -367,35 +367,35 @@ export default async function AuctionPage({
                           </Link>
 
                           {/* Stats chips */}
-                          <div className="grid grid-cols-3 gap-2 mb-3">
+                          <div className="grid grid-cols-3 gap-1.5 mb-2.5">
                             {l.size && (
-                              <div className="bg-slate-50 rounded-lg p-2 lg:p-3 text-center">
-                                <p className="text-[10px] lg:text-xs text-gray-400">
+                              <div className="bg-slate-50 rounded-lg p-1.5 lg:p-2 text-center">
+                                <p className="text-[9px] lg:text-[10px] text-gray-400">
                                   <T en="Size" bm="Keluasan" />
                                 </p>
-                                <p className="text-xs lg:text-sm font-bold text-gray-800 truncate">
+                                <p className="text-[11px] lg:text-xs font-bold text-gray-800 truncate">
                                   {l.size.toLocaleString()}<span className="font-normal text-gray-400"> ft²</span>
                                 </p>
                               </div>
                             )}
                             {l.roi !== null && (
-                              <div className="bg-green-50 rounded-lg p-2 lg:p-3 text-center">
-                                <p className="text-[10px] lg:text-xs text-gray-400">ROI</p>
-                                <p className="text-xs lg:text-sm font-bold text-green-700">{l.roi}%</p>
+                              <div className="bg-green-50 rounded-lg p-1.5 lg:p-2 text-center">
+                                <p className="text-[9px] lg:text-[10px] text-gray-400">ROI</p>
+                                <p className="text-[11px] lg:text-xs font-bold text-green-700">{l.roi}%</p>
                               </div>
                             )}
                             {l.savings > 0 && (
-                              <div className="bg-red-50 rounded-lg p-2 lg:p-3 text-center">
-                                <p className="text-[10px] lg:text-xs text-gray-400">
+                              <div className="bg-red-50 rounded-lg p-1.5 lg:p-2 text-center">
+                                <p className="text-[9px] lg:text-[10px] text-gray-400">
                                   <T en="Save" bm="Jimat" />
                                 </p>
-                                <p className="text-xs lg:text-sm font-bold text-red-600">{formatRM(l.savings)}</p>
+                                <p className="text-[11px] lg:text-xs font-bold text-red-600">{formatRM(l.savings)}</p>
                               </div>
                             )}
                           </div>
 
                           {l.rentalRange && (
-                            <p className="text-xs lg:text-sm text-gray-500 mb-2">
+                            <p className="text-xs text-gray-500 mb-1.5">
                               <span className="font-semibold text-gray-700">
                                 <T en="Est. Rental" bm="Sewa Anggaran" />:
                               </span>{' '}
@@ -405,40 +405,40 @@ export default async function AuctionPage({
 
                           {/* Est. monthly installment */}
                           {!isClosed && (
-                            <div className="bg-[#0f2540]/5 rounded-lg px-3 py-2 lg:py-3 mb-3 flex items-center justify-between gap-2">
-                              <span className="text-[10px] lg:text-xs text-gray-500 leading-tight">
+                            <div className="bg-[#0f2540]/5 rounded-lg px-2.5 py-1.5 lg:py-2 mb-2.5 flex items-center justify-between gap-2">
+                              <span className="text-[10px] text-gray-500 leading-tight">
                                 <T en="Monthly est." bm="Ansuran est." />
                                 <br />
                                 <span className="text-gray-400">90% LTV · 30yr · 4.5%</span>
                               </span>
-                              <span className="text-sm lg:text-base font-black text-[#0f2540] shrink-0">
+                              <span className="text-sm font-black text-[#0f2540] shrink-0">
                                 RM {estMonthly.toLocaleString('en-MY')}<span className="text-xs font-normal text-gray-400">/mo</span>
                               </span>
                             </div>
                           )}
 
                           {/* Countdown + region */}
-                          <div className="mt-auto pt-3 border-t border-gray-50 flex items-center justify-between gap-2 flex-wrap">
+                          <div className="mt-auto pt-2.5 border-t border-gray-50 flex items-center justify-between gap-2 flex-wrap">
                             {l.auctionDate && l.auctionDate.match(/^\d{2}\/\d{2}\/\d{4}$/) && !isClosed ? (
                               <AuctionCountdown dateStr={l.auctionDate} />
                             ) : (
-                              <span className="text-xs lg:text-sm text-gray-400">
+                              <span className="text-xs text-gray-400">
                                 {isClosed
                                   ? <T en="Auction Closed" bm="Lelongan Ditutup" />
                                   : <T en="Date TBC" bm="Tarikh TBC" />}
                               </span>
                             )}
-                            <span className="text-xs lg:text-sm text-gray-400 truncate">{l.region}</span>
+                            <span className="text-xs text-gray-400 truncate">{l.region}</span>
                           </div>
                         </div>
 
                         {/* ── Action row ── */}
-                        <div className="px-4 lg:px-5 pb-4 lg:pb-5 flex gap-2">
+                        <div className="px-3 lg:px-4 pb-3 lg:pb-4 flex gap-2">
                           <a
                             href={`https://wa.me/60133677921?text=${waText}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white text-xs lg:text-sm font-semibold py-3 lg:py-3.5 rounded-xl transition-colors"
+                            className="flex-1 flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white text-xs font-semibold py-2.5 lg:py-3 rounded-xl transition-colors"
                           >
                             <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
