@@ -35,3 +35,8 @@ export function areaPhoto(l: Listing): string | null {
     null
   );
 }
+
+// For auction listings which have no subarea — uses broad (region + category) lookup only
+export function areaPhotoByRegionCategory(region: string, category: string): string | null {
+  return broad.get(`${region}|${category}`) ?? null;
+}

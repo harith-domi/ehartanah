@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { auctionListings } from '@/lib/listings';
+import { areaPhotoByRegionCategory } from '@/lib/areaPhotos';
 import T from '@/components/T';
 
 export const metadata: Metadata = {
@@ -69,28 +70,45 @@ export default function AuctionPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {auctionListings.map((l) => (
             <div key={l.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
-              {/* Colour header */}
-              <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-4 relative">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <span className="bg-white/20 text-white text-[11px] font-semibold px-2 py-0.5 rounded-md">
-                      {l.propertyType}
-                    </span>
-                    {l.tenure && (
-                      <span className="ml-1.5 bg-white/20 text-white text-[11px] font-semibold px-2 py-0.5 rounded-md">
-                        {l.tenure}
-                      </span>
+              {/* Photo / colour header */}
+              {(() => {
+                const photo = areaPhotoByRegionCategory(l.region, l.category);
+                return (
+                  <div className="relative h-40 bg-gradient-to-br from-amber-500 to-orange-600 overflow-hidden">
+                    {photo && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={photo} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-80" />
                     )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10" />
+                    <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
+                      <div>
+                        <span className="bg-black/30 backdrop-blur-sm text-white text-[11px] font-semibold px-2 py-0.5 rounded-md">
+                          {l.propertyType}
+                        </span>
+                        {l.tenure && (
+                          <span className="ml-1.5 bg-black/30 backdrop-blur-sm text-white text-[11px] font-semibold px-2 py-0.5 rounded-md">
+                            {l.tenure}
+                          </span>
+                        )}
+                      </div>
+                      <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shrink-0">
+                        SAVE {l.savingsPct}%
+                      </span>
+                    </div>
+                    <div className="absolute bottom-3 left-3 right-3">
+                      {photo && (
+                        <span className="text-white/70 text-[10px] font-medium block mb-1">
+                          <T en="Similar property nearby" bm="Hartanah serupa berdekatan" />
+                        </span>
+                      )}
+                      <p className="text-white font-bold text-xl leading-none">{formatRM(l.reservePrice)}</p>
+                      <p className="text-white/80 text-xs mt-0.5">
+                        <T en="Reserve Price" bm="Harga Rizab" /> · <T en="MV" bm="NP" />: <span className="line-through opacity-70">{formatRM(l.marketValue)}</span>
+                      </p>
+                    </div>
                   </div>
-                  <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shrink-0">
-                    SAVE {l.savingsPct}%
-                  </span>
-                </div>
-                <p className="text-white font-bold text-xl mt-3">{formatRM(l.reservePrice)}</p>
-                <p className="text-amber-100 text-xs">
-                  <T en="Reserve Price" bm="Harga Rizab" /> · <T en="MV" bm="NP" />: <span className="line-through opacity-70">{formatRM(l.marketValue)}</span>
-                </p>
-              </div>
+                );
+              })()}
 
               {/* Body */}
               <div className="p-4 flex flex-col flex-1">
