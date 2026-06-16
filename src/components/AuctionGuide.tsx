@@ -54,7 +54,7 @@ export default function AuctionGuide() {
           <div key={i}>
             <button
               onClick={() => setOpen(open === i ? null : i)}
-              className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-slate-50 transition-colors"
+              className="w-full flex items-center justify-between px-4 sm:px-6 py-4 text-left hover:bg-slate-50 transition-colors"
             >
               <span className="font-semibold text-gray-800 text-sm pr-4">{item.q}</span>
               <svg
@@ -65,7 +65,7 @@ export default function AuctionGuide() {
               </svg>
             </button>
             {open === i && (
-              <div className="px-6 pb-5">
+              <div className="px-4 sm:px-6 pb-5">
                 <p className="text-sm text-gray-600 leading-relaxed">{item.a}</p>
               </div>
             )}
@@ -73,7 +73,7 @@ export default function AuctionGuide() {
         ))}
       </div>
 
-      <div className="px-6 py-5 bg-amber-50 border-t border-amber-100 flex items-center justify-between gap-4">
+      <div className="px-5 sm:px-6 py-5 bg-amber-50 border-t border-amber-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-amber-800">Still have questions?</p>
           <p className="text-xs text-amber-700 mt-0.5">Our team has guided many first-time lelong buyers. Let us help.</p>
