@@ -72,7 +72,7 @@ export default function AuctionPage() {
             <div key={l.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
               {/* Photo with slide-style overlays */}
               {(() => {
-                const photo = areaPhotoByRegionCategory(l.region, l.category);
+                const photo = l.photos?.[0] ?? areaPhotoByRegionCategory(l.region, l.category);
                 return (
                   <div className="relative h-52 bg-gray-800 overflow-hidden">
                     {photo ? (

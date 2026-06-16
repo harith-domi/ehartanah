@@ -20,7 +20,9 @@
     "price": 850000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-003.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -44,7 +46,9 @@
     "price": 438000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-004.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -68,7 +72,9 @@
     "price": 527000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-005.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -92,7 +98,9 @@
     "price": 532000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-006.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -116,7 +124,9 @@
     "price": 230000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-007.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -140,7 +150,9 @@
     "price": 2600000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-010.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -164,7 +176,9 @@
     "price": 1380000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-012.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -188,7 +202,9 @@
     "price": 975000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-013.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -212,7 +228,9 @@
     "price": 810000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-014.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -236,7 +254,9 @@
     "price": 405000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-015.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -260,7 +280,9 @@
     "price": 850000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-019.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -284,7 +306,9 @@
     "price": 268000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-020.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -308,7 +332,9 @@
     "price": 332000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-021.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -332,7 +358,9 @@
     "price": 522000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-022.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -356,7 +384,9 @@
     "price": 430000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-023.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -380,7 +410,9 @@
     "price": 454000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-024.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -404,7 +436,9 @@
     "price": 216000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-025.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -428,7 +462,9 @@
     "price": 360000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-026.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -452,7 +488,9 @@
     "price": 527000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-027.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -476,7 +514,9 @@
     "price": 243000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-028.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -500,7 +540,9 @@
     "price": 486000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-029.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -524,7 +566,9 @@
     "price": 527000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-030.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -548,7 +592,9 @@
     "price": 405000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-031.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -572,7 +618,9 @@
     "price": 360000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-032.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -596,7 +644,9 @@
     "price": 456000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-033.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -620,7 +670,9 @@
     "price": 554000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-034.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -644,7 +696,9 @@
     "price": 498000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-035.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -668,7 +722,9 @@
     "price": 314000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-036.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -692,7 +748,9 @@
     "price": 453000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-037.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -716,7 +774,9 @@
     "price": 438000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-038.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -740,7 +800,9 @@
     "price": 532000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-039.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -764,7 +826,9 @@
     "price": 394000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-040.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -788,7 +852,9 @@
     "price": 369000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-041.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -812,7 +878,9 @@
     "price": 307000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-042.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -836,7 +904,9 @@
     "price": 688000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-043.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -860,7 +930,9 @@
     "price": 288000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-044.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -884,7 +956,9 @@
     "price": 225000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-045.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -908,7 +982,9 @@
     "price": 230000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-046.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -932,7 +1008,9 @@
     "price": 329000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-047.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -956,7 +1034,9 @@
     "price": 310000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-048.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -980,7 +1060,9 @@
     "price": 2180000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-051.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -1004,7 +1086,9 @@
     "price": 3150000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-052.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -1028,7 +1112,9 @@
     "price": 1310000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-053.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -1052,7 +1138,9 @@
     "price": 721000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-054.jpg"
+    ],
     "postedAt": "2026-06-09"
   },
   {
@@ -1076,7 +1164,9 @@
     "price": 1500000,
     "featured": false,
     "imageCount": 0,
-    "photos": [],
+    "photos": [
+      "/auction/auction-055.jpg"
+    ],
     "postedAt": "2026-06-09"
   }
 ]
