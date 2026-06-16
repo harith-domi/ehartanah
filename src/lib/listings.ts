@@ -30,6 +30,10 @@ export interface AuctionListing {
 
 export const auctionListings = auctionData as AuctionListing[];
 
+export function getAuctionListing(id: string): AuctionListing | undefined {
+  return auctionListings.find((l) => l.id === id);
+}
+
 export interface Listing {
   id: string;
   title: string;
