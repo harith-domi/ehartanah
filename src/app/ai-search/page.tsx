@@ -34,10 +34,10 @@ export default async function AISearchPage({
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Chat (takes 2/3 width on desktop) */}
-          <div className="lg:col-span-2" style={{ height: '620px' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Chat (takes 3/4 width on desktop) */}
+          <div className="lg:col-span-3" style={{ height: 'calc(100vh - 220px)', minHeight: '640px' }}>
             <ChatInterface initialQuery={initialQuery} />
           </div>
 
