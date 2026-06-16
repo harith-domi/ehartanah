@@ -21,7 +21,7 @@ export default function PhotoGallery({ photos, title }: Props) {
         <img
           src={shown[active]}
           alt={`${title} — photo ${active + 1}`}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top"
         />
         {shown.length > 1 && (
           <>
@@ -62,7 +62,7 @@ export default function PhotoGallery({ photos, title }: Props) {
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={src} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+              <img src={src} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover object-top" />
             </button>
           ))}
         </div>

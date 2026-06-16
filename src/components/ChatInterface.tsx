@@ -72,7 +72,7 @@ function ListingResultCard({ listing }: { listing: Listing }) {
           <img
             src={coverPhoto}
             alt={listing.title}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <NoPhotoPlaceholder count={listing.imageCount} url={listing.url} size="sm" category={listing.category} />
@@ -124,7 +124,7 @@ function AuctionResultCard({ listing }: { listing: AuctionListing }) {
           <img
             src={photo}
             alt={listing.address}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-amber-700 to-orange-800" />
