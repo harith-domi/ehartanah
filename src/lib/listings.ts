@@ -114,16 +114,27 @@ export interface ListingFilters {
   privateOnly?: boolean;
 }
 
+const ABBR: Record<string, string> = {
+  '\bkl\b': 'kuala lumpur',
+  '\bpj\b': 'petaling jaya',
+  '\bkk\b': 'kota kinabalu',
+  '\bjb\b': 'johor bahru',
+};
+
+function normalizeQ(q: string): string {
+  let s = q.toLowerCase();
+  for (const [pat, rep] of Object.entries(ABBR)) s = s.replace(new RegExp(pat, 'g'), rep);
+  return s;
+}
+
 export function filterListings(listings: Listing[], f: ListingFilters): Listing[] {
   let out = listings;
   if (f.q) {
-    const q = f.q.toLowerCase();
-    out = out.filter(
-      (l) =>
-        l.title.toLowerCase().includes(q) ||
-        l.location.toLowerCase().includes(q) ||
-        l.subarea.toLowerCase().includes(q)
-    );
+    const tokens = normalizeQ(f.q).split(',').map((t) => t.trim()).filter(Boolean);
+    out = out.filter((l) => {
+      const hay = [l.title, l.location, l.subarea].join(' ').toLowerCase();
+      return tokens.every((t) => hay.includes(t));
+    });
   }
   if (f.region && f.region !== 'All') out = out.filter((l) => l.region === f.region);
   if (f.category && f.category !== 'All') out = out.filter((l) => l.category === f.category);
