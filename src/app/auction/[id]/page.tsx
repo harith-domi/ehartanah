@@ -108,7 +108,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
             <div className="relative rounded-2xl overflow-hidden h-56 sm:h-72 bg-gray-800">
               {photo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={photo} alt={l.address} className="absolute inset-0 w-full h-full object-cover" />
+                <img src={photo} alt={l.address} className="absolute inset-0 w-full h-full object-cover object-top" />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-600" />
               )}
@@ -308,7 +308,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                   <div className="relative h-40 sm:h-36 bg-gray-800">
                     {s.photos?.[0] && (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={s.photos[0]} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
+                      <img src={s.photos[0]} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover object-top" />
                     )}
                     <div className="absolute inset-0 bg-black/20" />
                     <span className="absolute bottom-2 left-2 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded">

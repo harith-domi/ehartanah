@@ -279,7 +279,7 @@ export default async function AuctionPage({
                                 src={photo}
                                 alt=""
                                 aria-hidden
-                                className={`absolute inset-0 w-full h-full object-cover ${isClosed ? 'grayscale' : ''}`}
+                                className={`absolute inset-0 w-full h-full object-cover object-top ${isClosed ? 'grayscale' : ''}`}
                               />
                             ) : (
                               <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900" />
