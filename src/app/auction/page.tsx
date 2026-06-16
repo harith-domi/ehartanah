@@ -70,41 +70,52 @@ export default function AuctionPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {auctionListings.map((l) => (
             <div key={l.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
-              {/* Photo / colour header */}
+              {/* Photo with slide-style overlays */}
               {(() => {
                 const photo = areaPhotoByRegionCategory(l.region, l.category);
                 return (
-                  <div className="relative h-40 bg-gradient-to-br from-amber-500 to-orange-600 overflow-hidden">
-                    {photo && (
+                  <div className="relative h-52 bg-gray-800 overflow-hidden">
+                    {photo ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={photo} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-80" />
+                      <img src={photo} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover" />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900" />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10" />
-                    <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
-                      <div>
-                        <span className="bg-black/30 backdrop-blur-sm text-white text-[11px] font-semibold px-2 py-0.5 rounded-md">
-                          {l.propertyType}
-                        </span>
-                        {l.tenure && (
-                          <span className="ml-1.5 bg-black/30 backdrop-blur-sm text-white text-[11px] font-semibold px-2 py-0.5 rounded-md">
-                            {l.tenure}
-                          </span>
-                        )}
+                    {/* Slight dark veil so overlays are readable */}
+                    <div className="absolute inset-0 bg-black/20" />
+
+                    {/* Orange date banner — top left, like the slide */}
+                    {l.auctionDate && (
+                      <div className="absolute top-0 left-0 flex items-center">
+                        {/* left accent bar */}
+                        <div className="w-2 h-12 bg-gray-900" />
+                        <div className="bg-orange-500 px-3 h-12 flex items-center">
+                          <span className="text-white font-black text-xl tracking-tight leading-none">{l.auctionDate}</span>
+                        </div>
                       </div>
-                      <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shrink-0">
+                    )}
+
+                    {/* EST. stamp — top right */}
+                    <div className="absolute top-2 right-3 w-12 h-12 flex items-center justify-center">
+                      {/* Starburst/seal shape via clip-path */}
+                      <div className="absolute inset-0 bg-amber-100 border-2 border-amber-300"
+                        style={{ clipPath: 'polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)' }}
+                      />
+                      <span className="relative text-[10px] font-black text-amber-800 tracking-wide">EST.</span>
+                    </div>
+
+                    {/* Save badge — bottom left */}
+                    <div className="absolute bottom-3 left-3">
+                      <span className="bg-red-500 text-white text-xs font-black px-3 py-1 rounded-md tracking-wide">
                         SAVE {l.savingsPct}%
                       </span>
                     </div>
-                    <div className="absolute bottom-3 left-3 right-3">
-                      {photo && (
-                        <span className="text-white/70 text-[10px] font-medium block mb-1">
-                          <T en="Similar property nearby" bm="Hartanah serupa berdekatan" />
-                        </span>
-                      )}
-                      <p className="text-white font-bold text-xl leading-none">{formatRM(l.reservePrice)}</p>
-                      <p className="text-white/80 text-xs mt-0.5">
-                        <T en="Reserve Price" bm="Harga Rizab" /> · <T en="MV" bm="NP" />: <span className="line-through opacity-70">{formatRM(l.marketValue)}</span>
-                      </p>
+
+                    {/* Property type — bottom right */}
+                    <div className="absolute bottom-3 right-3">
+                      <span className="bg-black/40 backdrop-blur-sm text-white text-[11px] font-semibold px-2 py-1 rounded-md">
+                        {l.propertyType}
+                      </span>
                     </div>
                   </div>
                 );
