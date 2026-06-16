@@ -49,8 +49,8 @@ export default function Navbar() {
                   href={link.href}
                   className={`px-3.5 py-2 font-semibold text-sm transition-all duration-150 rounded-xl ${
                     isActive
-                      ? 'text-[#d4a017] bg-white/10 shadow-sm'
-                      : 'text-[#94b3cc] hover:text-white hover:bg-white/10'
+                      ? 'text-[#d4a017] bg-white/10 shadow-sm border-b-2 border-[#d4a017]'
+                      : 'text-[#94b3cc] hover:text-white hover:bg-white/10 border-b-2 border-transparent'
                   }`}
                 >
                   {lang === 'bm' ? link.bm : link.en}
@@ -64,11 +64,12 @@ export default function Navbar() {
             {/* Language toggle */}
             <button
               onClick={toggleLang}
-              className="text-xs font-bold px-3 py-1.5 rounded-full border border-white/20 text-[#94b3cc] hover:border-[#d4a017] hover:text-[#d4a017] hover:bg-white/10 transition-all"
-              title="Toggle language"
+              className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full border border-white/20 text-[#94b3cc] hover:border-[#d4a017] hover:text-[#d4a017] hover:bg-white/10 transition-all"
               aria-label={lang === 'en' ? 'Tukar ke Bahasa Malaysia' : 'Switch to English'}
             >
-              {lang === 'en' ? '🇲🇾 BM' : '🇬🇧 EN'}
+              <span className={lang === 'en' ? 'text-white' : 'text-[#94b3cc]'}>EN</span>
+              <span className="text-white/20">|</span>
+              <span className={lang === 'bm' ? 'text-white' : 'text-[#94b3cc]'}>BM</span>
             </button>
 
             {/* WhatsApp CTA */}
@@ -121,10 +122,12 @@ export default function Navbar() {
             <div className="flex gap-2 px-4 pt-2">
               <button
                 onClick={toggleLang}
-                className="border border-white/20 text-xs font-bold px-3 py-2 rounded-full text-[#94b3cc] hover:border-[#d4a017] hover:text-[#d4a017] transition-all"
+                className="flex items-center gap-1 border border-white/20 text-xs font-bold px-3 py-2 rounded-full text-[#94b3cc] hover:border-[#d4a017] hover:text-[#d4a017] transition-all"
                 aria-label={lang === 'en' ? 'Tukar ke Bahasa Malaysia' : 'Switch to English'}
               >
-                {lang === 'en' ? '🇲🇾 BM' : '🇬🇧 EN'}
+                <span className={lang === 'en' ? 'text-white' : 'text-[#94b3cc]'}>EN</span>
+                <span className="text-white/20">|</span>
+                <span className={lang === 'bm' ? 'text-white' : 'text-[#94b3cc]'}>BM</span>
               </button>
               <a
                 href={AGENCY_WA}

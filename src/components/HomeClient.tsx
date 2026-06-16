@@ -274,9 +274,19 @@ export default function HomeClient({ featured, featuredRentals, newAgencyListing
               <div className="flex items-center justify-between border-t border-gray-100 pt-3 mt-2">
                 <div className="flex flex-wrap gap-2">
                   {t.chips.map((chip) => (
-                    <span key={chip} className="text-xs bg-[#edf2f8] text-[#1e3a5f] px-2.5 py-1 rounded-full border border-[#dce8f0] font-medium">
+                    <button
+                      key={chip}
+                      type="button"
+                      onClick={(e) => {
+                        const form = e.currentTarget.closest('form') as HTMLFormElement | null;
+                        const input = form?.querySelector('input[name="q"]') as HTMLInputElement | null;
+                        if (input) input.value = chip;
+                        form?.requestSubmit();
+                      }}
+                      className="text-xs bg-[#edf2f8] hover:bg-[#dce8f0] text-[#1e3a5f] px-2.5 py-1 rounded-full border border-[#dce8f0] font-medium transition-colors cursor-pointer"
+                    >
                       {chip}
-                    </span>
+                    </button>
                   ))}
                 </div>
                 <button
@@ -449,7 +459,7 @@ export default function HomeClient({ featured, featuredRentals, newAgencyListing
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {t.aiFeatures.map((feat, i) => (
-              <div key={feat.title} className="bg-slate-800 rounded-2xl p-5 hover:bg-slate-700 transition-colors">
+              <div key={feat.title} className="bg-slate-800 rounded-2xl p-5 hover:bg-slate-700 hover:-translate-y-0.5 transition-all duration-200">
                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${AI_FEATURE_ICONS[i].color} flex items-center justify-center mb-4`}>
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={AI_FEATURE_ICONS[i].icon} />
@@ -490,7 +500,7 @@ export default function HomeClient({ featured, featuredRentals, newAgencyListing
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
           {t.ctaTitle}
         </h2>
-        <p className="text-[#fef3c7] text-base mb-8 max-w-xl mx-auto">
+        <p className="text-slate-300 text-base mb-8 max-w-xl mx-auto">
           {t.ctaSub}
         </p>
         <Link
