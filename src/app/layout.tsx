@@ -77,7 +77,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-MY">
-      <head>
+      <body className={`${inter.className} bg-slate-50 text-gray-900 antialiased`}>
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="ga4-init" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];
@@ -85,8 +85,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', '${GA_ID}');
         `}</Script>
-      </head>
-      <body className={`${inter.className} bg-slate-50 text-gray-900 antialiased`}>
         <LanguageProvider>
           <Navbar />
           <main className="min-h-screen">{children}</main>
