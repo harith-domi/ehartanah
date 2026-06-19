@@ -29,6 +29,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+const BASE_URL = 'https://ehartanahmalaysia.com';
+
 export default async function GuidePage({ params }: Props) {
   const { slug } = await params;
   const guide = getGuide(slug);
@@ -36,8 +38,21 @@ export default async function GuidePage({ params }: Props) {
 
   const others = guides.filter((g) => g.slug !== slug).slice(0, 2);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.titleEn ?? guide.title,
+    description: guide.descriptionEn ?? guide.description,
+    url: `${BASE_URL}/guides/${guide.slug}`,
+    datePublished: guide.publishedAt,
+    author: { '@type': 'Organization', name: 'eHartanah', url: BASE_URL },
+    publisher: { '@type': 'Organization', name: 'eHartanah', url: BASE_URL },
+    inLanguage: ['ms', 'en'],
+  };
+
   return (
     <div className="min-h-screen bg-slate-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
         <Link href="/guides" className="text-[#1e3a5f] text-sm font-semibold inline-flex items-center gap-1 mb-6">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

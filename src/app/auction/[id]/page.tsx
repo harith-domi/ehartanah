@@ -66,9 +66,30 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
     .filter((x) => x.id !== l.id && (x.region === l.region || x.category === l.category))
     .slice(0, 3);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: l.title,
+    description: `Bank auction property at ${l.address}. Reserve price RM${l.reservePrice.toLocaleString('en-MY')}, ${l.savingsPct}% below market value.`,
+    url: pageUrl,
+    price: l.reservePrice,
+    priceCurrency: 'MYR',
+    ...(l.size !== null && {
+      floorSize: { '@type': 'QuantitativeValue', value: l.size, unitText: l.sizeUnit },
+    }),
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: l.address,
+      addressRegion: l.region,
+      addressCountry: 'MY',
+    },
+    offeredBy: { '@type': 'Organization', name: 'eHartanah' },
+  };
+
   return (
     /* pb-24 reserves space for the mobile sticky bottom bar */
     <div className="min-h-screen bg-slate-50 pb-24 lg:pb-0">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ── Mobile sticky bottom CTA bar ─── visible only on < lg ── */}
       <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-white border-t border-gray-200 px-4 py-3 flex items-center gap-3 shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
