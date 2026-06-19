@@ -30,10 +30,14 @@ export default function GuidesPage() {
               <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">
                 <span>{new Date(g.publishedAt).toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                 <span>·</span>
-                <span>{g.readMinutes} min bacaan</span>
+                <span>{g.readMinutes} <T en="min read" bm="min bacaan" /></span>
               </div>
-              <h2 className="font-bold text-gray-900 text-lg mb-2 leading-snug">{g.title}</h2>
-              <p className="text-gray-500 text-sm leading-relaxed mb-3">{g.description}</p>
+              <h2 className="font-bold text-gray-900 text-lg mb-2 leading-snug">
+                <T en={g.titleEn} bm={g.title} />
+              </h2>
+              <p className="text-gray-500 text-sm leading-relaxed mb-3">
+                <T en={g.descriptionEn} bm={g.description} />
+              </p>
               <span className="text-[#1e3a5f] text-sm font-semibold inline-flex items-center gap-1">
                 <T en="Read guide" bm="Baca panduan" />
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

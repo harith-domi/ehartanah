@@ -1,5 +1,6 @@
 export interface GuideSection {
   heading: string;
+  headingEn?: string;
   paragraphs: string[];
   bullets?: string[];
 }
@@ -7,8 +8,10 @@ export interface GuideSection {
 export interface Guide {
   slug: string;
   title: string;
+  titleEn: string;
   description: string;
-  publishedAt: string; // ISO date
+  descriptionEn: string;
+  publishedAt: string;
   readMinutes: number;
   sections: GuideSection[];
 }
@@ -17,8 +20,11 @@ export const guides: Guide[] = [
   {
     slug: 'cara-sewa-beli-rumah-malaysia',
     title: 'Cara Sewa Beli Rumah di Malaysia: Panduan Lengkap 2026',
+    titleEn: 'How Rent-to-Own Works in Malaysia: Complete Guide 2026',
     description:
       'Apa itu sewa beli rumah (rent-to-own)? Bagaimana ia berfungsi, siapa yang layak, kos sebenar, dan perangkap yang perlu dielakkan. Panduan lengkap untuk pembeli Malaysia.',
+    descriptionEn:
+      'What is rent-to-own? How it works, who qualifies, the real costs, and pitfalls to avoid. A complete guide for Malaysian property buyers.',
     publishedAt: '2026-06-12',
     readMinutes: 7,
     sections: [
@@ -80,8 +86,11 @@ export const guides: Guide[] = [
   {
     slug: 'gagal-loan-bank-pilihan-anda',
     title: 'Gagal Loan Bank? 5 Pilihan Untuk Anda Masih Miliki Rumah',
+    titleEn: 'Bank Loan Rejected? 5 Real Options to Still Own a Home in Malaysia',
     description:
       'Loan rumah ditolak bank? Anda bukan jalan mati. Ini 5 pilihan sebenar untuk memiliki rumah di Malaysia walaupun CCRIS bermasalah — termasuk sewa beli, skim kerajaan, dan pembaikan kredit.',
+    descriptionEn:
+      'Home loan rejected by the bank? It\'s not the end of the road. Here are 5 real options to own property in Malaysia even with a bad CCRIS — including rent-to-own, government schemes, and credit repair.',
     publishedAt: '2026-06-12',
     readMinutes: 6,
     sections: [
@@ -144,8 +153,11 @@ export const guides: Guide[] = [
   {
     slug: 'sewa-beli-vs-sewa-biasa',
     title: 'Sewa Beli vs Sewa Biasa: Mana Lebih Berbaloi Untuk Anda?',
+    titleEn: 'Rent-to-Own vs Regular Rental: Which Is Better for You?',
     description:
       'Perbandingan jujur antara sewa beli (rent-to-own) dan sewa biasa di Malaysia. Kira kos sebenar, kelebihan, kekurangan, dan situasi mana setiap satu lebih berbaloi.',
+    descriptionEn:
+      'An honest comparison between rent-to-own and regular rental in Malaysia. Calculate the real costs, pros, cons, and which option makes more financial sense for your situation.',
     publishedAt: '2026-06-12',
     readMinutes: 5,
     sections: [
