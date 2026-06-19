@@ -60,7 +60,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-xs text-gray-500"><T en="Email" bm="E-mel" /></p>
-                    <p className="text-sm font-medium text-gray-800">hello@ehartanah.my</p>
+                    <p className="text-sm font-medium text-gray-800">support@ucigroupasia.com</p>
                   </div>
                 </div>
                 <div className="flex gap-3">
