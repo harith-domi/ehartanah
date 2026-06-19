@@ -219,6 +219,49 @@ export default function ListingBrowser({
                 />
                 <T en="Private only" bm="Pemilik sahaja" />
               </label>
+              {/* Price presets */}
+              {(params.type === 'sale' || params.type === 'rent') && (() => {
+                const presets = params.type === 'sale'
+                  ? [
+                      { label: '< RM300k', min: '', max: '300000' },
+                      { label: 'RM300k–600k', min: '300000', max: '600000' },
+                      { label: 'RM600k–1M', min: '600000', max: '1000000' },
+                      { label: '> RM1M', min: '1000000', max: '' },
+                    ]
+                  : [
+                      { label: '< RM1k', min: '', max: '1000' },
+                      { label: 'RM1k–2k', min: '1000', max: '2000' },
+                      { label: 'RM2k–3.5k', min: '2000', max: '3500' },
+                      { label: '> RM3.5k', min: '3500', max: '' },
+                    ];
+                return (
+                  <div className="flex gap-1.5 flex-wrap w-full sm:w-auto">
+                    {presets.map((p) => {
+                      const active = params.minPrice === p.min && params.maxPrice === p.max;
+                      const href = (() => {
+                        const q = new URLSearchParams();
+                        if (params.type) q.set('type', params.type);
+                        if (params.q) q.set('q', params.q);
+                        if (params.region && params.region !== 'All') q.set('region', params.region);
+                        if (params.category && params.category !== 'All') q.set('category', params.category);
+                        if (params.beds) q.set('beds', params.beds);
+                        if (params.sort) q.set('sort', params.sort);
+                        if (params.privateOnly === 'true') q.set('privateOnly', 'true');
+                        if (!active) {
+                          if (p.min) q.set('minPrice', p.min);
+                          if (p.max) q.set('maxPrice', p.max);
+                        }
+                        return `${basePath}?${q.toString()}`;
+                      })();
+                      return (
+                        <Link key={p.label} href={href}
+                          className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-colors ${active ? 'bg-[#0f2540] text-white border-[#0f2540]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#0f2540] hover:text-[#0f2540]'}`}
+                        >{p.label}</Link>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
               {/* Clear */}
               {(params.q || params.region || params.category || params.minPrice || params.maxPrice || params.beds || params.privateOnly) && (
                 <Link

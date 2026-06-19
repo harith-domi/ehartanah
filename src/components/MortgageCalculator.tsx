@@ -18,7 +18,7 @@ const PRESETS = [
   { label: 'Conservative', rate: 5.50 },
 ];
 
-export default function MortgageCalculator({ reservePrice }: { reservePrice: number }) {
+export default function MortgageCalculator({ reservePrice, priceLabel = 'Property Price' }: { reservePrice: number; priceLabel?: string }) {
   const [ltvPct, setLtvPct] = useState(90);
   const [years, setYears] = useState(30);
   const [rate, setRate] = useState(4.50);
@@ -105,7 +105,7 @@ export default function MortgageCalculator({ reservePrice }: { reservePrice: num
         {/* Summary */}
         <div className="bg-slate-50 rounded-xl p-3 space-y-2 text-xs">
           <div className="flex justify-between">
-            <span className="text-gray-500">Reserve Price</span>
+            <span className="text-gray-500">{priceLabel}</span>
             <span className="font-semibold text-gray-800">{fmt(reservePrice)}</span>
           </div>
           <div className="flex justify-between">

@@ -12,7 +12,8 @@ const navLinks = [
   { en: 'Properties',  bm: 'Hartanah',    href: '/browse' },
   { en: 'Auction',     bm: 'Lelongan',    href: '/auction' },
   { en: 'Rent-to-Own', bm: 'Sewa Beli',   href: '/rent-to-own' },
-  { en: 'Insights',    bm: 'Wawasan',     href: '/investment-insights' },
+  { en: 'Calculator',  bm: 'Kalkulator',  href: '/calculator' },
+  { en: 'Guides',      bm: 'Panduan',     href: '/guides' },
 ];
 
 export default function Navbar() {

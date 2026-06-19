@@ -21,6 +21,7 @@ import BackButton from '@/components/BackButton';
 import T from '@/components/T';
 import EnquiryForm from '@/components/EnquiryForm';
 import AuctionShareButton from '@/components/AuctionShareButton';
+import MortgageCalculator from '@/components/MortgageCalculator';
 import { describeListing } from '@/lib/describe';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
@@ -269,11 +270,18 @@ export default async function ListingDetailPage({
               )}
             </div>
 
+            {listing.listingType === 'sale' && listing.price !== null && (
+              <MortgageCalculator reservePrice={listing.price} />
+            )}
+
             <div className="bg-gradient-to-br from-[#0f2540] to-[#1e3a5f] rounded-2xl p-5 text-white text-center">
               <p className="font-bold mb-2 text-sm">Get AI Price Analysis</p>
               <p className="text-[#fef3c7] text-xs mb-4">Ask our AI if this property is a good deal for your budget and goals</p>
-              <Link href="/ai-search" className="block bg-white text-[#1e3a5f] font-semibold text-sm py-2.5 rounded-xl hover:bg-[#edf2f8] transition-colors">
+              <Link href="/ai-search" className="block bg-white text-[#1e3a5f] font-semibold text-sm py-2.5 rounded-xl hover:bg-[#edf2f8] transition-colors mb-2">
                 Ask AI Now
+              </Link>
+              <Link href="/calculator" className="block bg-white/10 hover:bg-white/20 text-white font-semibold text-sm py-2.5 rounded-xl transition-colors">
+                Loan Eligibility Calculator
               </Link>
             </div>
           </div>
