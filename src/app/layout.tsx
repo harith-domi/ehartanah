@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -75,6 +74,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-MY">
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q2DHDKRD2W" />
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Q2DHDKRD2W');` }} />
+      </head>
       <body className={`${inter.className} bg-slate-50 text-gray-900 antialiased`}>
         <LanguageProvider>
           <Navbar />
@@ -82,7 +85,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <WhatsAppWidget />
         </LanguageProvider>
-        <GoogleAnalytics gaId="G-Q2DHDKRD2W" />
       </body>
     </html>
   );
