@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     'Semak kelayakan sewa beli rumah anda dalam 1 minit. Deposit rendah, tak perlu lulus loan bank dulu. Sesuai untuk pembeli kali pertama dan yang membaiki kredit.',
 };
 
-const WA_MSG = encodeURIComponent('Salam! Saya berminat dengan program Sewa Beli di eHartanah. Boleh hubungi saya apabila ia tersedia?');
+const WA_MSG = encodeURIComponent('Salam! Saya berminat dengan program Sewa Beli di eHartanah. Boleh hubungi saya untuk maklumat lanjut?');
 
 export default function RentToOwnPage() {
   return (
@@ -28,12 +28,11 @@ export default function RentToOwnPage() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
         </div>
-        <span className="inline-block bg-[#dce8f0] text-[#1e3a5f] text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide"><T en="Coming Soon" bm="Akan Datang" /></span>
         <h2 className="text-2xl font-bold text-gray-900 mb-3"><T en="Rent-to-Own Programmes" bm="Program Sewa Beli" /></h2>
         <p className="text-gray-500 text-sm leading-relaxed mb-6 max-w-md mx-auto">
           <T
-            en="We're building rent-to-own programmes for first-time buyers and those rebuilding credit. Register your interest now — our advisors will contact you when it's ready."
-            bm="Kami sedang membina program sewa beli untuk pembeli kali pertama dan mereka yang membaiki kredit. Daftar minat sekarang — penasihat kami akan hubungi anda apabila ia sedia."
+            en="Own your home with a low deposit — no full bank loan required. Designed for first-time buyers and those rebuilding credit. Check your eligibility now and our advisors will guide you through the next steps."
+            bm="Miliki rumah dengan deposit rendah — tidak perlu loan bank penuh. Direka untuk pembeli kali pertama dan mereka yang membaiki kredit. Semak kelayakan anda sekarang dan penasihat kami akan bantu anda."
           />
         </p>
 
