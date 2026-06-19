@@ -23,6 +23,7 @@ import EnquiryForm from '@/components/EnquiryForm';
 import AuctionShareButton from '@/components/AuctionShareButton';
 import MortgageCalculator from '@/components/MortgageCalculator';
 import { describeListing } from '@/lib/describe';
+import { areaPhoto } from '@/lib/areaPhotos';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
 
@@ -138,9 +139,36 @@ export default async function ListingDetailPage({
                 : listing.thumbnailUrl
                 ? [listing.thumbnailUrl]
                 : [];
-              return photos.length > 0 ? (
-                <PhotoGallery photos={photos} title={listing.title} />
-              ) : null;
+              if (photos.length > 0) {
+                return <PhotoGallery photos={photos} title={listing.title} />;
+              }
+              const nearby = areaPhoto(listing);
+              if (nearby) {
+                return (
+                  <div className="rounded-2xl overflow-hidden shadow-sm relative h-52 sm:h-72 bg-[#0f2540]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={nearby} alt="" aria-hidden className="w-full h-full object-cover object-top opacity-70" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-4 left-0 right-0 text-center">
+                      <p className="text-white text-sm font-semibold drop-shadow">
+                        <T en="Photos available on original listing" bm="Gambar tersedia di senarai asal" />
+                      </p>
+                      <a
+                        href={listing.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-xs font-semibold px-4 py-1.5 rounded-full transition-colors"
+                      >
+                        <T en={`View ${listing.imageCount} photos on Mudah`} bm={`Lihat ${listing.imageCount} gambar di Mudah`} />
+                      </a>
+                    </div>
+                    <span className="absolute bottom-3 left-3 bg-[#0f2540]/70 backdrop-blur-sm text-white text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wide select-none pointer-events-none">
+                      eHartanah.my
+                    </span>
+                  </div>
+                );
+              }
+              return null;
             })()}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
               <div className="flex items-center gap-2 mb-3">
