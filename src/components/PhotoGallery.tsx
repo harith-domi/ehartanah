@@ -23,6 +23,9 @@ export default function PhotoGallery({ photos, title }: Props) {
           alt={`${title} — photo ${active + 1}`}
           className="w-full h-full object-cover object-top"
         />
+        <span className="absolute bottom-3 left-3 bg-[#0f2540]/70 backdrop-blur-sm text-white text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wide select-none pointer-events-none z-10">
+          eHartanah.my
+        </span>
         {shown.length > 1 && (
           <>
             <button

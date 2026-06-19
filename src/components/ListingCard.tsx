@@ -85,6 +85,11 @@ export default function ListingCard({ listing }: { listing: Listing }) {
               <T en="Private" bm="Persendirian" />
             </span>
           )}
+          {coverPhoto && (
+            <span className="absolute bottom-2.5 left-3 bg-[#0f2540]/70 backdrop-blur-sm text-white text-[9px] lg:text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wide select-none pointer-events-none">
+              eHartanah.my
+            </span>
+          )}
           {(listing.photos?.length ?? listing.imageCount) > 0 && (
             <span className="absolute bottom-2.5 right-3 flex items-center gap-1 bg-black/30 backdrop-blur-sm text-white text-[10px] lg:text-[11px] font-medium px-2 py-0.5 lg:py-1 rounded-md">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
