@@ -63,6 +63,16 @@ export default function Navbar() {
 
           {/* Right side */}
           <div className="hidden md:flex items-center gap-2">
+            {/* Shortlist */}
+            <Link
+              href="/shortlist"
+              title={lang === 'en' ? 'My Shortlist' : 'Senarai Simpanan'}
+              className={`p-2 rounded-xl transition-colors ${pathname === '/shortlist' ? 'text-rose-400 bg-white/10' : 'text-[#94b3cc] hover:text-rose-400 hover:bg-white/10'}`}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </Link>
             {/* Language toggle */}
             <button
               onClick={toggleLang}
@@ -121,6 +131,16 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            <Link
+              href="/shortlist"
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-colors ${pathname === '/shortlist' ? 'text-rose-400 bg-white/10' : 'text-[#94b3cc] hover:text-white hover:bg-white/10'}`}
+              onClick={() => setMobileOpen(false)}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+              {lang === 'en' ? 'My Shortlist' : 'Senarai Simpanan'}
+            </Link>
             <div className="flex gap-2 px-4 pt-2">
               <button
                 onClick={toggleLang}

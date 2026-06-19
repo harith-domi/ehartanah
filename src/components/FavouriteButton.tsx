@@ -4,7 +4,24 @@ import { useLang } from '@/lib/i18n';
 
 const KEY = 'ehartanah_favs';
 
-export default function FavouriteButton({ id }: { id: string }) {
+type FavEntry = { type: 'listing' | 'auction'; id: string };
+
+function readFavs(): FavEntry[] {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    // Migrate old string[] format to FavEntry[]
+    if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'string') {
+      return parsed.map((id: string) => ({ type: 'listing' as const, id }));
+    }
+    return parsed as FavEntry[];
+  } catch {
+    return [];
+  }
+}
+
+export default function FavouriteButton({ id, type = 'listing' }: { id: string; type?: 'listing' | 'auction' }) {
   const [saved, setSaved] = useState(false);
   const { lang } = useLang();
 
@@ -17,17 +34,20 @@ export default function FavouriteButton({ id }: { id: string }) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const favs: string[] = JSON.parse(localStorage.getItem(KEY) || '[]');
-    setSaved(favs.includes(id));
-  }, [id]);
+    const favs = readFavs();
+    setSaved(favs.some((f) => f.id === id && f.type === type));
+  }, [id, type]);
 
   function toggle(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    const favs: string[] = JSON.parse(localStorage.getItem(KEY) || '[]');
-    const next = favs.includes(id) ? favs.filter((f) => f !== id) : [...favs, id];
+    const favs = readFavs();
+    const isSaved = favs.some((f) => f.id === id && f.type === type);
+    const next = isSaved
+      ? favs.filter((f) => !(f.id === id && f.type === type))
+      : [...favs, { type, id }];
     localStorage.setItem(KEY, JSON.stringify(next));
-    setSaved(next.includes(id));
+    setSaved(!isSaved);
   }
 
   return (

@@ -454,7 +454,7 @@ export default async function AuctionPage({
                             </svg>
                             <T en="Enquire" bm="Tanya" />
                           </a>
-                          <FavouriteButton id={l.id} />
+                          <FavouriteButton id={l.id} type="auction" />
                           <AuctionShareButton
                             title={`${l.propertyType} Lelong`}
                             address={l.address}

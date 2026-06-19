@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { guides, getGuide } from '@/lib/guides';
 import T from '@/components/T';
+import GuideSectionBody from '@/components/GuideSectionBody';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -59,23 +60,7 @@ export default async function GuidePage({ params }: Props) {
               <h2 className="text-lg font-bold text-gray-900 mb-3">
                 <T en={s.headingEn ?? s.heading} bm={s.heading} />
               </h2>
-              {s.paragraphs.map((p) => (
-                <p key={p.slice(0, 40)} className="text-gray-600 text-sm leading-relaxed mb-3">{p}</p>
-              ))}
-              {s.bullets && (
-                <ul className="space-y-2 mt-2">
-                  {s.bullets.map((b) => (
-                    <li key={b.slice(0, 40)} className="flex items-start gap-2.5 text-gray-600 text-sm leading-relaxed">
-                      <span className="w-4 h-4 rounded-full bg-[#dce8f0] flex items-center justify-center shrink-0 mt-0.5">
-                        <svg className="w-2.5 h-2.5 text-[#1e3a5f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <GuideSectionBody section={s} />
             </section>
           ))}
         </div>

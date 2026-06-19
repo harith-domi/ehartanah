@@ -81,7 +81,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
           {WA_ICON}
           <T en="Enquire via WhatsApp" bm="Tanya via WhatsApp" />
         </a>
-        <FavouriteButton id={l.id} />
+        <FavouriteButton id={l.id} type="auction" />
         <AuctionShareButton title={`${l.propertyType} Lelong`} address={l.address} url={pageUrl} />
       </div>
 
@@ -172,7 +172,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                 </div>
                 {/* Desktop fav + share — hidden on mobile (in sticky bar instead) */}
                 <div className="hidden lg:flex items-center gap-1 shrink-0">
-                  <FavouriteButton id={l.id} />
+                  <FavouriteButton id={l.id} type="auction" />
                   <AuctionShareButton title={`${l.propertyType} Lelong`} address={l.address} url={pageUrl} />
                 </div>
               </div>
