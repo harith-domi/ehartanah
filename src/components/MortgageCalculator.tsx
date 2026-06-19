@@ -1,5 +1,6 @@
 'use client';
 import { useState, useMemo } from 'react';
+import { useLang } from '@/lib/i18n';
 
 function calcMonthly(principal: number, annualRate: number, years: number): number {
   const r = annualRate / 100 / 12;
@@ -28,6 +29,32 @@ export default function MortgageCalculator({ reservePrice, priceLabel = 'Propert
   const totalPay = useMemo(() => monthly * years * 12, [monthly, years]);
   const totalInterest = useMemo(() => totalPay - loan, [totalPay, loan]);
   const downpayment = reservePrice - loan;
+  const { lang } = useLang();
+  const t = lang === 'en' ? {
+    title: 'Loan Calculator',
+    monthlyLabel: 'Estimated Monthly Instalment',
+    loanSummary: (ln: string, yr: number, r: number) => `Loan: ${ln} · ${yr} yrs · ${r}% p.a.`,
+    ratePreset: 'Interest Rate Preset',
+    ltv: 'Loan Amount (LTV)',
+    tenure: 'Loan Tenure',
+    interestRate: 'Interest Rate',
+    downPayment: (pct: number) => `Down Payment (${pct}%)`,
+    totalInterest: 'Total Interest',
+    totalRepayment: 'Total Repayment',
+    disclaimer: 'Indicative only. Actual rates depend on your bank, credit profile, and property type. Consult a mortgage advisor before committing.',
+  } : {
+    title: 'Kalkulator Pinjaman',
+    monthlyLabel: 'Anggaran Ansuran Bulanan',
+    loanSummary: (ln: string, yr: number, r: number) => `Pinjaman: ${ln} · ${yr} thn · ${r}% setahun`,
+    ratePreset: 'Kadar Faedah Pratetap',
+    ltv: 'Jumlah Pinjaman (LTV)',
+    tenure: 'Tempoh Pinjaman',
+    interestRate: 'Kadar Faedah',
+    downPayment: (pct: number) => `Bayaran Pendahuluan (${pct}%)`,
+    totalInterest: 'Jumlah Faedah',
+    totalRepayment: 'Jumlah Bayaran Balik',
+    disclaimer: 'Anggaran sahaja. Kadar sebenar bergantung pada bank, profil kredit, dan jenis hartanah anda.',
+  };
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -35,20 +62,20 @@ export default function MortgageCalculator({ reservePrice, priceLabel = 'Propert
         <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 11h.01M12 11h.01M15 11h.01M4 19h16a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
-        <h3 className="font-bold text-gray-900 text-sm">Loan Calculator</h3>
+        <h3 className="font-bold text-gray-900 text-sm">{t.title}</h3>
       </div>
 
       <div className="p-5 space-y-5">
         {/* Monthly result hero */}
         <div className="bg-[#0f2540] rounded-xl p-4 text-center">
-          <p className="text-amber-300 text-xs font-medium mb-1">Estimated Monthly Installment</p>
+          <p className="text-amber-300 text-xs font-medium mb-1">{t.monthlyLabel}</p>
           <p className="text-3xl font-black text-white">{fmt(monthly)}<span className="text-base font-normal text-gray-300">/mo</span></p>
-          <p className="text-gray-400 text-xs mt-1">Loan: {fmt(loan)} · {years} yrs · {rate}% p.a.</p>
+          <p className="text-gray-400 text-xs mt-1">{t.loanSummary(fmt(loan), years, rate)}</p>
         </div>
 
         {/* Rate presets */}
         <div>
-          <p className="text-xs text-gray-500 font-medium mb-2">Interest Rate Preset</p>
+          <p className="text-xs text-gray-500 font-medium mb-2">{t.ratePreset}</p>
           <div className="flex gap-2">
             {PRESETS.map((p) => (
               <button
@@ -66,7 +93,7 @@ export default function MortgageCalculator({ reservePrice, priceLabel = 'Propert
         {/* LTV slider */}
         <div>
           <div className="flex justify-between text-xs mb-1.5">
-            <span className="text-gray-500 font-medium">Loan Amount (LTV)</span>
+            <span className="text-gray-500 font-medium">{t.ltv}</span>
             <span className="font-bold text-[#0f2540]">{ltvPct}% — {fmt(loan)}</span>
           </div>
           <input type="range" min={70} max={100} step={5} value={ltvPct} onChange={(e) => setLtvPct(Number(e.target.value))}
@@ -79,7 +106,7 @@ export default function MortgageCalculator({ reservePrice, priceLabel = 'Propert
         {/* Tenure slider */}
         <div>
           <div className="flex justify-between text-xs mb-1.5">
-            <span className="text-gray-500 font-medium">Loan Tenure</span>
+            <span className="text-gray-500 font-medium">{t.tenure}</span>
             <span className="font-bold text-[#0f2540]">{years} years</span>
           </div>
           <input type="range" min={5} max={35} step={5} value={years} onChange={(e) => setYears(Number(e.target.value))}
@@ -92,7 +119,7 @@ export default function MortgageCalculator({ reservePrice, priceLabel = 'Propert
         {/* Rate slider */}
         <div>
           <div className="flex justify-between text-xs mb-1.5">
-            <span className="text-gray-500 font-medium">Interest Rate</span>
+            <span className="text-gray-500 font-medium">{t.interestRate}</span>
             <span className="font-bold text-[#0f2540]">{rate.toFixed(2)}% p.a.</span>
           </div>
           <input type="range" min={3} max={6} step={0.05} value={rate} onChange={(e) => setRate(Number(e.target.value))}
@@ -109,23 +136,20 @@ export default function MortgageCalculator({ reservePrice, priceLabel = 'Propert
             <span className="font-semibold text-gray-800">{fmt(reservePrice)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-500">Down Payment ({100 - ltvPct}%)</span>
+            <span className="text-gray-500">{t.downPayment(100 - ltvPct)}</span>
             <span className="font-semibold text-amber-700">{fmt(downpayment)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-500">Total Interest</span>
+            <span className="text-gray-500">{t.totalInterest}</span>
             <span className="font-semibold text-red-500">{fmt(totalInterest)}</span>
           </div>
           <div className="flex justify-between border-t border-gray-200 pt-2">
-            <span className="text-gray-700 font-semibold">Total Repayment</span>
+            <span className="text-gray-700 font-semibold">{t.totalRepayment}</span>
             <span className="font-black text-gray-900">{fmt(totalPay)}</span>
           </div>
         </div>
 
-        <p className="text-[10px] text-gray-400 leading-relaxed">
-          Indicative only. Actual rates depend on your bank, credit profile, and property type.
-          Consult a mortgage advisor before committing.
-        </p>
+        <p className="text-[10px] text-gray-400 leading-relaxed">{t.disclaimer}</p>
       </div>
     </div>
   );
