@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Listing, formatPrice, formatSize, formatPostedDate, whatsappLink, pricePerSqft, displayBedrooms, displayBathrooms } from '@/lib/listings';
 import { areaPhoto } from '@/lib/areaPhotos';
 import FavouriteButton from './FavouriteButton';
+import CompareButton from './CompareButton';
 import NoPhotoPlaceholder from './NoPhotoPlaceholder';
 import T from './T';
 
@@ -201,6 +202,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
             <T en="View Details" bm="Lihat Butiran" />
           </Link>
         )}
+        <CompareButton entry={{ type: 'listing', id: listing.id }} />
         <FavouriteButton id={listing.id} />
       </div>
     </div>

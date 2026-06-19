@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import { LanguageProvider } from '@/lib/i18n';
+import CompareBar from '@/components/CompareBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -81,6 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="min-h-screen">{children}</main>
           <Footer />
           <WhatsAppWidget />
+          <CompareBar />
         </LanguageProvider>
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-Q2DHDKRD2W" strategy="afterInteractive" />
         <Script id="ga4" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Q2DHDKRD2W');`}</Script>
