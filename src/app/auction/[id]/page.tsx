@@ -19,9 +19,19 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const l = getAuctionListing(id);
   if (!l) return { title: 'Listing Not Found' };
+  const photo = l.photos?.[0];
+  const title = `${l.propertyType} Lelong — ${l.address.split(',')[0]} | eHartanah`;
+  const description = `Bank auction property at ${l.address}. Reserve price RM${(l.reservePrice / 1000).toFixed(0)}K, ${l.savingsPct}% below market value of RM${(l.marketValue / 1000).toFixed(0)}K.`;
   return {
-    title: `${l.propertyType} Lelong — ${l.address.split(',')[0]} | eHartanah`,
-    description: `Bank auction property at ${l.address}. Reserve price RM${(l.reservePrice / 1000).toFixed(0)}K, ${l.savingsPct}% below market value of RM${(l.marketValue / 1000).toFixed(0)}K.`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/auction/${id}`,
+      ...(photo && { images: [{ url: photo, width: 800, height: 600, alt: l.title }] }),
+    },
+    twitter: { card: 'summary_large_image', title, description, ...(photo && { images: [photo] }) },
   };
 }
 

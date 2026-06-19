@@ -20,6 +20,7 @@ import PhotoGallery from '@/components/PhotoGallery';
 import BackButton from '@/components/BackButton';
 import T from '@/components/T';
 import EnquiryForm from '@/components/EnquiryForm';
+import AuctionShareButton from '@/components/AuctionShareButton';
 import { describeListing } from '@/lib/describe';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
@@ -36,9 +37,19 @@ export async function generateMetadata({
   const { id } = await params;
   const listing = getListing(id);
   if (!listing) return { title: 'Listing Not Found' };
+  const photo = listing.photos?.[0] ?? listing.thumbnailUrl;
+  const desc = describeListing(listing).en.slice(0, 160);
+  const title = `${listing.title} — ${formatPrice(listing.price, listing.listingType)}`;
   return {
-    title: `${listing.title} — ${formatPrice(listing.price, listing.listingType)}`,
-    description: describeListing(listing).en.slice(0, 160),
+    title,
+    description: desc,
+    openGraph: {
+      title,
+      description: desc,
+      url: `${BASE_URL}/listings/${id}`,
+      ...(photo && { images: [{ url: photo, width: 800, height: 600, alt: listing.title }] }),
+    },
+    twitter: { card: 'summary_large_image', title, description: desc, ...(photo && { images: [photo] }) },
   };
 }
 
@@ -139,7 +150,14 @@ export default async function ListingDetailPage({
                 </span>
               </div>
 
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{listing.title}</h1>
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{listing.title}</h1>
+                <AuctionShareButton
+                  title={listing.title}
+                  address={listing.location || listing.subarea}
+                  url={`${BASE_URL}/listings/${listing.id}`}
+                />
+              </div>
               {listing.location && (
                 <div className="flex items-center gap-1 text-gray-500 text-sm mb-4">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
