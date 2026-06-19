@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { supabase } from '@/lib/supabase';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const TO = 'support@ucigroupasia.com';
 const FROM = process.env.RESEND_FROM ?? 'eHartanah <onboarding@resend.dev>';
 
@@ -95,6 +94,7 @@ export async function POST(req: NextRequest) {
   <p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:16px">eHartanah Malaysia · ehartanahmalaysia.com</p>
 </div>`;
 
+  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     await resend.emails.send({ from: FROM, to: TO, subject, html });
   } catch (err) {
