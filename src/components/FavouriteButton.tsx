@@ -1,10 +1,19 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useLang } from '@/lib/i18n';
 
 const KEY = 'ehartanah_favs';
 
 export default function FavouriteButton({ id }: { id: string }) {
   const [saved, setSaved] = useState(false);
+  const { lang } = useLang();
+
+  const ariaLabel = saved
+    ? (lang === 'en' ? 'Remove from shortlist' : 'Buang dari senarai pendek')
+    : (lang === 'en' ? 'Save to shortlist' : 'Simpan ke senarai pendek');
+  const titleLabel = saved
+    ? (lang === 'en' ? 'Saved to shortlist' : 'Disimpan dalam senarai pendek')
+    : (lang === 'en' ? 'Save to shortlist' : 'Simpan ke senarai pendek');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -24,8 +33,8 @@ export default function FavouriteButton({ id }: { id: string }) {
   return (
     <button
       onClick={toggle}
-      aria-label={saved ? 'Remove from shortlist' : 'Save to shortlist'}
-      title={saved ? 'Saved to shortlist' : 'Save to shortlist'}
+      aria-label={ariaLabel}
+      title={titleLabel}
       className={`p-2 rounded-lg transition-colors shrink-0 ${
         saved
           ? 'text-rose-500 bg-rose-50 hover:bg-rose-100'

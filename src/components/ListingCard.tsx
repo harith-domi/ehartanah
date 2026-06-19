@@ -78,11 +78,11 @@ export default function ListingCard({ listing }: { listing: Listing }) {
           </span>
           {listing.featured ? (
             <span className="absolute top-3 right-3 bg-[#d4a017] text-[#0f2540] text-[10px] lg:text-[11px] font-bold px-2 py-0.5 lg:py-1 rounded-md tracking-wide">
-              Agency
+              <T en="Agency" bm="Agensi" />
             </span>
           ) : (
             <span className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-[10px] lg:text-[11px] font-semibold px-2 py-0.5 lg:py-1 rounded-md">
-              Private
+              <T en="Private" bm="Persendirian" />
             </span>
           )}
           {(listing.photos?.length ?? listing.imageCount) > 0 && (
@@ -91,7 +91,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              {listing.photos?.length ?? listing.imageCount} photos
+              {listing.photos?.length ?? listing.imageCount} <T en="photos" bm="gambar" />
             </span>
           )}
         </div>
@@ -160,7 +160,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
           {/* Footer */}
           <div className="mt-auto pt-2.5 border-t border-gray-50 flex items-center justify-between text-[11px] text-gray-400">
             <span className={`font-medium ${listing.featured ? 'text-[#1e3a5f]' : 'text-gray-400'}`}>
-              {listing.featured ? 'Agency Listing' : 'Private Owner'}
+              {listing.featured ? <T en="Agency Listing" bm="Senarai Agensi" /> : <T en="Private Owner" bm="Pemilik Persendirian" />}
             </span>
             <span className="shrink-0 ml-2">{formatPostedDate(listing.postedAt)}</span>
           </div>
@@ -174,7 +174,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
             href="/contact"
             className="flex-1 text-center bg-[#0f2540] hover:bg-[#0a1e38] text-white text-xs font-semibold py-2.5 lg:py-3 rounded-xl transition-colors"
           >
-            Enquire Now
+            <T en="Enquire Now" bm="Tanya Sekarang" />
           </Link>
         ) : wa ? (
           <a
@@ -193,7 +193,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
             href={`/listings/${listing.id}`}
             className="flex-1 text-center border border-gray-200 text-gray-600 hover:bg-gray-50 text-xs font-semibold py-2.5 lg:py-3 rounded-xl transition-colors"
           >
-            View Details
+            <T en="View Details" bm="Lihat Butiran" />
           </Link>
         )}
         <FavouriteButton id={listing.id} />

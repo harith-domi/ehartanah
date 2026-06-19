@@ -64,7 +64,6 @@ export default async function ListingDetailPage({
   if (!listing) notFound();
 
   const backPath = listing.listingType === 'rent' ? '/rent' : '/subsale';
-  const backLabel = listing.listingType === 'rent' ? 'Rent' : 'Subsale';
   const wa = whatsappLink(listing.phone);
   const psf = pricePerSqft(listing);
 
@@ -116,9 +115,11 @@ export default async function ListingDetailPage({
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-100 py-3">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-sm text-gray-500 flex gap-2">
-          <Link href="/" className="hover:text-[#1e3a5f]">Home</Link>
+          <Link href="/" className="hover:text-[#1e3a5f]"><T en="Home" bm="Utama" /></Link>
           <span>/</span>
-          <Link href={backPath} className="hover:text-[#1e3a5f]">{backLabel}</Link>
+          <Link href={backPath} className="hover:text-[#1e3a5f]">
+            {listing.listingType === 'rent' ? <T en="Rent" bm="Sewa" /> : <T en="Subsale" bm="Subsale" />}
+          </Link>
           <span>/</span>
           <span className="text-gray-800 truncate">{listing.title}</span>
         </div>
@@ -144,7 +145,7 @@ export default async function ListingDetailPage({
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
               <div className="flex items-center gap-2 mb-3">
                 <span className="bg-[#dce8f0] text-[#0f2540] text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide">
-                  {listing.listingType === 'rent' ? 'For Rent' : 'For Sale'}
+                  {listing.listingType === 'rent' ? <T en="For Rent" bm="Untuk Sewa" /> : <T en="For Sale" bm="Untuk Dijual" />}
                 </span>
                 <span className="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-md">
                   {listing.propertyType || listing.category}
@@ -190,7 +191,10 @@ export default async function ListingDetailPage({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-[#1e3a5f] hover:text-[#0f2540] font-semibold text-sm"
                   >
-                    View original listing{listing.imageCount > 0 ? ` with ${listing.imageCount} photos` : ''}
+                    <T
+                      en={`View original listing${listing.imageCount > 0 ? ` with ${listing.imageCount} photos` : ''}`}
+                      bm={`Lihat senarai asal${listing.imageCount > 0 ? ` dengan ${listing.imageCount} gambar` : ''}`}
+                    />
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -220,7 +224,7 @@ export default async function ListingDetailPage({
             {(listing.location || listing.subarea) && (
               <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
                 <div className="px-6 py-4 border-b border-gray-100">
-                  <h3 className="font-bold text-gray-900 text-sm">Location</h3>
+                  <h3 className="font-bold text-gray-900 text-sm"><T en="Location" bm="Lokasi" /></h3>
                   <p className="text-gray-500 text-xs mt-0.5">{listing.location || listing.subarea}</p>
                 </div>
                 <div className="relative w-full aspect-video sm:aspect-auto sm:h-64">
@@ -249,7 +253,7 @@ export default async function ListingDetailPage({
             />
 
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-              <h3 className="font-bold text-gray-900 mb-3 text-sm">Or contact directly</h3>
+              <h3 className="font-bold text-gray-900 mb-3 text-sm"><T en="Or contact directly" bm="Atau hubungi terus" /></h3>
               {wa && (
                 <a
                   href={wa}
@@ -257,7 +261,7 @@ export default async function ListingDetailPage({
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm mb-2"
                 >
-                  WhatsApp Owner
+                  <T en="WhatsApp Owner" bm="WhatsApp Pemilik" />
                 </a>
               )}
               {listing.phone && (
@@ -265,7 +269,7 @@ export default async function ListingDetailPage({
                   href={`tel:${listing.phone}`}
                   className="block text-center border border-gray-200 text-gray-700 font-semibold py-2.5 rounded-xl hover:bg-slate-50 transition-colors text-sm"
                 >
-                  Call {listing.phone}
+                  <T en="Call" bm="Hubungi" /> {listing.phone}
                 </a>
               )}
             </div>
@@ -275,13 +279,13 @@ export default async function ListingDetailPage({
             )}
 
             <div className="bg-gradient-to-br from-[#0f2540] to-[#1e3a5f] rounded-2xl p-5 text-white text-center">
-              <p className="font-bold mb-2 text-sm">Get AI Price Analysis</p>
-              <p className="text-[#fef3c7] text-xs mb-4">Ask our AI if this property is a good deal for your budget and goals</p>
+              <p className="font-bold mb-2 text-sm"><T en="Get AI Price Analysis" bm="Dapatkan Analisis Harga AI" /></p>
+              <p className="text-[#fef3c7] text-xs mb-4"><T en="Ask our AI if this property is a good deal for your budget and goals" bm="Tanya AI kami sama ada hartanah ini berbaloi untuk bajet dan matlamat anda" /></p>
               <Link href="/ai-search" className="block bg-white text-[#1e3a5f] font-semibold text-sm py-2.5 rounded-xl hover:bg-[#edf2f8] transition-colors mb-2">
-                Ask AI Now
+                <T en="Ask AI Now" bm="Tanya AI Sekarang" />
               </Link>
               <Link href="/calculator" className="block bg-white/10 hover:bg-white/20 text-white font-semibold text-sm py-2.5 rounded-xl transition-colors">
-                Loan Eligibility Calculator
+                <T en="Loan Eligibility Calculator" bm="Kalkulator Kelayakan Pinjaman" />
               </Link>
             </div>
           </div>
@@ -292,7 +296,7 @@ export default async function ListingDetailPage({
       {similar.length > 0 && (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 border-t border-gray-100">
           <h2 className="text-lg font-bold text-gray-900 mb-5">
-            Similar Properties in {listing.subarea || listing.region}
+            <T en={`Similar Properties in ${listing.subarea || listing.region}`} bm={`Hartanah Serupa di ${listing.subarea || listing.region}`} />
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {similar.map((l) => (

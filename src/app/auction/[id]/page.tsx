@@ -88,9 +88,9 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-100 py-3">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-sm text-gray-500 flex gap-2 min-w-0 overflow-hidden">
-          <Link href="/" className="hover:text-[#1e3a5f] shrink-0">Home</Link>
+          <Link href="/" className="hover:text-[#1e3a5f] shrink-0"><T en="Home" bm="Utama" /></Link>
           <span className="shrink-0">/</span>
-          <Link href="/auction" className="hover:text-[#1e3a5f] shrink-0">Auction</Link>
+          <Link href="/auction" className="hover:text-[#1e3a5f] shrink-0"><T en="Auction" bm="Lelongan" /></Link>
           <span className="shrink-0">/</span>
           <span className="text-gray-800 truncate">{l.propertyType} · {l.address.split(',')[0]}</span>
         </div>
@@ -156,7 +156,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
                     <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-md uppercase">
-                      Bank Auction
+                      <T en="Bank Auction" bm="Lelong Bank" />
                     </span>
                     <span className="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-md">
                       {l.propertyType}
@@ -239,7 +239,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
             {/* Map */}
             <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
               <div className="px-4 sm:px-5 py-4 border-b border-gray-100">
-                <h3 className="font-bold text-gray-900 text-sm">Location</h3>
+                <h3 className="font-bold text-gray-900 text-sm"><T en="Location" bm="Lokasi" /></h3>
                 <p className="text-gray-500 text-xs mt-0.5 truncate">{l.address}</p>
               </div>
               <div className="h-52 sm:h-64">

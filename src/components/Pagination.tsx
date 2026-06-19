@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import T from './T';
 
 function pageHref(basePath: string, params: Record<string, string | undefined>, page: number) {
   const sp = new URLSearchParams();
@@ -36,7 +37,7 @@ export default function Pagination({
     <nav className="flex items-center justify-center gap-2 mt-10 flex-wrap" aria-label="Pagination">
       {page > 1 && (
         <Link href={pageHref(basePath, params, page - 1)} className={linkClass}>
-          ← Prev
+          <T en="← Prev" bm="← Sebelum" />
         </Link>
       )}
       {pages[0] > 1 && (
@@ -60,7 +61,7 @@ export default function Pagination({
       )}
       {page < totalPages && (
         <Link href={pageHref(basePath, params, page + 1)} className={linkClass}>
-          Next →
+          <T en="Next →" bm="Seterusnya →" />
         </Link>
       )}
     </nav>
