@@ -15,6 +15,7 @@ const footerLinks: Record<string, { heading: { en: string; bm: string }; links: 
       { label: { en: 'Home', bm: 'Utama' }, href: '/' },
       { label: { en: 'AI Search', bm: 'Carian AI' }, href: '/ai-search' },
       { label: { en: 'Subsale', bm: 'Subsale' }, href: '/subsale' },
+      { label: { en: 'Rent', bm: 'Sewa' }, href: '/rent' },
       { label: { en: 'Auction', bm: 'Lelongan' }, href: '/auction' },
       { label: { en: 'Rent-to-Own', bm: 'Sewa Beli' }, href: '/rent-to-own' },
       { label: { en: 'Investment Insights', bm: 'Wawasan Pelaburan' }, href: '/investment-insights' },

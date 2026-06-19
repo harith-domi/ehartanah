@@ -193,12 +193,12 @@ export function isRoomRental(l: Listing): boolean {
 
 export function displayBedrooms(l: Listing): number | null {
   if (isRoomRental(l)) return null;
-  return l.bedrooms || null;
+  return l.bedrooms ?? null;
 }
 
 export function displayBathrooms(l: Listing): number | null {
   if (isRoomRental(l)) return null;
-  return l.bathrooms || null;
+  return l.bathrooms ?? null;
 }
 
 export function formatPostedDate(postedAt: string): string {
