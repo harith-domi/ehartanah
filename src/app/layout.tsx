@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-
+import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import { LanguageProvider } from '@/lib/i18n';
-
-const GA_ID = 'G-Q2DHDKRD2W';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -77,16 +75,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-MY">
-      <head>
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
-        <script dangerouslySetInnerHTML={{ __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_ID}');
-        ` }} />
-      </head>
       <body className={`${inter.className} bg-slate-50 text-gray-900 antialiased`}>
         <LanguageProvider>
           <Navbar />
@@ -94,6 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <WhatsAppWidget />
         </LanguageProvider>
+        <GoogleAnalytics gaId="G-Q2DHDKRD2W" />
       </body>
     </html>
   );
