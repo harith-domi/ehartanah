@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { AGENCY_WA } from '@/lib/listings';
+import { useLang } from '@/lib/i18n';
 
-const inquiryTypes = [
+const inquiryTypesEn = [
   'Buy Property',
   'Sell Property',
   'Auction Query',
@@ -11,6 +12,16 @@ const inquiryTypes = [
   'Investment Analysis',
   'Partnership',
   'Other',
+];
+
+const inquiryTypesBm = [
+  'Beli Hartanah',
+  'Jual Hartanah',
+  'Pertanyaan Lelongan',
+  'Sewa Beli',
+  'Analisis Pelaburan',
+  'Perkongsian',
+  'Lain-lain',
 ];
 
 export default function ContactPageClient() {
@@ -23,6 +34,45 @@ export default function ContactPageClient() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { lang } = useLang();
+
+  const t = lang === 'en' ? {
+    heading: 'Send us a Message',
+    fullName: 'Full Name *',
+    namePlaceholder: 'Your full name',
+    emailLabel: 'Email Address *',
+    emailPlaceholder: 'you@example.com',
+    phoneLabel: 'Phone Number',
+    phonePlaceholder: '+60 12-345 6789',
+    inquiryLabel: 'Inquiry Type',
+    inquiryPlaceholder: 'Select type...',
+    messageLabel: 'Message *',
+    messagePlaceholder: 'Tell us how we can help you...',
+    sending: 'Sending...',
+    submit: 'Send Message',
+    successHeading: 'Message Sent!',
+    successSub: "Thank you, {name}. We've received your message and will get back to you within 24 hours.",
+    sendAnother: 'Send another message',
+    inquiryTypes: inquiryTypesEn,
+  } : {
+    heading: 'Hantar Mesej Kepada Kami',
+    fullName: 'Nama Penuh *',
+    namePlaceholder: 'Nama penuh anda',
+    emailLabel: 'Alamat E-mel *',
+    emailPlaceholder: 'anda@contoh.com',
+    phoneLabel: 'Nombor Telefon',
+    phonePlaceholder: '+60 12-345 6789',
+    inquiryLabel: 'Jenis Pertanyaan',
+    inquiryPlaceholder: 'Pilih jenis...',
+    messageLabel: 'Mesej *',
+    messagePlaceholder: 'Beritahu kami bagaimana kami boleh membantu anda...',
+    sending: 'Menghantar...',
+    submit: 'Hantar Mesej',
+    successHeading: 'Mesej Dihantar!',
+    successSub: 'Terima kasih, {name}. Kami telah menerima mesej anda dan akan menghubungi anda dalam 24 jam.',
+    sendAnother: 'Hantar mesej lain',
+    inquiryTypes: inquiryTypesBm,
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -71,81 +121,81 @@ export default function ContactPageClient() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Message Sent!</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">{t.successHeading}</h2>
           <p className="text-gray-500 text-sm mb-6">
-            Thank you, {form.name}. We&apos;ve received your message and will get back to you within 24 hours.
+            {t.successSub.replace('{name}', form.name)}
           </p>
           <button
             onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', inquiryType: '', message: '' }); }}
             className="text-[#1e3a5f] font-semibold text-sm hover:underline"
           >
-            Send another message
+            {t.sendAnother}
           </button>
         </div>
       ) : (
         <>
-          <h2 className="text-lg font-bold text-gray-900 mb-5">Send us a Message</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-5">{t.heading}</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.fullName}</label>
                 <input
                   type="text"
                   name="name"
                   value={form.name}
                   onChange={handleChange}
                   required
-                  placeholder="Your full name"
+                  placeholder={t.namePlaceholder}
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.emailLabel}</label>
                 <input
                   type="email"
                   name="email"
                   value={form.email}
                   onChange={handleChange}
                   required
-                  placeholder="you@example.com"
+                  placeholder={t.emailPlaceholder}
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors"
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.phoneLabel}</label>
                 <input
                   type="tel"
                   name="phone"
                   value={form.phone}
                   onChange={handleChange}
-                  placeholder="+60 12-345 6789"
+                  placeholder={t.phonePlaceholder}
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Inquiry Type</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.inquiryLabel}</label>
                 <select
                   name="inquiryType"
                   value={form.inquiryType}
                   onChange={handleChange}
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors bg-white"
                 >
-                  <option value="">Select type...</option>
-                  {inquiryTypes.map((t) => <option key={t} value={t}>{t}</option>)}
+                  <option value="">{t.inquiryPlaceholder}</option>
+                  {t.inquiryTypes.map((type) => <option key={type} value={type}>{type}</option>)}
                 </select>
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Message *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.messageLabel}</label>
               <textarea
                 name="message"
                 value={form.message}
                 onChange={handleChange}
                 required
                 rows={5}
-                placeholder="Tell us how we can help you..."
+                placeholder={t.messagePlaceholder}
                 className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d4a017] transition-colors resize-none"
               />
             </div>
@@ -157,9 +207,9 @@ export default function ContactPageClient() {
               {loading ? (
                 <>
                   <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                  Sending...
+                  {t.sending}
                 </>
-              ) : 'Send Message'}
+              ) : t.submit}
             </button>
           </form>
         </>

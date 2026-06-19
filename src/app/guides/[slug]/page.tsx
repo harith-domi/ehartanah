@@ -56,7 +56,9 @@ export default async function GuidePage({ params }: Props) {
         <div className="space-y-8">
           {guide.sections.map((s) => (
             <section key={s.heading}>
-              <h2 className="text-lg font-bold text-gray-900 mb-3">{s.heading}</h2>
+              <h2 className="text-lg font-bold text-gray-900 mb-3">
+                <T en={s.headingEn ?? s.heading} bm={s.heading} />
+              </h2>
               {s.paragraphs.map((p) => (
                 <p key={p.slice(0, 40)} className="text-gray-600 text-sm leading-relaxed mb-3">{p}</p>
               ))}

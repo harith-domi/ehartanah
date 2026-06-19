@@ -30,6 +30,7 @@ export const guides: Guide[] = [
     sections: [
       {
         heading: 'Apa Itu Sewa Beli (Rent-to-Own)?',
+        headingEn: 'What Is Rent-to-Own?',
         paragraphs: [
           'Sewa beli ialah cara memiliki rumah tanpa perlu lulus pinjaman bank dari awal. Anda menyewa rumah tersebut untuk tempoh tertentu (biasanya 3 hingga 5 tahun), dan sebahagian daripada bayaran sewa bulanan anda dikira sebagai simpanan ke arah harga belian rumah.',
           'Pada penghujung tempoh, anda diberi pilihan untuk membeli rumah tersebut pada harga yang telah dipersetujui dari awal — dan simpanan terkumpul anda dijadikan sebahagian daripada deposit.',
@@ -37,6 +38,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Bagaimana Ia Berfungsi?',
+        headingEn: 'How Does It Work?',
         paragraphs: ['Proses sewa beli biasanya mengikut langkah berikut:'],
         bullets: [
           'Pilih rumah daripada senarai yang ditawarkan oleh penyedia program sewa beli',
@@ -48,6 +50,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Siapa Yang Sesuai Dengan Sewa Beli?',
+        headingEn: 'Who Is Rent-to-Own Suitable For?',
         paragraphs: ['Program ini direka khas untuk mereka yang mahu memiliki rumah tetapi menghadapi halangan:'],
         bullets: [
           'Pembeli kali pertama yang belum cukup deposit 10%',
@@ -59,6 +62,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Kos Sebenar: Apa Yang Perlu Anda Tahu',
+        headingEn: 'The Real Cost: What You Need to Know',
         paragraphs: [
           'Sewa bulanan program sewa beli biasanya 10% hingga 20% lebih tinggi daripada sewa pasaran — itulah "harga" untuk mengunci harga rumah dan membina simpanan. Contohnya, jika sewa pasaran RM1,500, sewa beli mungkin RM1,700-RM1,800 sebulan.',
           'Pastikan anda tahu berapa peratus daripada sewa yang sebenarnya masuk ke tabung pemilikan anda. Program yang baik akan nyatakan ini dengan jelas dalam perjanjian — biasanya 20% hingga 30% daripada bayaran bulanan.',
@@ -66,6 +70,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Perangkap Yang Perlu Dielakkan',
+        headingEn: 'Pitfalls to Avoid',
         paragraphs: ['Bukan semua program sewa beli sama. Sebelum tandatangan apa-apa:'],
         bullets: [
           'Pastikan perjanjian dinyatakan secara bertulis berapa harga belian akhir — bukan "harga pasaran semasa"',
@@ -77,6 +82,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Langkah Seterusnya',
+        headingEn: 'Next Steps',
         paragraphs: [
           'Jika anda rasa sewa beli sesuai untuk situasi anda, mulakan dengan menyemak kelayakan anda. Di eHartanah, kami sediakan semakan kelayakan percuma 1 minit — jawab 4 soalan dan penasihat kami akan hubungi anda dengan pilihan yang sesuai.',
         ],
@@ -96,6 +102,7 @@ export const guides: Guide[] = [
     sections: [
       {
         heading: 'Kenapa Loan Anda Ditolak?',
+        headingEn: 'Why Was Your Loan Rejected?',
         paragraphs: [
           'Hampir 40% permohonan loan rumah di Malaysia ditolak. Sebab paling biasa: rekod CCRIS menunjukkan bayaran lewat, komitmen hutang melebihi 60-70% pendapatan (DSR tinggi), tiada bukti pendapatan tetap, atau pernah masuk senarai AKPK.',
           'Penting untuk tahu sebab sebenar penolakan anda — minta penjelasan daripada bank atau semak laporan CCRIS anda secara percuma di laman Bank Negara Malaysia.',
@@ -103,6 +110,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Pilihan 1: Sewa Beli (Rent-to-Own)',
+        headingEn: 'Option 1: Rent-to-Own',
         paragraphs: [
           'Pilihan paling praktikal jika anda mahu masuk rumah segera. Anda tidak perlu lulus loan bank hari ini — anda duduk dulu, bina simpanan melalui sewa bulanan, dan mohon loan 3-5 tahun kemudian apabila rekod kredit anda sudah pulih.',
           'Deposit serendah 2-5%, dan harga rumah dikunci dari hari pertama. Sesuai untuk mereka yang yakin pendapatan akan stabil dalam beberapa tahun.',
@@ -110,6 +118,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Pilihan 2: Baiki CCRIS Dulu (6-12 Bulan)',
+        headingEn: 'Option 2: Fix Your CCRIS First (6–12 Months)',
         paragraphs: ['Rekod CCRIS hanya menyimpan sejarah 12 bulan terkini. Ini bermakna anda boleh "bersihkan" rekod dengan disiplin:'],
         bullets: [
           'Bayar SEMUA komitmen tepat pada masa selama 12 bulan berturut-turut',
@@ -121,6 +130,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Pilihan 3: Skim Kerajaan',
+        headingEn: 'Option 3: Government Schemes',
         paragraphs: ['Beberapa skim membantu pembeli yang sukar lulus loan biasa:'],
         bullets: [
           'Skim Rumah Pertamaku (SRP) — pembiayaan sehingga 110% untuk pembeli pertama bergaji bawah RM5,000',
@@ -131,18 +141,21 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Pilihan 4: Pembeli Bersama (Joint Application)',
+        headingEn: 'Option 4: Joint Application',
         paragraphs: [
           'Mohon bersama pasangan, adik-beradik, atau ibu bapa yang mempunyai rekod kredit bersih. Pendapatan digabungkan untuk DSR yang lebih baik. Pastikan persetujuan jelas tentang pemilikan — nama siapa di geran, siapa bayar apa.',
         ],
       },
       {
         heading: 'Pilihan 5: Rumah Lelong (Dengan Berhati-hati)',
+        headingEn: 'Option 5: Auction Properties (With Caution)',
         paragraphs: [
           'Rumah lelong dijual 20-30% bawah harga pasaran, jadi loan yang lebih kecil diperlukan — kadangkala cukup untuk lulus walaupun DSR anda ketat. Tetapi lelong ada risiko sendiri: tunggakan penyelenggaraan, penghuni enggan keluar, dan deposit 10% yang hangus jika loan tidak lulus. Buat kajian dulu.',
         ],
       },
       {
         heading: 'Kesimpulan',
+        headingEn: 'Conclusion',
         paragraphs: [
           'Ditolak loan bukan penamat — ia cuma bermakna laluan konvensional tertutup buat masa ini. Pilihan paling sesuai bergantung pada situasi anda: jika perlu rumah segera, pertimbangkan sewa beli; jika boleh tunggu setahun, baiki CCRIS dulu.',
           'Tidak pasti pilihan mana sesuai? Gunakan semakan kelayakan percuma kami atau hubungi penasihat eHartanah melalui WhatsApp.',
@@ -163,6 +176,7 @@ export const guides: Guide[] = [
     sections: [
       {
         heading: 'Perbezaan Asas',
+        headingEn: 'The Core Difference',
         paragraphs: [
           'Sewa biasa: anda bayar untuk tinggal, habis bulan, duit tu hilang. Fleksibel — boleh pindah bila-bila selepas tempoh perjanjian.',
           'Sewa beli: anda bayar lebih sedikit setiap bulan, tetapi sebahagiannya terkumpul sebagai simpanan ke arah pemilikan rumah tersebut. Kurang fleksibel, tetapi setiap bulan membawa anda lebih dekat kepada memiliki aset.',
@@ -170,6 +184,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Perbandingan Kos: Contoh Sebenar',
+        headingEn: 'Cost Comparison: A Real Example',
         paragraphs: ['Ambil contoh apartmen RM300,000 di Selangor:'],
         bullets: [
           'Sewa biasa: RM1,500/bulan × 5 tahun = RM90,000 dibayar, RM0 terkumpul',
@@ -180,6 +195,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Bila Sewa Biasa Lebih Berbaloi',
+        headingEn: 'When Regular Rental Makes More Sense',
         paragraphs: ['Sewa beli bukan untuk semua orang. Kekal dengan sewa biasa jika:'],
         bullets: [
           'Kerjaya anda mungkin perlukan pindah negeri dalam 2-3 tahun',
@@ -190,6 +206,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Bila Sewa Beli Lebih Berbaloi',
+        headingEn: 'When Rent-to-Own Makes More Sense',
         paragraphs: ['Sewa beli paling masuk akal jika:'],
         bullets: [
           'Anda sudah tahu mahu menetap di kawasan tersebut 5+ tahun',
@@ -200,6 +217,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Soalan Untuk Tanya Sebelum Tandatangan',
+        headingEn: 'Questions to Ask Before Signing',
         paragraphs: ['Jika anda memilih sewa beli, pastikan jawapan kepada soalan ini jelas dalam perjanjian:'],
         bullets: [
           'Berapa peratus sewa bulanan masuk ke tabung pemilikan saya?',
@@ -211,6 +229,7 @@ export const guides: Guide[] = [
       },
       {
         heading: 'Kesimpulan',
+        headingEn: 'Conclusion',
         paragraphs: [
           'Sewa biasa membeli fleksibiliti. Sewa beli membeli masa — masa untuk membaiki kredit, mengumpul deposit, dan mengunci harga sebelum naik. Pilihan terbaik bergantung pada kestabilan hidup dan matlamat 5 tahun anda.',
           'Mahu tahu sama ada profil anda sesuai untuk sewa beli? Cuba semakan kelayakan percuma 1 minit di halaman Sewa Beli kami.',
