@@ -47,7 +47,9 @@ export default async function RentAreaPage({
 }) {
   const { area } = await params;
   const region = fromSlug(area);
-  const filtered = rentListings.filter((l) => l.region === region);
+  const all = rentListings.filter((l) => l.region === region);
+  const filtered = all.slice(0, 100);
+  const hasMore = all.length > 100;
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -106,6 +108,12 @@ export default async function RentAreaPage({
                 <ListingCard key={listing.id} listing={listing} />
               ))}
             </div>
+            {hasMore && (
+              <p className="text-center text-sm text-gray-500 mt-8">
+                Showing 100 of {all.length.toLocaleString('en-MY')} listings. Use the search on the{' '}
+                <Link href="/rent" className="text-[#1e3a5f] font-medium underline">Rent page</Link> to filter further.
+              </p>
+            )}
           </>
         )}
       </div>
