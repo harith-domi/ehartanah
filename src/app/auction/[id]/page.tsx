@@ -5,6 +5,8 @@ import { auctionListings, getAuctionListing, AGENCY_PHONE } from '@/lib/listings
 import FavouriteButton from '@/components/FavouriteButton';
 import AuctionCountdown from '@/components/AuctionCountdown';
 import AuctionShareButton from '@/components/AuctionShareButton';
+import ShareButton from '@/components/ShareButton';
+import RecentlyViewed from '@/components/RecentlyViewed';
 import MortgageCalculator from '@/components/MortgageCalculator';
 import T from '@/components/T';
 import EnquiryForm from '@/components/EnquiryForm';
@@ -103,6 +105,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
           <T en="Enquire via WhatsApp" bm="Tanya via WhatsApp" />
         </a>
         <FavouriteButton id={l.id} type="auction" />
+        <ShareButton title={`${l.propertyType} Lelong — ${l.address.split(',')[0]}`} />
         <AuctionShareButton title={`${l.propertyType} Lelong`} address={l.address} url={pageUrl} />
       </div>
 
@@ -194,6 +197,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                 {/* Desktop fav + share — hidden on mobile (in sticky bar instead) */}
                 <div className="hidden lg:flex items-center gap-1 shrink-0">
                   <FavouriteButton id={l.id} type="auction" />
+                  <ShareButton title={`${l.propertyType} Lelong — ${l.address.split(',')[0]}`} />
                   <AuctionShareButton title={`${l.propertyType} Lelong`} address={l.address} url={pageUrl} />
                 </div>
               </div>
@@ -308,6 +312,17 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
               <MortgageCalculator reservePrice={l.reservePrice} />
             </div>
           </div>
+        </div>
+
+        {/* Recently Viewed */}
+        <div className="mt-8">
+          <RecentlyViewed
+            currentId={l.id}
+            type="auction"
+            title={`${l.propertyType} — ${l.address.split(',')[0]}`}
+            price={l.reservePrice}
+            photo={l.photos?.[0]}
+          />
         </div>
 
         {/* Similar listings */}

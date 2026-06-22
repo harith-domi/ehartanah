@@ -21,6 +21,8 @@ import BackButton from '@/components/BackButton';
 import T from '@/components/T';
 import EnquiryForm from '@/components/EnquiryForm';
 import AuctionShareButton from '@/components/AuctionShareButton';
+import ShareButton from '@/components/ShareButton';
+import RecentlyViewed from '@/components/RecentlyViewed';
 import MortgageCalculator from '@/components/MortgageCalculator';
 import { describeListing } from '@/lib/describe';
 import { areaPhoto } from '@/lib/areaPhotos';
@@ -182,11 +184,14 @@ export default async function ListingDetailPage({
 
               <div className="flex items-start justify-between gap-2 mb-2">
                 <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{listing.title}</h1>
-                <AuctionShareButton
-                  title={listing.title}
-                  address={listing.location || listing.subarea}
-                  url={`${BASE_URL}/listings/${listing.id}`}
-                />
+                <div className="flex items-center gap-1 shrink-0">
+                  <ShareButton title={listing.title} />
+                  <AuctionShareButton
+                    title={listing.title}
+                    address={listing.location || listing.subarea}
+                    url={`${BASE_URL}/listings/${listing.id}`}
+                  />
+                </div>
               </div>
               {listing.location && (
                 <div className="flex items-center gap-1 text-gray-500 text-sm mb-4">
@@ -318,6 +323,17 @@ export default async function ListingDetailPage({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Recently Viewed */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-2">
+        <RecentlyViewed
+          currentId={listing.id}
+          type="listing"
+          title={listing.title}
+          price={listing.price}
+          photo={listing.photos?.[0] ?? listing.thumbnailUrl}
+        />
       </div>
 
       {/* Similar listings */}
