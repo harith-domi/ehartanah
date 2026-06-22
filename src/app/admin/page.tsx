@@ -1,4 +1,5 @@
 import { auctionListings } from '@/lib/listings';
+import AdminTable from './AdminTable';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Admin — Full Addresses' };
@@ -30,35 +31,8 @@ export default async function AdminPage({
           <p className="text-blue-200 text-sm mt-1">Private — not visible to customers</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-100">
-              <tr>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600 w-8">#</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">ID</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">Type</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">Full Address (with unit no.)</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">Reserve Price</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {auctionListings.map((l, i) => (
-                <tr key={l.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 text-gray-400">{i + 1}</td>
-                  <td className="px-4 py-3 text-gray-500 font-mono text-xs">{l.id}</td>
-                  <td className="px-4 py-3 text-gray-700">{l.propertyType}</td>
-                  <td className="px-4 py-3 text-gray-900">{l.address || '—'}</td>
-                  <td className="px-4 py-3 font-semibold text-[#1e3a5f]">
-                    RM {l.reservePrice.toLocaleString('en-MY')}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-gray-400 mt-4 text-center">
-          {auctionListings.length} auction properties · eHartanah Admin
-        </p>
+        <AdminTable listings={auctionListings} />
+        <p className="text-xs text-gray-400 mt-4 text-center">eHartanah Admin</p>
       </div>
     </main>
   );
