@@ -10,7 +10,8 @@ export default async function AdminPage({
 }) {
   const { key } = await searchParams;
 
-  if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) {
+  const adminKey = process.env.ADMIN_KEY?.trim();
+  if (!adminKey || key !== adminKey) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
