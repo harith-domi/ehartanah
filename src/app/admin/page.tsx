@@ -1,6 +1,6 @@
-import { notFound } from 'next/navigation';
 import { auctionListings } from '@/lib/listings';
 
+export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Admin — Full Addresses' };
 
 export default async function AdminPage({
@@ -11,7 +11,14 @@ export default async function AdminPage({
   const { key } = await searchParams;
 
   if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) {
-    notFound();
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <p className="text-4xl font-bold text-gray-300 mb-2">403</p>
+          <p className="text-gray-500">Access denied.</p>
+        </div>
+      </main>
+    );
   }
 
   return (
