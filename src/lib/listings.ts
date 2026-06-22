@@ -211,6 +211,16 @@ export function formatPostedDate(postedAt: string): string {
   return d.toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+// Strip unit/parcel number from address for public display.
+// Full address (with unit no.) stays in the data for internal use.
+export function stripUnitNo(address: string): string {
+  return address
+    .replace(/^Unit No\. [^,]+,\s*/i, '')
+    .replace(/^Parcel No\. [^,]+,\s*/i, '')
+    .replace(/^No\. [^,]+,\s*/i, '')
+    .trim();
+}
+
 export const AGENCY_PHONE = '60149999309';
 export const AGENCY_WA = `https://wa.me/${AGENCY_PHONE}`;
 

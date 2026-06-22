@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { auctionListings, getAuctionListing, AGENCY_PHONE } from '@/lib/listings';
+import { auctionListings, getAuctionListing, AGENCY_PHONE, stripUnitNo } from '@/lib/listings';
 import FavouriteButton from '@/components/FavouriteButton';
 import AuctionCountdown from '@/components/AuctionCountdown';
 import AuctionShareButton from '@/components/AuctionShareButton';
@@ -191,7 +191,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                       </span>
                     )}
                   </div>
-                  <h1 className="text-lg sm:text-xl font-bold text-gray-900 leading-snug">{l.address}</h1>
+                  <h1 className="text-lg sm:text-xl font-bold text-gray-900 leading-snug">{stripUnitNo(l.address)}</h1>
                   <p className="text-gray-500 text-sm mt-1">{l.region}</p>
                 </div>
                 {/* Desktop fav + share — hidden on mobile (in sticky bar instead) */}
@@ -265,7 +265,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
             <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
               <div className="px-4 sm:px-5 py-4 border-b border-gray-100">
                 <h3 className="font-bold text-gray-900 text-sm"><T en="Location" bm="Lokasi" /></h3>
-                <p className="text-gray-500 text-xs mt-0.5 truncate">{l.address}</p>
+                <p className="text-gray-500 text-xs mt-0.5 truncate">{stripUnitNo(l.address)}</p>
               </div>
               <div className="h-52 sm:h-64">
                 <iframe

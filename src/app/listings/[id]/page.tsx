@@ -14,6 +14,7 @@ import {
   ownRentListings,
   saleListings,
   rentListings,
+  stripUnitNo,
 } from '@/lib/listings';
 import ListingCard from '@/components/ListingCard';
 import PhotoGallery from '@/components/PhotoGallery';
@@ -199,7 +200,7 @@ export default async function ListingDetailPage({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  {listing.location}
+                  {stripUnitNo(listing.location)}
                 </div>
               )}
 
@@ -258,7 +259,7 @@ export default async function ListingDetailPage({
               <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
                 <div className="px-6 py-4 border-b border-gray-100">
                   <h3 className="font-bold text-gray-900 text-sm"><T en="Location" bm="Lokasi" /></h3>
-                  <p className="text-gray-500 text-xs mt-0.5">{listing.location || listing.subarea}</p>
+                  <p className="text-gray-500 text-xs mt-0.5">{stripUnitNo(listing.location || listing.subarea)}</p>
                 </div>
                 <div className="relative w-full aspect-video sm:aspect-auto sm:h-64">
                   <iframe
