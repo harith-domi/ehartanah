@@ -12,9 +12,7 @@ const navLinks = [
   { en: 'Properties',  bm: 'Hartanah',    href: '/browse' },
   { en: 'Auction',     bm: 'Lelongan',    href: '/auction' },
   { en: 'Rent-to-Own', bm: 'Sewa Beli',   href: '/rent-to-own' },
-  { en: 'Insights',    bm: 'Wawasan',     href: '/investment-insights' },
   { en: 'Market Stats', bm: 'Statistik Pasaran', href: '/market' },
-  { en: 'Calculator',  bm: 'Kalkulator',  href: '/calculator' },
   { en: 'Guides',      bm: 'Panduan',     href: '/guides' },
 ];
 
