@@ -211,14 +211,29 @@ export function formatPostedDate(postedAt: string): string {
   return d.toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-// Strip unit/parcel number from address for public display.
-// Full address (with unit no.) stays in the data for internal use.
+// Strip unit/lot/house numbers from address for public display.
+// Full address stays in the data — only visible in /admin.
 export function stripUnitNo(address: string): string {
-  return address
-    .replace(/^Unit No\. [^,]+,\s*/i, '')
-    .replace(/^Parcel No\. [^,]+,\s*/i, '')
-    .replace(/^No\. [^,]+,\s*/i, '')
-    .trim();
+  let a = address.trim();
+  // Keep applying until nothing changes (handles stacked prefixes)
+  let prev = '';
+  while (a !== prev) {
+    prev = a;
+    a = a
+      // Unit No. A-08-10, / Unit No. Cindai 4-14,
+      .replace(/^Unit No\. [^,]+,\s*/i, '')
+      // Parcel No. X,
+      .replace(/^Parcel No\. [^,]+,\s*/i, '')
+      // Lot No. X, / Lot 123,
+      .replace(/^Lot No\. [^,]+,\s*/i, '')
+      .replace(/^Lot \d+[^,]*,\s*/i, '')
+      // PTD 123, / PT 456, (Malaysian land lot numbers)
+      .replace(/^PTD? \d+[^,]*,\s*/i, '')
+      // House/premise numbers: No. 49, / No 504, / No. 33A, / No. 42-00 & 42-01,
+      .replace(/^No\.?\s*\d[\w\-& ]{0,30},\s*/i, '')
+      .trim();
+  }
+  return a;
 }
 
 export const AGENCY_PHONE = '60149999309';

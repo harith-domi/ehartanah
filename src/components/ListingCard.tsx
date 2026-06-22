@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Listing, formatPrice, formatSize, formatPostedDate, whatsappLink, pricePerSqft, displayBedrooms, displayBathrooms } from '@/lib/listings';
+import { Listing, formatPrice, formatSize, formatPostedDate, whatsappLink, pricePerSqft, displayBedrooms, displayBathrooms, stripUnitNo } from '@/lib/listings';
 import { areaPhoto } from '@/lib/areaPhotos';
 import FavouriteButton from './FavouriteButton';
 import CompareButton from './CompareButton';
@@ -42,7 +42,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
   const baths = displayBathrooms(listing);
   const size = formatSize(listing);
   const psf = pricePerSqft(listing);
-  const location = listing.location || [listing.subarea, listing.region].filter(Boolean).join(', ');
+  const location = stripUnitNo(listing.location || [listing.subarea, listing.region].filter(Boolean).join(', '));
   const wa = whatsappLink(listing.phone);
 
   return (
