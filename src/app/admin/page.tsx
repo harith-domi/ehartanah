@@ -1,4 +1,4 @@
-import { auctionListings } from '@/lib/listings';
+import { auctionListings, ownListings } from '@/lib/listings';
 import AdminTable from './AdminTable';
 
 export const dynamic = 'force-dynamic';
@@ -31,7 +31,26 @@ export default async function AdminPage({
           <p className="text-blue-200 text-sm mt-1">Private — not visible to customers</p>
         </div>
 
-        <AdminTable listings={auctionListings} />
+        <AdminTable
+          listings={[
+            ...auctionListings.map((l) => ({
+              id: l.id,
+              propertyType: l.propertyType,
+              region: l.region,
+              address: l.address,
+              price: l.reservePrice,
+              source: 'Auction' as const,
+            })),
+            ...ownListings.map((l) => ({
+              id: l.id,
+              propertyType: l.category,
+              region: l.region,
+              address: l.location,
+              price: l.price ?? 0,
+              source: 'Agency' as const,
+            })),
+          ]}
+        />
         <p className="text-xs text-gray-400 mt-4 text-center">eHartanah Admin</p>
       </div>
     </main>
