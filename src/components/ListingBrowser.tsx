@@ -21,6 +21,7 @@ export interface BrowseParams {
   sort?: string;
   page?: string;
   privateOnly?: string;
+  source?: string;
 }
 
 export default function ListingBrowser({
@@ -34,13 +35,21 @@ export default function ListingBrowser({
   params: BrowseParams;
   showTypeFilter?: boolean;
 }) {
+  // Source filter
+  const sourceFiltered =
+    params.source === 'agency'
+      ? listings.filter((l) => l.featured === true)
+      : params.source === 'community'
+      ? listings.filter((l) => !l.featured)
+      : listings;
+
   // Type filter
   const typeFiltered =
     params.type === 'rent'
-      ? listings.filter((l) => l.listingType === 'rent')
+      ? sourceFiltered.filter((l) => l.listingType === 'rent')
       : params.type === 'sale'
-      ? listings.filter((l) => l.listingType === 'sale')
-      : listings;
+      ? sourceFiltered.filter((l) => l.listingType === 'sale')
+      : sourceFiltered;
 
   const regions = uniqueRegions(typeFiltered);
   const categories = uniqueCategories(typeFiltered);
@@ -77,6 +86,26 @@ export default function ListingBrowser({
     if (params.beds) p.set('beds', params.beds);
     if (params.sort) p.set('sort', params.sort);
     if (params.privateOnly === 'true') p.set('privateOnly', 'true');
+    if (params.source) p.set('source', params.source);
+    const qs = p.toString();
+    return qs ? `${basePath}?${qs}` : basePath;
+  }
+
+  const activeSource = params.source ?? 'all';
+  const agencyCount = listings.filter((l) => l.featured === true).length;
+  const communityCount = listings.filter((l) => !l.featured).length;
+
+  function sourceHref(val: string) {
+    const p = new URLSearchParams();
+    if (params.type) p.set('type', params.type);
+    if (params.q) p.set('q', params.q);
+    if (params.region && params.region !== 'All') p.set('region', params.region);
+    if (params.category && params.category !== 'All') p.set('category', params.category);
+    if (params.minPrice) p.set('minPrice', params.minPrice);
+    if (params.maxPrice) p.set('maxPrice', params.maxPrice);
+    if (params.beds) p.set('beds', params.beds);
+    if (params.sort) p.set('sort', params.sort);
+    if (val !== 'all') p.set('source', val);
     const qs = p.toString();
     return qs ? `${basePath}?${qs}` : basePath;
   }
@@ -133,10 +162,32 @@ export default function ListingBrowser({
             </div>
           )}
 
+          {/* Source tabs — Agency / Community */}
+          <div className="flex gap-0 border-b border-gray-100">
+            {[
+              { key: 'all', en: `All (${listings.length.toLocaleString('en-MY')})`, bm: `Semua (${listings.length.toLocaleString('en-MY')})` },
+              { key: 'agency', en: `Agency (${agencyCount})`, bm: `Agensi (${agencyCount})` },
+              { key: 'community', en: `Community (${communityCount.toLocaleString('en-MY')})`, bm: `Komuniti (${communityCount.toLocaleString('en-MY')})` },
+            ].map((tab) => (
+              <Link
+                key={tab.key}
+                href={sourceHref(tab.key)}
+                className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                  activeSource === tab.key
+                    ? 'border-[#0f2540] text-[#0f2540]'
+                    : 'border-transparent text-gray-400 hover:text-gray-600'
+                }`}
+              >
+                <T en={tab.en} bm={tab.bm} />
+              </Link>
+            ))}
+          </div>
+
           {/* Filter row — on mobile only search + Search are visible; the rest
               collapses behind a Filters toggle (CSS-only checkbox + peer) */}
           <form method="GET" action={basePath} className="py-3">
             {params.type && <input type="hidden" name="type" value={params.type} />}
+            {params.source && <input type="hidden" name="source" value={params.source} />}
             <input type="checkbox" id="filter-toggle" className="peer hidden" />
 
             {/* Always-visible compact row */}
