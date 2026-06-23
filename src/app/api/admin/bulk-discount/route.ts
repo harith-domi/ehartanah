@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   }
 
   const sb = createAdminSupabase();
-  const { data, error } = await sb.from('admin_listings').select('id,price').not('price', 'is', null).or('source.eq.New,source.is.null');
+  const { data, error } = await sb.from('admin_listings').select('id,price').not('price', 'is', null).or('source.eq.New,source.eq.Rent,source.is.null');
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   const pct = Number(req.nextUrl.searchParams.get('pct') ?? '30') / 100;
