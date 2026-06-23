@@ -1,13 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
-const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
+const clean = (s: string) => s.replace(/[^\x20-\x7e]/g, '').trim();
+
+const url = clean(process.env.NEXT_PUBLIC_SUPABASE_URL ?? '');
+const key = clean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '');
 
 export const supabase = url && key ? createClient(url, key) : null;
 
 // Server-side admin client — bypasses RLS, server only
 export function createAdminSupabase() {
-  return createClient(url, process.env.SUPABASE_SERVICE_ROLE_KEY ?? key);
+  return createClient(url, clean(process.env.SUPABASE_SERVICE_ROLE_KEY ?? key));
 }
 
 export type AdminListing = {
