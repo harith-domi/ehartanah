@@ -90,11 +90,15 @@ export default function NewListingForm({ adminKey }: Props) {
       const photoUrls: string[] = [];
       for (let i = 0; i < photos.length; i++) {
         const f = photos[i];
-        const mime = f.type || 'image/jpeg';
+        // Strip any non-ASCII from the MIME type (e.g. BOM from clipboard)
+        const mime = (f.type || 'image/jpeg').replace(/[^\x20-\x7e]/g, '') || 'image/jpeg';
+        // Convert to ArrayBuffer so no File metadata is attached to the request
+        const buffer = await f.arrayBuffer();
         const res = await fetch(`/api/admin/photo?k=${cleanKey}&folder=${folder}&idx=${i}`, {
           method: 'POST',
           headers: { 'Content-Type': mime },
-          body: f,
+          body: buffer,
+          referrerPolicy: 'no-referrer',
         });
         const json = await res.json();
         if (json.url) photoUrls.push(json.url);
@@ -105,6 +109,7 @@ export default function NewListingForm({ adminKey }: Props) {
       const res = await fetch(`/api/admin/listing?k=${cleanKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        referrerPolicy: 'no-referrer',
         body: JSON.stringify({
           title: get('title'),
           listing_type: get('listing_type'),
