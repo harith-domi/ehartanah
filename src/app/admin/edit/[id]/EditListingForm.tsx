@@ -88,6 +88,7 @@ export default function EditListingForm({ listing, adminKey }: Props) {
         referrerPolicy: 'no-referrer',
         body: JSON.stringify({
           title: get('title'),
+          source: get('source'),
           listing_type: get('listing_type'),
           price: get('price'),
           category: get('category'),
@@ -171,7 +172,17 @@ export default function EditListingForm({ listing, adminKey }: Props) {
               <label className={label}>Title *</label>
               <input name="title" required defaultValue={listing.title} className={field} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className={label}>Source *</label>
+                <select name="source" required defaultValue={listing.source ?? 'New'} className={field}>
+                  <option value="New">New</option>
+                  <option value="Agency">Agency</option>
+                  <option value="Sale">Sale</option>
+                  <option value="Rent">Rent</option>
+                  <option value="Auction">Auction</option>
+                </select>
+              </div>
               <div>
                 <label className={label}>Listing Type *</label>
                 <select name="listing_type" required defaultValue={listing.listing_type} className={field}>

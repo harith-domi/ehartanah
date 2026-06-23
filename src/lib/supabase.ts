@@ -29,6 +29,7 @@ export type AdminListing = {
   description: string;
   phone: string;
   tenure: string;
+  source?: string;
   photos: string[];
   image_count: number;
   thumbnail_url: string;

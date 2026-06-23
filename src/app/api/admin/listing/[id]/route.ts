@@ -30,6 +30,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     description: String(body.description ?? ''),
     phone: String(body.phone ?? ''),
     tenure: String(body.tenure ?? ''),
+    source: String(body.source ?? 'New'),
     photos,
     image_count: photos.length,
     thumbnail_url: photos[0] ?? '',

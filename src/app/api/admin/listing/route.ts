@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
     description: String(body.description ?? ''),
     phone: String(body.phone ?? ''),
     tenure: String(body.tenure ?? ''),
+    source: String(body.source ?? 'New'),
     photos,
     image_count: photos.length,
     thumbnail_url: photos[0] ?? '',

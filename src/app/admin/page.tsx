@@ -32,10 +32,10 @@ export default async function AdminPage({
   }
 
   // Fetch Supabase admin-added listings
-  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New'; publicUrl: string }[] = [];
+  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string }[] = [];
   try {
     const sb = createAdminSupabase();
-    const { data } = await sb.from('admin_listings').select('id,category,region,location,price').order('posted_at', { ascending: false });
+    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source').order('posted_at', { ascending: false });
     if (data) {
       supabaseRows = (data as AdminListing[]).map((l) => ({
         id: l.id,
@@ -43,7 +43,7 @@ export default async function AdminPage({
         region: l.region,
         address: l.location,
         price: l.price ?? 0,
-        source: 'New' as const,
+        source: (['New','Agency','Sale','Rent','Auction'].includes(l.source ?? '') ? l.source : 'New') as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction',
         publicUrl: `${DOMAIN}/listings/${l.id}`,
       }));
     }
