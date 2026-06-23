@@ -10,9 +10,11 @@ export default async function AdminNewPage({
   searchParams: Promise<{ key?: string }>;
 }) {
   const { key } = await searchParams;
-  const adminKey = process.env.ADMIN_KEY?.trim();
+  const clean = (s?: string) => (s ?? '').replace(/[^\x20-\x7e]/g, '').trim();
+  const adminKey = clean(process.env.ADMIN_KEY);
+  const incomingKey = clean(key);
 
-  if (!adminKey || key !== adminKey) {
+  if (!adminKey || incomingKey !== adminKey) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
@@ -28,7 +30,7 @@ export default async function AdminNewPage({
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center gap-4 mb-6">
           <Link
-            href={`/admin?key=${key}`}
+            href={`/admin?key=${incomingKey}`}
             className="text-sm text-gray-500 hover:text-gray-700"
           >
             ← Back to Admin
@@ -42,7 +44,7 @@ export default async function AdminNewPage({
           </p>
         </div>
 
-        <NewListingForm adminKey={key} />
+        <NewListingForm adminKey={incomingKey} />
       </div>
     </main>
   );

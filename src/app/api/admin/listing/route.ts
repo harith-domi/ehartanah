@@ -11,10 +11,11 @@ function slugify(text: string): string {
 }
 
 export async function POST(req: NextRequest) {
-  const adminKey = process.env.ADMIN_KEY?.trim();
+  const clean = (s?: string | null) => (s ?? '').replace(/[^\x20-\x7e]/g, '').trim();
+  const adminKey = clean(process.env.ADMIN_KEY);
   const sb = createAdminSupabase();
   const formData = await req.formData();
-  const authKey = (formData.get('_adminKey') as string | null)?.trim();
+  const authKey = clean(formData.get('_adminKey') as string | null);
   if (!adminKey || authKey !== adminKey) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
