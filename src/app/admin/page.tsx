@@ -1,5 +1,8 @@
 import { auctionListings, ownListings, saleListings, rentListings } from '@/lib/listings';
 import AdminFilters from './AdminFilters';
+import CopyButton from './CopyButton';
+
+const DOMAIN = 'https://ehartanahmalaysia.com';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Admin — All Listings' };
@@ -26,10 +29,10 @@ export default async function AdminPage({
   }
 
   const allRows = [
-    ...auctionListings.map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const })),
-    ...ownListings.map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const })),
-    ...saleListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const })),
-    ...rentListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const })),
+    ...auctionListings.map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}` })),
+    ...ownListings.map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}` })),
+    ...saleListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}` })),
+    ...rentListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}` })),
   ];
 
   const regions = [...new Set(allRows.map((r) => r.region).filter(Boolean))].sort();
@@ -91,11 +94,12 @@ export default async function AdminPage({
                 <th className="text-left px-4 py-3 font-semibold text-gray-600">Region</th>
                 <th className="text-left px-4 py-3 font-semibold text-gray-600">Address / Location</th>
                 <th className="text-left px-4 py-3 font-semibold text-gray-600 whitespace-nowrap">Price</th>
+                <th className="text-left px-4 py-3 font-semibold text-gray-600">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {rows.length === 0 ? (
-                <tr><td colSpan={6} className="px-4 py-10 text-center text-gray-400">No listings match your search.</td></tr>
+                <tr><td colSpan={7} className="px-4 py-10 text-center text-gray-400">No listings match your search.</td></tr>
               ) : rows.map((r, i) => (
                 <tr key={r.id} className="hover:bg-blue-50/30">
                   <td className="px-4 py-2.5 text-gray-400 text-xs">{(page - 1) * PER_PAGE + i + 1}</td>
@@ -112,6 +116,19 @@ export default async function AdminPage({
                   <td className="px-4 py-2.5 text-gray-900 text-xs">{r.address || '—'}</td>
                   <td className="px-4 py-2.5 font-semibold text-[#1e3a5f] whitespace-nowrap text-xs">
                     {r.price ? `RM ${r.price.toLocaleString('en-MY')}` : '—'}
+                  </td>
+                  <td className="px-4 py-2.5">
+                    <div className="flex gap-1.5 items-center">
+                      <a
+                        href={r.publicUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2 py-1 text-xs rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#1e3a5f] hover:border-gray-300 whitespace-nowrap"
+                      >
+                        ↗ Open
+                      </a>
+                      <CopyButton url={r.publicUrl} />
+                    </div>
                   </td>
                 </tr>
               ))}
