@@ -11,25 +11,38 @@ function median(prices: number[]): number {
   return sorted.length % 2 ? sorted[mid] : Math.round((sorted[mid - 1] + sorted[mid]) / 2);
 }
 
+// Map admin categories to rent data categories
+function rentCategory(category: string): string[] {
+  const c = category.toLowerCase();
+  if (c.includes('terrace') || c.includes('link') || c.includes('semi') || c.includes('bungalow') || c.includes('townhouse')) {
+    return ['house', 'terrace / link house', 'semi-detached house', 'bungalow', 'townhouse'];
+  }
+  if (c.includes('apartment') || c.includes('condominium') || c.includes('flat') || c.includes('serviced')) {
+    return ['apartment / condominium', 'serviced residence', 'flat', 'studio', 'duplex', 'penthouse'];
+  }
+  return [c];
+}
+
 function findRentPrice(subarea: string, region: string, category: string): { price: number; matches: number } | null {
   const rentListings = rentData as RentListing[];
   const subareaLower = subarea.toLowerCase();
   const regionLower = region.toLowerCase();
-  const categoryLower = category.toLowerCase();
+  const cats = rentCategory(category);
+  const matchesCat = (r: RentListing) => cats.some(c => r.category?.toLowerCase().includes(c) || c.includes(r.category?.toLowerCase() ?? ''));
 
   // Try exact subarea match first
   let matches = rentListings.filter(r =>
     r.price != null && r.price > 0 &&
     r.subarea?.toLowerCase() === subareaLower &&
-    r.category?.toLowerCase() === categoryLower
+    matchesCat(r)
   ).map(r => r.price as number);
 
-  // Broaden to partial subarea match if not enough
+  // Broaden to partial subarea match
   if (matches.length < 3) {
     matches = rentListings.filter(r =>
       r.price != null && r.price > 0 &&
       r.region?.toLowerCase() === regionLower &&
-      r.category?.toLowerCase() === categoryLower &&
+      matchesCat(r) &&
       (r.subarea?.toLowerCase().includes(subareaLower) || subareaLower.includes(r.subarea?.toLowerCase() ?? ''))
     ).map(r => r.price as number);
   }
@@ -39,7 +52,7 @@ function findRentPrice(subarea: string, region: string, category: string): { pri
     matches = rentListings.filter(r =>
       r.price != null && r.price > 0 &&
       r.region?.toLowerCase() === regionLower &&
-      r.category?.toLowerCase() === categoryLower
+      matchesCat(r)
     ).map(r => r.price as number);
   }
 
