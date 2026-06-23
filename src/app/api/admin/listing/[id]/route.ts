@@ -43,6 +43,24 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   return NextResponse.json({ id, success: true });
 }
 
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const clean = (s: string | null) => (s ?? '').replace(/[^\x20-\x7e]/g, '').trim();
+  const adminKey = clean(process.env.ADMIN_KEY ?? null);
+  const k = clean(req.nextUrl.searchParams.get('k'));
+  if (!adminKey || k !== adminKey) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const body = await req.json() as Record<string, unknown>;
+  const source = String(body.source ?? '');
+  if (!['New', 'Agency', 'Sale', 'Rent', 'Auction'].includes(source))
+    return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
+
+  const sb = createAdminSupabase();
+  const { error } = await sb.from('admin_listings').update({ source }).eq('id', id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ success: true });
+}
+
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const clean = (s: string | null) => (s ?? '').replace(/[^\x20-\x7e]/g, '').trim();

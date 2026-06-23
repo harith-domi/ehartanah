@@ -3,6 +3,7 @@ import { createAdminSupabase } from '@/lib/supabase';
 import type { AdminListing } from '@/lib/supabase';
 import AdminFilters from './AdminFilters';
 import CopyButton from './CopyButton';
+import SourceBadge from './SourceBadge';
 import Link from 'next/link';
 
 const DOMAIN = 'https://ehartanahmalaysia.com';
@@ -32,7 +33,7 @@ export default async function AdminPage({
   }
 
   // Fetch Supabase admin-added listings
-  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string }[] = [];
+  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string; isSupabase: true }[] = [];
   try {
     const sb = createAdminSupabase();
     const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source').order('posted_at', { ascending: false });
@@ -45,16 +46,17 @@ export default async function AdminPage({
         price: l.price ?? 0,
         source: (['New','Agency','Sale','Rent','Auction'].includes(l.source ?? '') ? l.source : 'New') as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction',
         publicUrl: `${DOMAIN}/listings/${l.id}`,
+        isSupabase: true as const,
       }));
     }
   } catch {}
 
   const allRows = [
     ...supabaseRows,
-    ...auctionListings.map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}` })),
-    ...ownListings.map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}` })),
-    ...saleListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}` })),
-    ...rentListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}` })),
+    ...auctionListings.map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}`, isSupabase: false as const })),
+    ...ownListings.map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
+    ...saleListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
+    ...rentListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
   ];
 
   const regions = [...new Set(allRows.map((r) => r.region).filter(Boolean))].sort();
@@ -137,13 +139,17 @@ export default async function AdminPage({
                 <tr key={r.id} className="hover:bg-blue-50/30">
                   <td className="px-4 py-2.5 text-gray-400 text-xs">{(page - 1) * PER_PAGE + i + 1}</td>
                   <td className="px-4 py-2.5">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                      r.source === 'New'     ? 'bg-purple-50 text-purple-600' :
-                      r.source === 'Auction' ? 'bg-red-50 text-red-600' :
-                      r.source === 'Agency'  ? 'bg-blue-50 text-blue-600' :
-                      r.source === 'Sale'    ? 'bg-green-50 text-green-600' :
-                                               'bg-yellow-50 text-yellow-700'
-                    }`}>{r.source}</span>
+                    {r.isSupabase ? (
+                      <SourceBadge id={r.id} source={r.source} adminKey={key} />
+                    ) : (
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                        r.source === 'New'     ? 'bg-purple-50 text-purple-600' :
+                        r.source === 'Auction' ? 'bg-red-50 text-red-600' :
+                        r.source === 'Agency'  ? 'bg-blue-50 text-blue-600' :
+                        r.source === 'Sale'    ? 'bg-green-50 text-green-600' :
+                                                 'bg-yellow-50 text-yellow-700'
+                      }`}>{r.source}</span>
+                    )}
                   </td>
                   <td className="px-4 py-2.5 text-gray-700 whitespace-nowrap text-xs">{r.propertyType}</td>
                   <td className="px-4 py-2.5 text-gray-500 whitespace-nowrap text-xs">{r.region}</td>
