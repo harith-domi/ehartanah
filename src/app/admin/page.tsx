@@ -13,6 +13,14 @@ export const metadata = { title: 'Admin — All Listings' };
 
 const PER_PAGE = 100;
 
+const SOURCE_COLORS: Record<string, string> = {
+  New:     'bg-purple-50 text-purple-600',
+  Auction: 'bg-red-50 text-red-600',
+  Agency:  'bg-blue-50 text-blue-600',
+  Sale:    'bg-green-50 text-green-600',
+  Rent:    'bg-yellow-50 text-yellow-700',
+};
+
 export default async function AdminPage({
   searchParams,
 }: {
@@ -98,13 +106,7 @@ export default async function AdminPage({
         {/* Source breakdown */}
         <div className="flex gap-2 text-xs flex-wrap mb-4">
             {(['New', 'Agency', 'Sale', 'Rent', 'Auction'] as const).map((s) => (
-              <span key={s} className={`px-2 py-1 rounded-full font-semibold ${
-                s === 'New'     ? 'bg-purple-100 text-purple-700' :
-                s === 'Auction' ? 'bg-red-100 text-red-700' :
-                s === 'Agency'  ? 'bg-blue-100 text-blue-700' :
-                s === 'Sale'    ? 'bg-green-100 text-green-700' :
-                                  'bg-yellow-100 text-yellow-700'
-              }`}>
+              <span key={s} className={`px-2 py-1 rounded-full font-semibold ${SOURCE_COLORS[s] ?? ''}`}>
                 {s}: {allRows.filter((r) => r.source === s).length.toLocaleString('en-MY')}
               </span>
             ))}
@@ -142,13 +144,9 @@ export default async function AdminPage({
                     {r.isSupabase ? (
                       <SourceBadge id={r.id} source={r.source} adminKey={key} />
                     ) : (
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                        r.source === 'New'     ? 'bg-purple-50 text-purple-600' :
-                        r.source === 'Auction' ? 'bg-red-50 text-red-600' :
-                        r.source === 'Agency'  ? 'bg-blue-50 text-blue-600' :
-                        r.source === 'Sale'    ? 'bg-green-50 text-green-600' :
-                                                 'bg-yellow-50 text-yellow-700'
-                      }`}>{r.source}</span>
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${SOURCE_COLORS[r.source] ?? 'bg-gray-100 text-gray-600'}`}>
+                        {r.source}
+                      </span>
                     )}
                   </td>
                   <td className="px-4 py-2.5 text-gray-700 whitespace-nowrap text-xs">{r.propertyType}</td>
