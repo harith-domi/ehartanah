@@ -48,6 +48,30 @@ export default function NewListingForm({ adminKey }: Props) {
     setPreviews(p => p.filter((_, idx) => idx !== i));
   }
 
+  async function handlePaste() {
+    try {
+      const items = await navigator.clipboard.read();
+      const imageFiles: File[] = [];
+      for (const item of items) {
+        for (const type of item.types) {
+          if (type.startsWith('image/')) {
+            const blob = await item.getType(type);
+            imageFiles.push(new File([blob], `pasted.png`, { type: 'image/png' }));
+          }
+        }
+      }
+      if (imageFiles.length === 0) {
+        alert('No image found in clipboard. Copy an image from WhatsApp first, then click Paste.');
+        return;
+      }
+      const newPreviews = imageFiles.map(f => URL.createObjectURL(f));
+      setPhotos(p => [...p, ...imageFiles]);
+      setPreviews(p => [...p, ...newPreviews]);
+    } catch {
+      alert('Could not read clipboard. Make sure you\'ve copied an image and allowed clipboard access.');
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -202,7 +226,16 @@ export default function NewListingForm({ adminKey }: Props) {
 
       {/* Photos */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
-        <h2 className="font-bold text-gray-800 text-sm">Photos</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="font-bold text-gray-800 text-sm">Photos</h2>
+          <button
+            type="button"
+            onClick={handlePaste}
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:text-[#1e3a5f] hover:border-gray-300 transition-colors"
+          >
+            📋 Paste from WhatsApp
+          </button>
+        </div>
         <div
           onDragOver={e => e.preventDefault()}
           onDrop={e => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
