@@ -46,6 +46,7 @@ export default function AdminFilters({ adminKey, regions, currentQ, currentSourc
         className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f]/30 bg-white"
       >
         <option value="">All sources</option>
+        <option value="New">New (Admin-added)</option>
         <option value="Auction">Auction</option>
         <option value="Agency">Agency</option>
         <option value="Sale">Sale</option>

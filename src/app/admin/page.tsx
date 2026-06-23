@@ -1,6 +1,9 @@
 import { auctionListings, ownListings, saleListings, rentListings } from '@/lib/listings';
+import { createAdminSupabase } from '@/lib/supabase';
+import type { AdminListing } from '@/lib/supabase';
 import AdminFilters from './AdminFilters';
 import CopyButton from './CopyButton';
+import Link from 'next/link';
 
 const DOMAIN = 'https://ehartanahmalaysia.com';
 
@@ -28,7 +31,26 @@ export default async function AdminPage({
     );
   }
 
+  // Fetch Supabase admin-added listings
+  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New'; publicUrl: string }[] = [];
+  try {
+    const sb = createAdminSupabase();
+    const { data } = await sb.from('admin_listings').select('id,category,region,location,price').order('posted_at', { ascending: false });
+    if (data) {
+      supabaseRows = (data as AdminListing[]).map((l) => ({
+        id: l.id,
+        propertyType: l.category,
+        region: l.region,
+        address: l.location,
+        price: l.price ?? 0,
+        source: 'New' as const,
+        publicUrl: `${DOMAIN}/listings/${l.id}`,
+      }));
+    }
+  } catch {}
+
   const allRows = [
+    ...supabaseRows,
     ...auctionListings.map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}` })),
     ...ownListings.map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}` })),
     ...saleListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}` })),
@@ -61,18 +83,29 @@ export default async function AdminPage({
             <h1 className="text-xl font-bold">All Listings</h1>
             <p className="text-blue-200 text-sm mt-0.5">Private — not visible to customers · {allRows.length.toLocaleString('en-MY')} total</p>
           </div>
-          <div className="flex gap-2 text-xs flex-wrap">
-            {(['Auction', 'Agency', 'Sale', 'Rent'] as const).map((s) => (
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link
+              href={`/admin/new?key=${key}`}
+              className="bg-white text-[#0f2540] text-sm font-bold px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors whitespace-nowrap"
+            >
+              + Add Listing
+            </Link>
+          </div>
+        </div>
+
+        {/* Source breakdown */}
+        <div className="flex gap-2 text-xs flex-wrap mb-4">
+            {(['New', 'Auction', 'Agency', 'Sale', 'Rent'] as const).map((s) => (
               <span key={s} className={`px-2 py-1 rounded-full font-semibold ${
-                s === 'Auction' ? 'bg-red-500/20 text-red-200' :
-                s === 'Agency' ? 'bg-blue-400/20 text-blue-200' :
-                s === 'Sale' ? 'bg-green-400/20 text-green-200' :
-                'bg-yellow-400/20 text-yellow-200'
+                s === 'New'     ? 'bg-purple-100 text-purple-700' :
+                s === 'Auction' ? 'bg-red-100 text-red-700' :
+                s === 'Agency'  ? 'bg-blue-100 text-blue-700' :
+                s === 'Sale'    ? 'bg-green-100 text-green-700' :
+                                  'bg-yellow-100 text-yellow-700'
               }`}>
                 {s}: {allRows.filter((r) => r.source === s).length.toLocaleString('en-MY')}
               </span>
             ))}
-          </div>
         </div>
 
         {/* Filters (client component for live URL update) */}
@@ -105,6 +138,7 @@ export default async function AdminPage({
                   <td className="px-4 py-2.5 text-gray-400 text-xs">{(page - 1) * PER_PAGE + i + 1}</td>
                   <td className="px-4 py-2.5">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                      r.source === 'New'     ? 'bg-purple-50 text-purple-600' :
                       r.source === 'Auction' ? 'bg-red-50 text-red-600' :
                       r.source === 'Agency'  ? 'bg-blue-50 text-blue-600' :
                       r.source === 'Sale'    ? 'bg-green-50 text-green-600' :

@@ -11,3 +11,4 @@ next-env.d.ts
 tsconfig.tsbuildinfo
 scripts/mudah-cookie.txt
 scripts/mudah-photos-results.json
+.env*.local

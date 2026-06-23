@@ -27,6 +27,9 @@ import RecentlyViewed from '@/components/RecentlyViewed';
 import MortgageCalculator from '@/components/MortgageCalculator';
 import { describeListing } from '@/lib/describe';
 import { areaPhoto } from '@/lib/areaPhotos';
+import { createAdminSupabase } from '@/lib/supabase';
+import type { AdminListing } from '@/lib/supabase';
+import type { Listing } from '@/lib/listings';
 
 const BASE_URL = 'https://ehartanahmalaysia.com';
 
@@ -58,13 +61,50 @@ export async function generateMetadata({
   };
 }
 
+function adminToListing(a: AdminListing): Listing {
+  return {
+    id: a.id,
+    title: a.title,
+    listingType: a.listing_type,
+    price: a.price,
+    category: a.category,
+    propertyType: a.property_type,
+    size: a.size,
+    sizeUnit: a.size_unit,
+    bedrooms: a.bedrooms,
+    bathrooms: a.bathrooms,
+    subarea: a.subarea,
+    region: a.region,
+    location: a.location,
+    advertiser: 'eHartanah',
+    phone: a.phone,
+    imageCount: a.image_count,
+    thumbnailUrl: a.thumbnail_url,
+    photos: a.photos,
+    description: a.description,
+    postedAt: a.posted_at,
+    url: '',
+    featured: true,
+  };
+}
+
 export default async function ListingDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const listing = getListing(id);
+  let listing = getListing(id);
+
+  // Fall back to Supabase for admin-added listings not in static JSON
+  if (!listing) {
+    try {
+      const sb = createAdminSupabase();
+      const { data } = await sb.from('admin_listings').select('*').eq('id', id).single();
+      if (data) listing = adminToListing(data as AdminListing);
+    } catch {}
+  }
+
   if (!listing) notFound();
 
   const backPath = listing.listingType === 'rent' ? '/rent' : '/subsale';
