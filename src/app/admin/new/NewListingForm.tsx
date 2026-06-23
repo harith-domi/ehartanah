@@ -79,7 +79,11 @@ export default function NewListingForm({ adminKey }: Props) {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-    photos.forEach(f => data.append('photos', f));
+    photos.forEach((f, i) => {
+      const ext = (f.name.split('.').pop() ?? 'jpg').replace(/[^\x20-\x7e]/g, '') || 'jpg';
+      const safe = new File([f], `photo-${i + 1}.${ext}`, { type: f.type });
+      data.append('photos', safe);
+    });
     data.append('_adminKey', adminKey);
 
     try {
