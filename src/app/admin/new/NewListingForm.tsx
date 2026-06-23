@@ -78,18 +78,49 @@ export default function NewListingForm({ adminKey }: Props) {
     setResult(null);
 
     const form = e.currentTarget;
-    const data = new FormData(form);
-    photos.forEach((f, i) => {
-      const ext = (f.name.split('.').pop() ?? 'jpg').replace(/[^\x20-\x7e]/g, '') || 'jpg';
-      const safe = new File([f], `photo-${i + 1}.${ext}`, { type: f.type });
-      data.append('photos', safe);
-    });
-    data.append('_adminKey', adminKey);
+    const get = (name: string) =>
+      (form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null)?.value ?? '';
+
+    // Strip BOM client-side too just in case
+    const cleanKey = encodeURIComponent((adminKey ?? '').replace(/[^\x20-\x7e]/g, ''));
 
     try {
-      const res = await fetch('/api/admin/listing', {
+      // Upload each photo as a plain binary body (no FormData, no ByteString risk)
+      const folder = `tmp-${Date.now()}`;
+      const photoUrls: string[] = [];
+      for (let i = 0; i < photos.length; i++) {
+        const f = photos[i];
+        const mime = f.type || 'image/jpeg';
+        const res = await fetch(`/api/admin/photo?k=${cleanKey}&folder=${folder}&idx=${i}`, {
+          method: 'POST',
+          headers: { 'Content-Type': mime },
+          body: f,
+        });
+        const json = await res.json();
+        if (json.url) photoUrls.push(json.url);
+        else if (json.error) throw new Error(`Photo ${i + 1}: ${json.error}`);
+      }
+
+      // Submit listing data as plain JSON
+      const res = await fetch(`/api/admin/listing?k=${cleanKey}`, {
         method: 'POST',
-        body: data,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: get('title'),
+          listing_type: get('listing_type'),
+          price: get('price'),
+          category: get('category'),
+          tenure: get('tenure'),
+          size: get('size'),
+          bedrooms: get('bedrooms'),
+          bathrooms: get('bathrooms'),
+          description: get('description'),
+          location: get('location'),
+          subarea: get('subarea'),
+          region: get('region'),
+          phone: get('phone'),
+          photos: photoUrls,
+        }),
       });
       const json = await res.json();
       if (json.success) {
@@ -101,14 +132,7 @@ export default function NewListingForm({ adminKey }: Props) {
         setResult({ error: json.error ?? 'Unknown error' });
       }
     } catch (err) {
-      const errMsg = String(err);
-      if (errMsg.includes('ByteString')) {
-        const k0 = (adminKey ?? '').charCodeAt(0);
-        const pNames = photos.map((f, i) => `photo${i}[0]=${f.name.charCodeAt(0)}`).join(' ');
-        setResult({ error: `${errMsg} | key[0]=${k0} | ${pNames}` });
-      } else {
-        setResult({ error: errMsg });
-      }
+      setResult({ error: String(err) });
     } finally {
       setLoading(false);
     }
