@@ -94,16 +94,17 @@ export default async function ListingDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  let listing = getListing(id);
+  let listing: Listing | null = null;
 
-  // Fall back to Supabase for admin-added listings not in static JSON
-  if (!listing) {
-    try {
-      const sb = createAdminSupabase();
-      const { data } = await sb.from('admin_listings').select('*').eq('id', id).single();
-      if (data) listing = adminToListing(data as AdminListing);
-    } catch {}
-  }
+  // Supabase first — catches both New listings and edited static listings
+  try {
+    const sb = createAdminSupabase();
+    const { data } = await sb.from('admin_listings').select('*').eq('id', id).single();
+    if (data) listing = adminToListing(data as AdminListing);
+  } catch {}
+
+  // Fall back to static JSON
+  if (!listing) listing = getListing(id);
 
   if (!listing) notFound();
 

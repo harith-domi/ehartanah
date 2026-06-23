@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createAdminSupabase } from '@/lib/supabase';
 import type { AdminListing } from '@/lib/supabase';
+import { getListing } from '@/lib/listings';
 import EditListingForm from './EditListingForm';
 
 export const dynamic = 'force-dynamic';
@@ -31,9 +32,45 @@ export default async function EditPage({
     );
   }
 
-  const sb = createAdminSupabase();
-  const { data } = await sb.from('admin_listings').select('*').eq('id', id).single();
-  if (!data) notFound();
+  // Try Supabase first (already-edited listing)
+  let listing: AdminListing | null = null;
+  try {
+    const sb = createAdminSupabase();
+    const { data } = await sb.from('admin_listings').select('*').eq('id', id).single();
+    if (data) listing = data as AdminListing;
+  } catch {}
+
+  // Fall back to static JSON (first-time edit of a Mudah/JSON listing)
+  if (!listing) {
+    const staticListing = getListing(id);
+    if (staticListing) {
+      listing = {
+        id: staticListing.id,
+        title: staticListing.title,
+        listing_type: staticListing.listingType as 'sale' | 'rent',
+        price: staticListing.price ?? null,
+        category: staticListing.category ?? '',
+        property_type: staticListing.propertyType ?? '',
+        size: staticListing.size ?? null,
+        size_unit: staticListing.sizeUnit ?? 'sq.ft.',
+        bedrooms: staticListing.bedrooms ?? null,
+        bathrooms: staticListing.bathrooms ?? null,
+        subarea: staticListing.subarea ?? '',
+        region: staticListing.region ?? '',
+        location: staticListing.location ?? '',
+        phone: staticListing.phone ?? '',
+        image_count: staticListing.imageCount ?? 0,
+        thumbnail_url: staticListing.thumbnailUrl ?? '',
+        photos: staticListing.photos ?? [],
+        description: staticListing.description ?? '',
+        posted_at: staticListing.postedAt ?? '',
+        featured: staticListing.featured ?? false,
+        tenure: '',
+      };
+    }
+  }
+
+  if (!listing) notFound();
 
   return (
     <main className="min-h-screen bg-gray-50 p-4 sm:p-6">
@@ -49,7 +86,7 @@ export default async function EditPage({
           <p className="text-blue-200 text-sm mt-0.5 font-mono">{id}</p>
         </div>
 
-        <EditListingForm listing={data as AdminListing} adminKey={incomingKey} />
+        <EditListingForm listing={listing} adminKey={incomingKey} />
       </div>
     </main>
   );

@@ -36,7 +36,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   };
 
   const sb = createAdminSupabase();
-  const { error } = await sb.from('admin_listings').update(update).eq('id', id);
+  const { error } = await sb.from('admin_listings').upsert({ id, ...update }).eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   return NextResponse.json({ id, success: true });
