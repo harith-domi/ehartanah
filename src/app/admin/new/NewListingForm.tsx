@@ -84,7 +84,7 @@ export default function NewListingForm({ adminKey }: Props) {
     try {
       const res = await fetch('/api/admin/listing', {
         method: 'POST',
-        headers: { 'x-admin-key': adminKey },
+        headers: { 'x-admin-key': adminKey.replace(/[^\x20-\x7e]/g, '') },
         body: data,
       });
       const json = await res.json();
