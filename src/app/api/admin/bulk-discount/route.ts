@@ -11,17 +11,19 @@ export async function POST(req: NextRequest) {
   }
 
   const sb = createAdminSupabase();
-  const { data, error } = await sb.from('admin_listings').select('id,price').not('price', 'is', null).or('source.eq.New,source.eq.Rent,source.is.null');
+  const { data, error } = await sb.from('admin_listings').select('id,price,source').not('price', 'is', null);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   const pct = Number(req.nextUrl.searchParams.get('pct') ?? '30') / 100;
+  const allowed = ['New', 'Rent', null, undefined, ''];
+  const rows = (data ?? []).filter(r => allowed.includes((r as Record<string, unknown>).source as string));
   let updated = 0;
 
-  for (const row of data ?? []) {
+  for (const row of rows) {
     const newPrice = Math.round((row.price as number) * (1 - pct));
     const { error: ue } = await sb.from('admin_listings').update({ price: newPrice }).eq('id', row.id);
     if (!ue) updated++;
   }
 
-  return NextResponse.json({ updated, total: (data ?? []).length });
+  return NextResponse.json({ updated, total: rows.length });
 }
