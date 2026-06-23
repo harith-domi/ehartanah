@@ -16,12 +16,12 @@ export default function PhotoGallery({ photos, title }: Props) {
   return (
     <div className="rounded-2xl overflow-hidden shadow-sm">
       {/* Main photo */}
-      <div className="relative w-full h-52 sm:h-72 bg-[#0f2540]">
+      <div className="relative w-full h-72 sm:h-96 md:h-[480px] bg-[#0f2540]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={shown[active]}
           alt={`${title} — photo ${active + 1}`}
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-center"
         />
         <span className="absolute bottom-3 left-3 bg-[#0f2540]/70 backdrop-blur-sm text-white text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wide select-none pointer-events-none z-10">
           eHartanah.my
@@ -60,12 +60,12 @@ export default function PhotoGallery({ photos, title }: Props) {
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`relative flex-1 h-12 sm:h-16 overflow-hidden rounded-lg transition-all ${
-                i === active ? 'ring-2 ring-[#d4a017] opacity-100' : 'opacity-60 hover:opacity-90'
+              className={`relative flex-1 h-16 sm:h-20 overflow-hidden rounded-lg transition-all ${
+                i === active ? 'ring-2 ring-[#d4a017] opacity-100' : 'opacity-75 hover:opacity-100'
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={src} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover object-top" />
+              <img src={src} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover object-center" />
             </button>
           ))}
         </div>
