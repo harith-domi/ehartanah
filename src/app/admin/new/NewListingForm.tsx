@@ -101,7 +101,14 @@ export default function NewListingForm({ adminKey }: Props) {
         setResult({ error: json.error ?? 'Unknown error' });
       }
     } catch (err) {
-      setResult({ error: String(err) });
+      const errMsg = String(err);
+      if (errMsg.includes('ByteString')) {
+        const k0 = (adminKey ?? '').charCodeAt(0);
+        const pNames = photos.map((f, i) => `photo${i}[0]=${f.name.charCodeAt(0)}`).join(' ');
+        setResult({ error: `${errMsg} | key[0]=${k0} | ${pNames}` });
+      } else {
+        setResult({ error: errMsg });
+      }
     } finally {
       setLoading(false);
     }
