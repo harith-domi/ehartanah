@@ -231,6 +231,10 @@ export function stripUnitNo(address: string): string {
       .replace(/^PTD? \d+[^,]*,\s*/i, '')
       // House/premise numbers: No. 49, / No 504, / No. 33A, / No. 42-00 & 42-01,
       .replace(/^No\.?\s*\d[\w\-& ]{0,30},\s*/i, '')
+      // Block / Blok identifiers left over after unit stripping: Block B, / Blok E,
+      .replace(/^Blok? [A-Z\d]+,\s*/i, '')
+      // Floor level: Tingkat 2,
+      .replace(/^Tingkat \d+,\s*/i, '')
       .trim();
   }
   return a;

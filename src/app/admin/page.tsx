@@ -4,6 +4,7 @@ import type { AdminListing } from '@/lib/supabase';
 import AdminFilters from './AdminFilters';
 import CopyButton from './CopyButton';
 import SourceBadge from './SourceBadge';
+import DeleteButton from './DeleteButton';
 import Link from 'next/link';
 
 const DOMAIN = 'https://ehartanahmalaysia.com';
@@ -166,12 +167,15 @@ export default async function AdminPage({
                         ↗ Open
                       </a>
                       <CopyButton url={r.publicUrl} />
-                      <Link
-                        href={`/admin/edit/${r.id}?key=${key}`}
-                        className="px-2 py-1 text-xs rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#1e3a5f] hover:border-gray-300 whitespace-nowrap"
-                      >
-                        ✏ Edit
-                      </Link>
+                      {r.isSupabase && (
+                        <Link
+                          href={`/admin/edit/${r.id}?key=${key}`}
+                          className="px-2 py-1 text-xs rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#1e3a5f] hover:border-gray-300 whitespace-nowrap"
+                        >
+                          ✏ Edit
+                        </Link>
+                      )}
+                      {r.isSupabase && <DeleteButton id={r.id} adminKey={key} />}
                     </div>
                   </td>
                 </tr>

@@ -230,7 +230,7 @@ export default async function ListingDetailPage({
                   <ShareButton title={listing.title} />
                   <AuctionShareButton
                     title={listing.title}
-                    address={listing.location || listing.subarea}
+                    address={stripUnitNo(listing.location || listing.subarea || '')}
                     url={`${BASE_URL}/listings/${listing.id}`}
                   />
                 </div>
