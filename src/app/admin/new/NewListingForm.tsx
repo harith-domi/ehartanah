@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const CATEGORIES = [
   'Apartment / Condominium',
@@ -29,6 +29,17 @@ const REGIONS = [
 interface Props { adminKey: string; }
 
 export default function NewListingForm({ adminKey }: Props) {
+  // Auto-clean BOM from URL so the Referer header is always clean
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const key = url.searchParams.get('key') ?? '';
+    const clean = key.replace(/[^\x20-\x7e]/g, '');
+    if (clean !== key) {
+      url.searchParams.set('key', clean);
+      window.history.replaceState({}, '', url.toString());
+    }
+  }, []);
+
   const [photos, setPhotos] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
