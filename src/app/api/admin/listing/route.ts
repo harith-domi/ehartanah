@@ -12,13 +12,12 @@ function slugify(text: string): string {
 
 export async function POST(req: NextRequest) {
   const adminKey = process.env.ADMIN_KEY?.trim();
-  const authKey = req.headers.get('x-admin-key')?.trim();
+  const sb = createAdminSupabase();
+  const formData = await req.formData();
+  const authKey = (formData.get('_adminKey') as string | null)?.trim();
   if (!adminKey || authKey !== adminKey) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-
-  const sb = createAdminSupabase();
-  const formData = await req.formData();
 
   const title = formData.get('title') as string;
   const listingType = formData.get('listing_type') as string;
