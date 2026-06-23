@@ -104,7 +104,7 @@ export default async function ListingDetailPage({
   } catch {}
 
   // Fall back to static JSON
-  if (!listing) listing = getListing(id);
+  if (!listing) listing = getListing(id) ?? null;
 
   if (!listing) notFound();
 
