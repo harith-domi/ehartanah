@@ -100,7 +100,10 @@ export default async function ListingDetailPage({
   try {
     const sb = createAdminSupabase();
     const { data } = await sb.from('admin_listings').select('*').eq('id', id).single();
-    if (data) listing = adminToListing(data as AdminListing);
+    if (data) {
+      if ((data as AdminListing).source === 'Hidden') notFound();
+      listing = adminToListing(data as AdminListing);
+    }
   } catch {}
 
   // Fall back to static JSON

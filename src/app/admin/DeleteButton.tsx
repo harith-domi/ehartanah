@@ -2,7 +2,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function DeleteButton({ id, adminKey }: { id: string; adminKey: string }) {
+export default function DeleteButton({
+  id, adminKey, isSupabase,
+}: { id: string; adminKey: string; isSupabase: boolean }) {
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -11,12 +13,12 @@ export default function DeleteButton({ id, adminKey }: { id: string; adminKey: s
     if (!confirm) { setConfirm(true); return; }
     setLoading(true);
     const k = encodeURIComponent((adminKey ?? '').replace(/[^\x20-\x7e]/g, ''));
-    const res = await fetch(`/api/admin/listing/${id}?k=${k}`, {
-      method: 'DELETE',
-      referrerPolicy: 'no-referrer',
-    });
-    const json = await res.json();
-    if (json.success) router.refresh();
+    if (isSupabase) {
+      await fetch(`/api/admin/listing/${id}?k=${k}`, { method: 'DELETE', referrerPolicy: 'no-referrer' });
+    } else {
+      await fetch(`/api/admin/hide/${id}?k=${k}`, { method: 'POST', referrerPolicy: 'no-referrer' });
+    }
+    router.refresh();
     setLoading(false);
     setConfirm(false);
   }
@@ -30,10 +32,7 @@ export default function DeleteButton({ id, adminKey }: { id: string; adminKey: s
       >
         {loading ? '…' : 'Sure?'}
       </button>
-      <button
-        onClick={() => setConfirm(false)}
-        className="px-2 py-1 text-xs rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-50"
-      >
+      <button onClick={() => setConfirm(false)} className="px-2 py-1 text-xs rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-50">
         No
       </button>
     </span>

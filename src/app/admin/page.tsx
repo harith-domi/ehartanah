@@ -43,29 +43,33 @@ export default async function AdminPage({
 
   // Fetch Supabase admin-added listings
   let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string; isSupabase: true }[] = [];
+  const hiddenIds = new Set<string>();
   try {
     const sb = createAdminSupabase();
     const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source').order('posted_at', { ascending: false });
     if (data) {
-      supabaseRows = (data as AdminListing[]).map((l) => ({
-        id: l.id,
-        propertyType: l.category,
-        region: l.region,
-        address: l.location,
-        price: l.price ?? 0,
-        source: (['New','Agency','Sale','Rent','Auction'].includes(l.source ?? '') ? l.source : 'New') as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction',
-        publicUrl: `${DOMAIN}/listings/${l.id}`,
-        isSupabase: true as const,
-      }));
+      (data as AdminListing[]).forEach((l) => { if (l.source === 'Hidden') hiddenIds.add(l.id); });
+      supabaseRows = (data as AdminListing[])
+        .filter((l) => l.source !== 'Hidden')
+        .map((l) => ({
+          id: l.id,
+          propertyType: l.category,
+          region: l.region,
+          address: l.location,
+          price: l.price ?? 0,
+          source: (['New','Agency','Sale','Rent','Auction'].includes(l.source ?? '') ? l.source : 'New') as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction',
+          publicUrl: `${DOMAIN}/listings/${l.id}`,
+          isSupabase: true as const,
+        }));
     }
   } catch {}
 
   const allRows = [
     ...supabaseRows,
-    ...auctionListings.map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}`, isSupabase: false as const })),
-    ...ownListings.map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
-    ...saleListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
-    ...rentListings.filter((l) => !l.featured).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
+    ...auctionListings.filter((l) => !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}`, isSupabase: false as const })),
+    ...ownListings.filter((l) => !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
+    ...saleListings.filter((l) => !l.featured && !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
+    ...rentListings.filter((l) => !l.featured && !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
   ];
 
   const regions = [...new Set(allRows.map((r) => r.region).filter(Boolean))].sort();
@@ -175,7 +179,7 @@ export default async function AdminPage({
                           ✏ Edit
                         </Link>
                       )}
-                      {r.isSupabase && <DeleteButton id={r.id} adminKey={key} />}
+                      <DeleteButton id={r.id} adminKey={key} isSupabase={r.isSupabase} />
                     </div>
                   </td>
                 </tr>
