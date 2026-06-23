@@ -95,7 +95,7 @@ export default async function AdminPage({
 
         {/* Source breakdown */}
         <div className="flex gap-2 text-xs flex-wrap mb-4">
-            {(['New', 'Auction', 'Agency', 'Sale', 'Rent'] as const).map((s) => (
+            {(['New', 'Agency', 'Sale', 'Rent', 'Auction'] as const).map((s) => (
               <span key={s} className={`px-2 py-1 rounded-full font-semibold ${
                 s === 'New'     ? 'bg-purple-100 text-purple-700' :
                 s === 'Auction' ? 'bg-red-100 text-red-700' :
