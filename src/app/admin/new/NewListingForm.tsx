@@ -103,14 +103,8 @@ export default function NewListingForm({ adminKey }: Props) {
     }
   }
 
-  const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f]/30 bg-white';
-  const lbl = 'text-xs font-semibold text-gray-500 mb-1 block';
-
-  const SectionHead = ({ title }: { title: string }) => (
-    <div className="bg-gray-50 border-b border-gray-100 px-5 py-2.5">
-      <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{title}</span>
-    </div>
-  );
+  const field = 'w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f]/30';
+  const label = 'block text-xs font-semibold text-gray-600 mb-1';
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -133,141 +127,164 @@ export default function NewListingForm({ adminKey }: Props) {
         </div>
       )}
 
-      {/* Single card — admin style */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      {/* 2-col on desktop */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
 
-        {/* ── Basic Info ── */}
-        <SectionHead title="Basic Info" />
-        <div className="p-5 space-y-3 border-b border-gray-100">
-          <div>
-            <label className={lbl}>Title *</label>
-            <input name="title" required placeholder="e.g. Cozy 3-Bed Terrace, Puncak Alam" className={inp} />
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="sm:col-span-1">
-              <label className={lbl}>Listing Type *</label>
-              <select name="listing_type" required className={inp}>
-                <option value="sale">For Sale</option>
-                <option value="rent">For Rent</option>
-              </select>
-            </div>
-            <div className="sm:col-span-1">
-              <label className={lbl}>Price (RM) *</label>
-              <input name="price" type="number" required placeholder="500000" className={inp} />
-            </div>
-            <div className="sm:col-span-1">
-              <label className={lbl}>Category *</label>
-              <select name="category" required className={inp}>
-                {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-            </div>
-            <div className="sm:col-span-1">
-              <label className={lbl}>Tenure</label>
-              <select name="tenure" className={inp}>
-                <option value="">—</option>
-                <option value="Freehold">Freehold</option>
-                <option value="Leasehold">Leasehold</option>
-                <option value="Strata Title">Strata Title</option>
-              </select>
-            </div>
-          </div>
-        </div>
+        {/* LEFT: Basic Info + Property Details + Contact */}
+        <div className="space-y-4">
 
-        {/* ── Property Details ── */}
-        <SectionHead title="Property Details" />
-        <div className="p-5 space-y-3 border-b border-gray-100">
-          <div className="grid grid-cols-3 gap-3">
+          {/* Basic info */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+            <h2 className="font-bold text-gray-800 text-sm">Basic Info</h2>
             <div>
-              <label className={lbl}>Size (sq.ft.)</label>
-              <input name="size" type="number" placeholder="1200" className={inp} />
+              <label className={label}>Title *</label>
+              <input name="title" required placeholder="e.g. Cozy 3-Bed Unit at Sunway Velocity" className={field} />
             </div>
-            <div>
-              <label className={lbl}>Bedrooms</label>
-              <input name="bedrooms" type="number" min="0" max="20" placeholder="3" className={inp} />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className={label}>Listing Type *</label>
+                <select name="listing_type" required className={field}>
+                  <option value="sale">For Sale</option>
+                  <option value="rent">For Rent</option>
+                </select>
+              </div>
+              <div>
+                <label className={label}>Price (RM) *</label>
+                <input name="price" type="number" required placeholder="500000" className={field} />
+              </div>
             </div>
-            <div>
-              <label className={lbl}>Bathrooms</label>
-              <input name="bathrooms" type="number" min="0" max="20" placeholder="2" className={inp} />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className={label}>Category *</label>
+                <select name="category" required className={field}>
+                  {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className={label}>Tenure</label>
+                <select name="tenure" className={field}>
+                  <option value="">—</option>
+                  <option value="Freehold">Freehold</option>
+                  <option value="Leasehold">Leasehold</option>
+                  <option value="Strata Title">Strata Title</option>
+                </select>
+              </div>
             </div>
           </div>
-          <div>
-            <label className={lbl}>Description</label>
-            <textarea name="description" rows={5} placeholder="Describe the property…" className={inp} />
-          </div>
-        </div>
 
-        {/* ── Location ── */}
-        <SectionHead title="Location" />
-        <div className="p-5 space-y-3 border-b border-gray-100">
-          <div>
-            <label className={lbl}>Full Address <span className="text-gray-400 font-normal">(with unit/lot — private, not shown to customers)</span></label>
-            <input name="location" required placeholder="Unit No. A-08-10, Residensi XYZ, Jalan …" className={inp} />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className={lbl}>Neighbourhood / Project Name</label>
-              <input name="subarea" placeholder="e.g. Puncak Bestari" className={inp} />
+          {/* Property details */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+            <h2 className="font-bold text-gray-800 text-sm">Property Details</h2>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className={label}>Size (sq.ft.)</label>
+                <input name="size" type="number" placeholder="1200" className={field} />
+              </div>
+              <div>
+                <label className={label}>Bedrooms</label>
+                <input name="bedrooms" type="number" min="0" max="20" placeholder="3" className={field} />
+              </div>
+              <div>
+                <label className={label}>Bathrooms</label>
+                <input name="bathrooms" type="number" min="0" max="20" placeholder="2" className={field} />
+              </div>
             </div>
             <div>
-              <label className={lbl}>State / Region *</label>
-              <select name="region" required className={inp}>
-                <option value="">— Select —</option>
-                {REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
-              </select>
+              <label className={label}>Description</label>
+              <textarea name="description" rows={6} placeholder="Describe the property…" className={field} />
             </div>
           </div>
-        </div>
 
-        {/* ── Contact ── */}
-        <SectionHead title="Contact" />
-        <div className="p-5 border-b border-gray-100">
-          <label className={lbl}>Phone Number</label>
-          <input name="phone" type="tel" placeholder="0149999309" className={`${inp} max-w-xs`} />
-        </div>
-
-        {/* ── Photos ── */}
-        <div className="bg-gray-50 border-b border-gray-100 px-5 py-2.5 flex items-center justify-between">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Photos</span>
-          <button
-            type="button"
-            onClick={handlePaste}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:text-[#1e3a5f] hover:border-gray-300 transition-colors"
-          >
-            📋 Paste from WhatsApp
-          </button>
-        </div>
-        <div className="p-5 space-y-3">
-          <div
-            onDragOver={e => e.preventDefault()}
-            onDrop={e => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
-            onClick={() => fileRef.current?.click()}
-            className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center cursor-pointer hover:border-[#1e3a5f]/40 transition-colors"
-          >
-            <p className="text-gray-500 text-sm">Drop photos here or <span className="text-[#1e3a5f] font-semibold">click to select</span></p>
-            <p className="text-gray-400 text-xs mt-1">JPG, PNG — multiple allowed</p>
-            <input ref={fileRef} type="file" accept="image/*" multiple className="hidden" onChange={e => handleFiles(e.target.files)} />
-          </div>
-          {previews.length > 0 && (
-            <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-              {previews.map((src, i) => (
-                <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="" className="w-full h-full object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => removePhoto(i)}
-                    className="absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center leading-none"
-                  >×</button>
-                  {i === 0 && (
-                    <span className="absolute bottom-1 left-1 text-[10px] bg-black/60 text-white px-1.5 py-0.5 rounded-full">Cover</span>
-                  )}
-                </div>
-              ))}
+          {/* Contact */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+            <h2 className="font-bold text-gray-800 text-sm">Contact</h2>
+            <div>
+              <label className={label}>Phone Number</label>
+              <input name="phone" type="tel" placeholder="0149999309" className={field} />
             </div>
-          )}
+          </div>
+
         </div>
 
-      </div>{/* end card */}
+        {/* RIGHT: Location + Photos */}
+        <div className="space-y-4">
+
+          {/* Location */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+            <h2 className="font-bold text-gray-800 text-sm">Location</h2>
+            <div>
+              <label className={label}>Full Address (with unit/lot number — private, not shown to customers)</label>
+              <input name="location" required placeholder="Unit No. A-08-10, Residensi XYZ, Jalan …" className={field} />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className={label}>Neighbourhood / Project Name</label>
+                <input name="subarea" placeholder="e.g. Mont Kiara" className={field} />
+              </div>
+              <div>
+                <label className={label}>State / Region *</label>
+                <select name="region" required className={field}>
+                  <option value="">— Select —</option>
+                  {REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Photos */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="font-bold text-gray-800 text-sm">Photos</h2>
+              <button
+                type="button"
+                onClick={handlePaste}
+                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:text-[#1e3a5f] hover:border-gray-300 transition-colors"
+              >
+                📋 Paste from WhatsApp
+              </button>
+            </div>
+            <div
+              onDragOver={e => e.preventDefault()}
+              onDrop={e => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
+              onClick={() => fileRef.current?.click()}
+              className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center cursor-pointer hover:border-[#1e3a5f]/40 transition-colors"
+            >
+              <p className="text-gray-500 text-sm">Drop photos here or <span className="text-[#1e3a5f] font-semibold">click to select</span></p>
+              <p className="text-gray-400 text-xs mt-1">JPG, PNG — multiple allowed</p>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={e => handleFiles(e.target.files)}
+              />
+            </div>
+
+        {previews.length > 0 && (
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+            {previews.map((src, i) => (
+              <div key={i} className="relative aspect-square rounded-xl overflow-hidden bg-gray-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt="" className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removePhoto(i)}
+                  className="absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center leading-none"
+                >
+                  ×
+                </button>
+                {i === 0 && (
+                  <span className="absolute bottom-1 left-1 text-[10px] bg-black/60 text-white px-1.5 py-0.5 rounded-full">Cover</span>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+          </div>{/* end Photos card */}
+
+        </div>{/* end right col */}
+      </div>{/* end 2-col grid */}
 
       <button
         type="submit"
