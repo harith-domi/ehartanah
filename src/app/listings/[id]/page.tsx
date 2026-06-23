@@ -135,7 +135,7 @@ export default async function ListingDetailPage({
     ...(listing.bedrooms !== null && { numberOfRooms: listing.bedrooms }),
     address: {
       '@type': 'PostalAddress',
-      addressLocality: listing.subarea || listing.location || '',
+      addressLocality: listing.subarea || stripUnitNo(listing.location || '') || '',
       addressRegion: listing.region || '',
       addressCountry: 'MY',
     },

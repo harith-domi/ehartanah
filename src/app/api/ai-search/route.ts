@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { filterListings, rentListings, saleListings, ownListings, auctionListings, Listing, AuctionListing } from '@/lib/listings';
+import { filterListings, rentListings, saleListings, ownListings, auctionListings, Listing, AuctionListing, stripUnitNo } from '@/lib/listings';
 import { getMockAIResponse } from '@/lib/mockAIResponses';
 
 // Longer/specific entries first so they match before shorter aliases (e.g. "subang jaya" before "subang")
@@ -185,7 +185,7 @@ export async function GET(req: NextRequest) {
     results = [...r, ...s];
   }
 
-  const topListings = results.slice(0, 6);
+  const topListings = results.slice(0, 6).map((l: Listing) => ({ ...l, location: stripUnitNo(l.location || '') }));
   const count = results.length;
   const browseUrl = buildBrowseUrl(params);
 

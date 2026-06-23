@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const l = getAuctionListing(id);
   if (!l) return { title: 'Listing Not Found' };
   const photo = l.photos?.[0];
-  const title = `${l.propertyType} Lelong — ${l.address.split(',')[0]} | eHartanah`;
-  const description = `Bank auction property at ${l.address}. Reserve price RM${(l.reservePrice / 1000).toFixed(0)}K, ${l.savingsPct}% below market value of RM${(l.marketValue / 1000).toFixed(0)}K.`;
+  const title = `${l.propertyType} Lelong — ${stripUnitNo(l.address).split(',')[0]} | eHartanah`;
+  const description = `Bank auction property at ${stripUnitNo(l.address)}. Reserve price RM${(l.reservePrice / 1000).toFixed(0)}K, ${l.savingsPct}% below market value of RM${(l.marketValue / 1000).toFixed(0)}K.`;
   return {
     title,
     description,
@@ -59,7 +59,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
   const mapQuery = encodeURIComponent(l.address);
   const mapSrc = `https://maps.google.com/maps?q=${mapQuery}&output=embed&hl=en&zoom=15`;
   const waText = encodeURIComponent(
-    `Salam! Saya berminat dengan unit lelongan: ${l.propertyType} di ${l.address} — Harga Rizab ${formatRM(l.reservePrice)}. Boleh dapatkan maklumat lanjut?`
+    `Salam! Saya berminat dengan unit lelongan: ${l.propertyType} di ${stripUnitNo(l.address)} — Harga Rizab ${formatRM(l.reservePrice)}. Boleh dapatkan maklumat lanjut?`
   );
   const waHref = `https://wa.me/${AGENCY_PHONE}?text=${waText}`;
   const pageUrl = `${BASE_URL}/auction/${l.id}`;
@@ -72,7 +72,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',
     name: l.title,
-    description: `Bank auction property at ${l.address}. Reserve price RM${l.reservePrice.toLocaleString('en-MY')}, ${l.savingsPct}% below market value.`,
+    description: `Bank auction property at ${stripUnitNo(l.address)}. Reserve price RM${l.reservePrice.toLocaleString('en-MY')}, ${l.savingsPct}% below market value.`,
     url: pageUrl,
     price: l.reservePrice,
     priceCurrency: 'MYR',
@@ -81,7 +81,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
     }),
     address: {
       '@type': 'PostalAddress',
-      streetAddress: l.address,
+      streetAddress: stripUnitNo(l.address),
       addressRegion: l.region,
       addressCountry: 'MY',
     },
@@ -105,8 +105,8 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
           <T en="Enquire via WhatsApp" bm="Tanya via WhatsApp" />
         </a>
         <FavouriteButton id={l.id} type="auction" />
-        <ShareButton title={`${l.propertyType} Lelong — ${l.address.split(',')[0]}`} />
-        <AuctionShareButton title={`${l.propertyType} Lelong`} address={l.address} url={pageUrl} />
+        <ShareButton title={`${l.propertyType} Lelong — ${stripUnitNo(l.address).split(',')[0]}`} />
+        <AuctionShareButton title={`${l.propertyType} Lelong`} address={stripUnitNo(l.address)} url={pageUrl} />
       </div>
 
       {/* Breadcrumb */}
@@ -116,7 +116,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
           <span className="shrink-0">/</span>
           <Link href="/auction" className="hover:text-[#1e3a5f] shrink-0"><T en="Auction" bm="Lelongan" /></Link>
           <span className="shrink-0">/</span>
-          <span className="text-gray-800 truncate">{l.propertyType} · {l.address.split(',')[0]}</span>
+          <span className="text-gray-800 truncate">{l.propertyType} · {stripUnitNo(l.address).split(',')[0]}</span>
         </div>
       </div>
 
@@ -197,8 +197,8 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                 {/* Desktop fav + share — hidden on mobile (in sticky bar instead) */}
                 <div className="hidden lg:flex items-center gap-1 shrink-0">
                   <FavouriteButton id={l.id} type="auction" />
-                  <ShareButton title={`${l.propertyType} Lelong — ${l.address.split(',')[0]}`} />
-                  <AuctionShareButton title={`${l.propertyType} Lelong`} address={l.address} url={pageUrl} />
+                  <ShareButton title={`${l.propertyType} Lelong — ${stripUnitNo(l.address).split(',')[0]}`} />
+                  <AuctionShareButton title={`${l.propertyType} Lelong`} address={stripUnitNo(l.address)} url={pageUrl} />
                 </div>
               </div>
 
@@ -287,7 +287,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
             <div className="sticky top-20 flex flex-col gap-4">
               <EnquiryForm
                 listingId={l.id}
-                listingTitle={`${l.propertyType} — ${l.address.split(',')[0]}`}
+                listingTitle={`${l.propertyType} — ${stripUnitNo(l.address).split(',')[0]}`}
                 listingPrice={`Reserve ${formatRM(l.reservePrice)}`}
                 listingType="auction"
               />
@@ -319,7 +319,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
           <RecentlyViewed
             currentId={l.id}
             type="auction"
-            title={`${l.propertyType} — ${l.address.split(',')[0]}`}
+            title={`${l.propertyType} — ${stripUnitNo(l.address).split(',')[0]}`}
             price={l.reservePrice}
             photo={l.photos?.[0]}
           />
@@ -350,7 +350,7 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                   </div>
                   <div className="p-3 flex-1">
                     <p className="text-xs font-bold text-[#1e3a5f]">{formatRM(s.reservePrice)}</p>
-                    <p className="text-[11px] text-gray-500 line-clamp-2 mt-0.5">{s.address}</p>
+                    <p className="text-[11px] text-gray-500 line-clamp-2 mt-0.5">{stripUnitNo(s.address)}</p>
                     {s.auctionDate && (
                       <p className="text-[11px] text-amber-600 font-semibold mt-1">{s.auctionDate}</p>
                     )}

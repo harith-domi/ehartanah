@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { auctionListings, AuctionListing, AGENCY_PHONE } from '@/lib/listings';
+import { auctionListings, AuctionListing, AGENCY_PHONE, stripUnitNo } from '@/lib/listings';
 import { areaPhotoByRegionCategory } from '@/lib/areaPhotos';
 import FavouriteButton from '@/components/FavouriteButton';
 import AuctionCountdown from '@/components/AuctionCountdown';
@@ -271,7 +271,7 @@ export default async function AuctionPage({
                     const rpPct = l.marketValue > 0 ? Math.round((l.reservePrice / l.marketValue) * 100) : 0;
                     const estMonthly = Math.round(l.reservePrice * MONTHLY_FACTOR);
                     const waText = encodeURIComponent(
-                      `Salam! Saya berminat dengan unit lelongan: ${l.propertyType} di ${l.address} — Harga Rizab ${formatRM(l.reservePrice)}. Boleh dapatkan maklumat lanjut?`
+                      `Salam! Saya berminat dengan unit lelongan: ${l.propertyType} di ${stripUnitNo(l.address)} — Harga Rizab ${formatRM(l.reservePrice)}. Boleh dapatkan maklumat lanjut?`
                     );
 
                     return (
@@ -371,7 +371,7 @@ export default async function AuctionPage({
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                               </svg>
-                              <span className="line-clamp-2">{l.address || l.title}</span>
+                              <span className="line-clamp-2">{stripUnitNo(l.address) || l.title}</span>
                             </h3>
                           </Link>
 

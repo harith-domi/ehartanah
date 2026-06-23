@@ -1,4 +1,4 @@
-import { Listing, formatPrice, pricePerSqft, plausibleSize, displayBedrooms, displayBathrooms } from './listings';
+import { Listing, formatPrice, pricePerSqft, plausibleSize, displayBedrooms, displayBathrooms, stripUnitNo } from './listings';
 
 /**
  * Generates a unique, fact-based description for a listing in EN and BM.
@@ -21,7 +21,7 @@ export function describeListing(l: Listing): { en: string; bm: string } {
   const seed = hashSeed(l.id);
   const isRent = l.listingType === 'rent';
   const typeName = l.propertyType || l.category;
-  const area = l.location || [l.subarea, l.region].filter(Boolean).join(', ') || 'Malaysia';
+  const area = stripUnitNo(l.location || '') || [l.subarea, l.region].filter(Boolean).join(', ') || 'Malaysia';
   const price = formatPrice(l.price, l.listingType);
   const psf = pricePerSqft(l);
 
