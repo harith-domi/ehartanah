@@ -35,4 +35,5 @@ export type AdminListing = {
   thumbnail_url: string;
   featured: boolean;
   posted_at: string;
+  updated_at?: string | null;
 };

@@ -2,6 +2,7 @@ import { auctionListings, ownListings, saleListings, rentListings } from '@/lib/
 import { createAdminSupabase } from '@/lib/supabase';
 import type { AdminListing } from '@/lib/supabase';
 import AdminFilters from './AdminFilters';
+import AdminMyListings from './AdminMyListings';
 import CopyButton from './CopyButton';
 import SourceBadge from './SourceBadge';
 import DeleteButton from './DeleteButton';
@@ -42,11 +43,11 @@ export default async function AdminPage({
   }
 
   // Fetch Supabase admin-added listings
-  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string; isSupabase: true }[] = [];
+  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string; isSupabase: true; updatedAt?: string | null }[] = [];
   const hiddenIds = new Set<string>();
   try {
     const sb = createAdminSupabase();
-    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source').order('posted_at', { ascending: false });
+    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source,updated_at').order('updated_at', { ascending: false });
     if (data) {
       (data as AdminListing[]).forEach((l) => { if (l.source === 'Hidden') hiddenIds.add(l.id); });
       supabaseRows = (data as AdminListing[])
@@ -60,6 +61,7 @@ export default async function AdminPage({
           source: (['New','Agency','Sale','Rent','Auction'].includes(l.source ?? '') ? l.source : 'New') as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction',
           publicUrl: `${DOMAIN}/listings/${l.id}`,
           isSupabase: true as const,
+          updatedAt: l.updated_at ?? null,
         }));
     }
   } catch {}
@@ -93,39 +95,7 @@ export default async function AdminPage({
   return (
     <main className="min-h-screen bg-gray-50 p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
-        {/* My Listings — Supabase-backed edited/added listings */}
-        {supabaseRows.length > 0 && (
-          <div id="my-listings" className="mb-6 scroll-mt-6">
-            <h2 className="text-sm font-bold text-gray-700 mb-3">My Listings <span className="text-gray-400 font-normal">({supabaseRows.length})</span></h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-              {supabaseRows.map((r) => (
-                <div key={r.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex flex-col gap-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-1 ${SOURCE_COLORS[r.source] ?? 'bg-gray-100 text-gray-600'}`}>{r.source}</span>
-                      <p className="text-xs font-semibold text-gray-800 truncate">{r.propertyType || '—'}</p>
-                      <p className="text-[11px] text-gray-500 truncate">{r.region}</p>
-                      <p className="text-[11px] text-gray-400 truncate">{r.address || '—'}</p>
-                    </div>
-                    <p className="text-sm font-black text-[#1e3a5f] whitespace-nowrap shrink-0">
-                      {r.price ? `RM ${r.price.toLocaleString('en-MY')}` : '—'}
-                    </p>
-                  </div>
-                  <div className="flex gap-1.5 mt-auto">
-                    <a href={r.publicUrl} target="_blank" rel="noopener noreferrer"
-                      className="flex-1 text-center text-[11px] py-1.5 rounded-lg border border-gray-200 text-gray-500 hover:border-gray-300 hover:text-[#1e3a5f]">
-                      ↗ View
-                    </a>
-                    <Link href={`/admin/edit/${r.id}?key=${encodeURIComponent(key)}`}
-                      className="flex-1 text-center text-[11px] py-1.5 rounded-lg bg-[#0f2540] text-white hover:bg-[#1e3a5f]">
-                      ✏ Edit
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <AdminMyListings rows={supabaseRows} adminKey={key} />
 
         <div className="bg-[#0f2540] text-white rounded-2xl px-6 py-5 mb-6 flex items-center justify-between flex-wrap gap-3">
           <div>

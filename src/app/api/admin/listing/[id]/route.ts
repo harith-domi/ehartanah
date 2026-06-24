@@ -34,6 +34,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     photos,
     image_count: photos.length,
     thumbnail_url: photos[0] ?? '',
+    updated_at: new Date().toISOString(),
   };
 
   const sb = createAdminSupabase();
