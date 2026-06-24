@@ -39,10 +39,10 @@ export default async function AdminPage({
   const hiddenIds = new Set<string>();
   try {
     const sb = createAdminSupabase();
-    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source,updated_at,thumbnail_url,image_count').order('updated_at', { ascending: false });
+    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source,updated_at,thumbnail_url,photos').order('updated_at', { ascending: false });
     if (data) {
       (data as AdminListing[]).forEach((l) => { if (l.source === 'Hidden') hiddenIds.add(l.id); });
-      allSupabaseRows = (data as (AdminListing & { image_count?: number })[]).map((l) => ({
+      allSupabaseRows = (data as AdminListing[]).map((l) => ({
         id: l.id,
         propertyType: l.category,
         region: l.region,
@@ -53,7 +53,7 @@ export default async function AdminPage({
         isSupabase: true as const,
         updatedAt: l.updated_at ?? null,
         thumbnailUrl: l.thumbnail_url ?? null,
-        imageCount: (l as AdminListing & { image_count?: number }).image_count ?? null,
+        imageCount: Array.isArray(l.photos) ? l.photos.length : null,
       }));
       supabaseRows = allSupabaseRows.filter(r => r.source !== 'Hidden');
     }
