@@ -93,24 +93,9 @@ export default async function AdminPage({
   return (
     <main className="min-h-screen bg-gray-50 p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-[#0f2540] text-white rounded-2xl px-6 py-5 mb-6 flex items-center justify-between flex-wrap gap-3">
-          <div>
-            <h1 className="text-xl font-bold">All Listings</h1>
-            <p className="text-blue-200 text-sm mt-0.5">Private — not visible to customers · {allRows.length.toLocaleString('en-MY')} total</p>
-          </div>
-          <div className="flex items-center gap-3 flex-wrap">
-            <Link
-              href={`/admin/new?key=${encodeURIComponent(key)}`}
-              className="bg-white text-[#0f2540] text-sm font-bold px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors whitespace-nowrap"
-            >
-              + Add Listing
-            </Link>
-          </div>
-        </div>
-
         {/* My Listings — Supabase-backed edited/added listings */}
         {supabaseRows.length > 0 && (
-          <div id="my-listings" className="mb-8 scroll-mt-6">
+          <div id="my-listings" className="mb-6 scroll-mt-6">
             <h2 className="text-sm font-bold text-gray-700 mb-3">My Listings <span className="text-gray-400 font-normal">({supabaseRows.length})</span></h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
               {supabaseRows.map((r) => (
@@ -141,6 +126,21 @@ export default async function AdminPage({
             </div>
           </div>
         )}
+
+        <div className="bg-[#0f2540] text-white rounded-2xl px-6 py-5 mb-6 flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <h1 className="text-xl font-bold">All Listings</h1>
+            <p className="text-blue-200 text-sm mt-0.5">Private — not visible to customers · {allRows.length.toLocaleString('en-MY')} total</p>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link
+              href={`/admin/new?key=${encodeURIComponent(key)}`}
+              className="bg-white text-[#0f2540] text-sm font-bold px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors whitespace-nowrap"
+            >
+              + Add Listing
+            </Link>
+          </div>
+        </div>
 
         {/* Source breakdown */}
         <div className="flex gap-2 text-xs flex-wrap mb-4">
