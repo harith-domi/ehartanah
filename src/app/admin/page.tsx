@@ -59,12 +59,17 @@ export default async function AdminPage({
     }
   } catch {}
 
+  // Any listing that has a Supabase record uses that record's data (correct photo count etc.)
+  // Exclude those IDs from the JSON arrays to prevent duplicates and stale data.
+  const supabaseIds = new Set(allSupabaseRows.map(r => r.id));
+  const jsonFilter = (l: { id: string }) => !hiddenIds.has(l.id) && !supabaseIds.has(l.id);
+
   const allRows = [
     ...allSupabaseRows,
-    ...auctionListings.filter((l) => !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
-    ...ownListings.filter((l) => !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
-    ...saleListings.filter((l) => !l.featured && !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
-    ...rentListings.filter((l) => !l.featured && !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
+    ...auctionListings.filter(jsonFilter).map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
+    ...ownListings.filter(jsonFilter).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
+    ...saleListings.filter((l) => !l.featured && jsonFilter(l)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
+    ...rentListings.filter((l) => !l.featured && jsonFilter(l)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
   ];
 
   const regions = [...new Set(allRows.map((r) => r.region).filter(Boolean))].sort();
