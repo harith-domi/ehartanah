@@ -56,7 +56,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
             <img
               src={coverPhoto}
               alt={listing.title}
-              className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : nearbyPhoto ? (
             <>
