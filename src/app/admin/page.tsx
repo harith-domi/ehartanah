@@ -171,14 +171,12 @@ export default async function AdminPage({
                         ↗ Open
                       </a>
                       <CopyButton url={r.publicUrl} />
-                      {r.isSupabase && (
-                        <Link
-                          href={`/admin/edit/${r.id}?key=${key}`}
-                          className="px-2 py-1 text-xs rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#1e3a5f] hover:border-gray-300 whitespace-nowrap"
-                        >
-                          ✏ Edit
-                        </Link>
-                      )}
+                      <Link
+                        href={`/admin/edit/${r.id}?key=${key}`}
+                        className="px-2 py-1 text-xs rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#1e3a5f] hover:border-gray-300 whitespace-nowrap"
+                      >
+                        ✏ Edit
+                      </Link>
                       <DeleteButton id={r.id} adminKey={key} isSupabase={r.isSupabase} />
                     </div>
                   </td>
