@@ -2,7 +2,6 @@ import { auctionListings, ownListings, saleListings, rentListings } from '@/lib/
 import { createAdminSupabase } from '@/lib/supabase';
 import type { AdminListing } from '@/lib/supabase';
 import AdminFilters from './AdminFilters';
-import AdminMyListings from './AdminMyListings';
 import AdminTable from './AdminTable';
 import Link from 'next/link';
 
@@ -130,9 +129,6 @@ export default async function AdminPage({
             </div>
           ))}
         </div>
-
-        {/* My Listings */}
-        <AdminMyListings rows={supabaseRows.map(r => ({ ...r, imageCount: r.imageCount ?? null }))} adminKey={key} />
 
         {/* All Listings section */}
         <div>
