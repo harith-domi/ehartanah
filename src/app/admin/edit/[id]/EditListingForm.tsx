@@ -21,18 +21,11 @@ export default function EditListingForm({ listing, adminKey }: Props) {
   const [existingPhotos, setExistingPhotos] = useState<string[]>(listing.photos ?? []);
   const [newPhotos, setNewPhotos] = useState<File[]>([]);
   const [newPreviews, setNewPreviews] = useState<string[]>([]);
-  const [urlInput, setUrlInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ success?: boolean; error?: string } | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  function addUrlPhotos() {
-    const urls = urlInput.split('\n').map(s => s.trim()).filter(s => s.startsWith('http'));
-    if (urls.length === 0) return;
-    setExistingPhotos(p => [...p, ...urls]);
-    setUrlInput('');
-  }
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -322,29 +315,9 @@ export default function EditListingForm({ listing, adminKey }: Props) {
               </div>
             )}
 
-            {/* Paste URLs */}
-            <div>
-              <p className="text-xs text-gray-500 mb-2">Paste photo URLs <span className="text-gray-400">(one per line)</span></p>
-              <textarea
-                value={urlInput}
-                onChange={e => setUrlInput(e.target.value)}
-                placeholder="https://cdn.rnudah.com/..."
-                rows={3}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#1e3a5f]/30 resize-none"
-              />
-              <button
-                type="button"
-                onClick={addUrlPhotos}
-                disabled={!urlInput.trim()}
-                className="mt-1.5 px-4 py-1.5 text-xs bg-[#0f2540] text-white rounded-lg hover:bg-[#1e3a5f] disabled:opacity-40 transition-colors"
-              >
-                Add URLs
-              </button>
-            </div>
-
             {/* Add new photos */}
             <div>
-              <p className="text-xs text-gray-500 mb-2">Upload photos from device</p>
+              <p className="text-xs text-gray-500 mb-2">Add new photos</p>
               <div
                 onDragOver={e => e.preventDefault()}
                 onDrop={e => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
