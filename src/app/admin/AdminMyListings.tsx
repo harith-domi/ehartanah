@@ -23,6 +23,7 @@ export interface MyListingRow {
   publicUrl: string;
   updatedAt?: string | null;
   thumbnailUrl?: string | null;
+  imageCount?: number | null;
 }
 
 export default function AdminMyListings({ rows, adminKey }: { rows: MyListingRow[]; adminKey: string }) {
@@ -84,6 +85,14 @@ export default function AdminMyListings({ rows, adminKey }: { rows: MyListingRow
                   {fmt(r.updatedAt)}
                 </span>
               )}
+              {/* Photo count badge */}
+              <span className={`absolute bottom-2 right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                (r.imageCount ?? 0) > 0
+                  ? 'bg-green-500 text-white'
+                  : 'bg-red-100 text-red-600'
+              }`}>
+                {(r.imageCount ?? 0) > 0 ? `${r.imageCount} photos` : 'No photos'}
+              </span>
             </div>
 
             {/* Info */}

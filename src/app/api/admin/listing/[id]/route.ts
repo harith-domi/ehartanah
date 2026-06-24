@@ -52,12 +52,26 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!adminKey || k !== adminKey) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json() as Record<string, unknown>;
-  const source = String(body.source ?? '');
-  if (!['New', 'Agency', 'Sale', 'Rent', 'Auction', 'Hidden'].includes(source))
-    return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
+  const updates: Record<string, unknown> = {};
+
+  if ('source' in body) {
+    const source = String(body.source ?? '');
+    if (!['New', 'Agency', 'Sale', 'Rent', 'Auction', 'Hidden'].includes(source))
+      return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
+    updates.source = source;
+  }
+
+  if ('price' in body) {
+    const price = Number(body.price);
+    if (!price || price <= 0) return NextResponse.json({ error: 'Invalid price' }, { status: 400 });
+    updates.price = price;
+  }
+
+  if (Object.keys(updates).length === 0)
+    return NextResponse.json({ error: 'Nothing to update' }, { status: 400 });
 
   const sb = createAdminSupabase();
-  const { error } = await sb.from('admin_listings').update({ source }).eq('id', id);
+  const { error } = await sb.from('admin_listings').update(updates).eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });
 }

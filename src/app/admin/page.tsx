@@ -3,10 +3,7 @@ import { createAdminSupabase } from '@/lib/supabase';
 import type { AdminListing } from '@/lib/supabase';
 import AdminFilters from './AdminFilters';
 import AdminMyListings from './AdminMyListings';
-import CopyButton from './CopyButton';
-import SourceBadge from './SourceBadge';
-import DeleteButton from './DeleteButton';
-import StatusToggle from './StatusToggle';
+import AdminTable from './AdminTable';
 import Link from 'next/link';
 
 const DOMAIN = 'https://ehartanahmalaysia.com';
@@ -16,13 +13,6 @@ export const metadata = { title: 'Admin — All Listings' };
 
 const PER_PAGE = 100;
 
-const SOURCE_COLORS: Record<string, string> = {
-  New:     'bg-purple-50 text-purple-600',
-  Auction: 'bg-red-50 text-red-600',
-  Agency:  'bg-blue-50 text-blue-600',
-  Sale:    'bg-green-50 text-green-600',
-  Rent:    'bg-yellow-50 text-yellow-700',
-};
 
 export default async function AdminPage({
   searchParams,
@@ -45,15 +35,15 @@ export default async function AdminPage({
 
   // Fetch Supabase admin-added listings
   type RowSource = 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction' | 'Hidden';
-  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: RowSource; publicUrl: string; isSupabase: true; updatedAt?: string | null; thumbnailUrl?: string | null }[] = [];
+  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: RowSource; publicUrl: string; isSupabase: true; updatedAt?: string | null; thumbnailUrl?: string | null; imageCount?: number | null }[] = [];
   let allSupabaseRows: typeof supabaseRows = [];
   const hiddenIds = new Set<string>();
   try {
     const sb = createAdminSupabase();
-    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source,updated_at,thumbnail_url').order('updated_at', { ascending: false });
+    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source,updated_at,thumbnail_url,image_count').order('updated_at', { ascending: false });
     if (data) {
       (data as AdminListing[]).forEach((l) => { if (l.source === 'Hidden') hiddenIds.add(l.id); });
-      allSupabaseRows = (data as AdminListing[]).map((l) => ({
+      allSupabaseRows = (data as (AdminListing & { image_count?: number })[]).map((l) => ({
         id: l.id,
         propertyType: l.category,
         region: l.region,
@@ -64,6 +54,7 @@ export default async function AdminPage({
         isSupabase: true as const,
         updatedAt: l.updated_at ?? null,
         thumbnailUrl: l.thumbnail_url ?? null,
+        imageCount: (l as AdminListing & { image_count?: number }).image_count ?? null,
       }));
       supabaseRows = allSupabaseRows.filter(r => r.source !== 'Hidden');
     }
@@ -141,7 +132,7 @@ export default async function AdminPage({
         </div>
 
         {/* My Listings */}
-        <AdminMyListings rows={supabaseRows} adminKey={key} />
+        <AdminMyListings rows={supabaseRows.map(r => ({ ...r, imageCount: r.imageCount ?? null }))} adminKey={key} />
 
         {/* All Listings section */}
         <div>
@@ -161,78 +152,25 @@ export default async function AdminPage({
             </p>
           </div>
 
-          {/* Table */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide w-8">#</th>
-                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Source</th>
-                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Type</th>
-                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Region</th>
-                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Address</th>
-                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Price</th>
-                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.length === 0 ? (
-                  <tr><td colSpan={7} className="px-4 py-14 text-center text-gray-400 text-sm">No listings match your search.</td></tr>
-                ) : rows.map((r, i) => (
-                  <tr key={r.id} className={`border-b border-gray-50 hover:bg-blue-50/40 transition-colors ${i % 2 === 0 ? '' : 'bg-gray-50/30'}`}>
-                    <td className="px-4 py-3 text-gray-300 text-xs">{(page - 1) * PER_PAGE + i + 1}</td>
-                    <td className="px-4 py-3">
-                      {r.isSupabase && r.source !== 'Hidden' ? (
-                        <SourceBadge id={r.id} source={r.source as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'} adminKey={key} />
-                      ) : (
-                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${SOURCE_COLORS[r.source] ?? 'bg-gray-100 text-gray-500'}`}>
-                          {r.source}
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">{r.propertyType}</td>
-                    <td className="px-4 py-3 text-gray-400 whitespace-nowrap text-xs">{r.region}</td>
-                    <td className="px-4 py-3 text-gray-800 text-xs max-w-xs truncate">{r.address || '—'}</td>
-                    <td className="px-4 py-3 font-bold text-[#1e3a5f] whitespace-nowrap text-xs">
-                      {r.price ? `RM ${r.price.toLocaleString('en-MY')}` : <span className="text-gray-300">—</span>}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex gap-1 items-center flex-wrap">
-                        <StatusToggle id={r.id} isSupabase={r.isSupabase} isHidden={r.source === 'Hidden'} adminKey={key} />
-                        <a href={r.publicUrl} target="_blank" rel="noopener noreferrer"
-                          className="px-2 py-1 text-[11px] rounded-lg border border-gray-200 text-gray-500 hover:text-[#1e3a5f] hover:border-[#1e3a5f]/30 whitespace-nowrap transition-colors">
-                          ↗ Open
-                        </a>
-                        <CopyButton url={r.publicUrl} />
-                        <Link href={`/admin/edit/${r.id}?key=${encodeURIComponent(key)}`}
-                          className="px-2 py-1 text-[11px] rounded-lg border border-gray-200 text-gray-500 hover:text-[#1e3a5f] hover:border-[#1e3a5f]/30 whitespace-nowrap transition-colors">
-                          ✏ Edit
-                        </Link>
-                        <DeleteButton id={r.id} adminKey={key} isSupabase={r.isSupabase} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-2 mt-5">
-              {page > 1
-                ? <a href={`/admin?${prevParams}`} className="px-4 py-2 text-sm border border-gray-200 rounded-xl bg-white hover:bg-gray-50 text-gray-600">← Prev</a>
-                : <span className="px-4 py-2 text-sm rounded-xl text-gray-300">← Prev</span>
-              }
-              <span className="px-4 py-2 text-sm text-gray-500 bg-white border border-gray-100 rounded-xl">
-                {page} <span className="text-gray-300">/ {totalPages}</span>
-              </span>
-              {page < totalPages
-                ? <a href={`/admin?${nextParams}`} className="px-4 py-2 text-sm border border-gray-200 rounded-xl bg-white hover:bg-gray-50 text-gray-600">Next →</a>
-                : <span className="px-4 py-2 text-sm rounded-xl text-gray-300">Next →</span>
-              }
-            </div>
-          )}
+          <AdminTable
+            rows={rows.map(r => ({
+              id: r.id,
+              propertyType: r.propertyType,
+              region: r.region,
+              address: r.address,
+              price: r.price,
+              source: r.source as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction' | 'Hidden',
+              publicUrl: r.publicUrl,
+              isSupabase: r.isSupabase,
+            }))}
+            adminKey={key}
+            page={page}
+            totalPages={totalPages}
+            perPage={PER_PAGE}
+            filteredCount={filtered.length}
+            prevUrl={`/admin?${prevParams}`}
+            nextUrl={`/admin?${nextParams}`}
+          />
         </div>
 
       </div>
