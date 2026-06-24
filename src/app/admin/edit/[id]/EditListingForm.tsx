@@ -128,6 +128,7 @@ export default function EditListingForm({ listing, adminKey }: Props) {
       const json = await res.json();
       if (json.success) {
         setResult({ success: true });
+        setExistingPhotos(allPhotos);
         setNewPhotos([]);
         setNewPreviews([]);
       } else {
