@@ -100,7 +100,7 @@ export default async function AdminPage({
           </div>
           <div className="flex items-center gap-3 flex-wrap">
             <Link
-              href={`/admin/new?key=${key}`}
+              href={`/admin/new?key=${encodeURIComponent(key)}`}
               className="bg-white text-[#0f2540] text-sm font-bold px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors whitespace-nowrap"
             >
               + Add Listing
@@ -172,7 +172,7 @@ export default async function AdminPage({
                       </a>
                       <CopyButton url={r.publicUrl} />
                       <Link
-                        href={`/admin/edit/${r.id}?key=${key}`}
+                        href={`/admin/edit/${r.id}?key=${encodeURIComponent(key)}`}
                         className="px-2 py-1 text-xs rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#1e3a5f] hover:border-gray-300 whitespace-nowrap"
                       >
                         ✏ Edit
