@@ -196,19 +196,6 @@ export default async function ListingDetailPage({
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={nearby} alt="" aria-hidden className="w-full h-full object-cover object-top opacity-70" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-4 left-0 right-0 text-center">
-                      <p className="text-white text-sm font-semibold drop-shadow">
-                        <T en="Photos available on original listing" bm="Gambar tersedia di senarai asal" />
-                      </p>
-                      <a
-                        href={listing.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-xs font-semibold px-4 py-1.5 rounded-full transition-colors"
-                      >
-                        <T en={`View ${listing.imageCount} photos on Mudah`} bm={`Lihat ${listing.imageCount} gambar di Mudah`} />
-                      </a>
-                    </div>
                     <span className="absolute bottom-3 left-3 bg-[#0f2540]/70 backdrop-blur-sm text-white text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wide select-none pointer-events-none">
                       eHartanah.my
                     </span>
