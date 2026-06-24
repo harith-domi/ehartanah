@@ -22,6 +22,10 @@ export async function POST(req: NextRequest) {
 
   const path = `${folder}/photo-${idx + 1}.${ext}`;
   const sb = createAdminSupabase();
+
+  // Ensure bucket exists (no-op if already created)
+  await sb.storage.createBucket('listing-photos', { public: true }).catch(() => {});
+
   const { error } = await sb.storage.from('listing-photos').upload(path, buffer, {
     contentType,
     upsert: true,
