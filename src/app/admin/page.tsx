@@ -6,6 +6,7 @@ import AdminMyListings from './AdminMyListings';
 import CopyButton from './CopyButton';
 import SourceBadge from './SourceBadge';
 import DeleteButton from './DeleteButton';
+import StatusToggle from './StatusToggle';
 import Link from 'next/link';
 
 const DOMAIN = 'https://ehartanahmalaysia.com';
@@ -43,32 +44,33 @@ export default async function AdminPage({
   }
 
   // Fetch Supabase admin-added listings
-  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string; isSupabase: true; updatedAt?: string | null; thumbnailUrl?: string | null }[] = [];
+  type RowSource = 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction' | 'Hidden';
+  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: RowSource; publicUrl: string; isSupabase: true; updatedAt?: string | null; thumbnailUrl?: string | null }[] = [];
+  let allSupabaseRows: typeof supabaseRows = [];
   const hiddenIds = new Set<string>();
   try {
     const sb = createAdminSupabase();
     const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source,updated_at,thumbnail_url').order('updated_at', { ascending: false });
     if (data) {
       (data as AdminListing[]).forEach((l) => { if (l.source === 'Hidden') hiddenIds.add(l.id); });
-      supabaseRows = (data as AdminListing[])
-        .filter((l) => l.source !== 'Hidden')
-        .map((l) => ({
-          id: l.id,
-          propertyType: l.category,
-          region: l.region,
-          address: l.location,
-          price: l.price ?? 0,
-          source: (['New','Agency','Sale','Rent','Auction'].includes(l.source ?? '') ? l.source : 'New') as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction',
-          publicUrl: `${DOMAIN}/listings/${l.id}`,
-          isSupabase: true as const,
-          updatedAt: l.updated_at ?? null,
-          thumbnailUrl: l.thumbnail_url ?? null,
-        }));
+      allSupabaseRows = (data as AdminListing[]).map((l) => ({
+        id: l.id,
+        propertyType: l.category,
+        region: l.region,
+        address: l.location,
+        price: l.price ?? 0,
+        source: (['New','Agency','Sale','Rent','Auction','Hidden'].includes(l.source ?? '') ? l.source : 'New') as RowSource,
+        publicUrl: `${DOMAIN}/listings/${l.id}`,
+        isSupabase: true as const,
+        updatedAt: l.updated_at ?? null,
+        thumbnailUrl: l.thumbnail_url ?? null,
+      }));
+      supabaseRows = allSupabaseRows.filter(r => r.source !== 'Hidden');
     }
   } catch {}
 
   const allRows = [
-    ...supabaseRows,
+    ...allSupabaseRows,
     ...auctionListings.filter((l) => !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}`, isSupabase: false as const })),
     ...ownListings.filter((l) => !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
     ...saleListings.filter((l) => !l.featured && !hiddenIds.has(l.id)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const })),
@@ -79,6 +81,7 @@ export default async function AdminPage({
 
   const ql = q.toLowerCase();
   const filtered = allRows.filter((r) => {
+    if (!source && r.source === 'Hidden') return false; // hide by default unless explicitly filtered
     if (q && !r.address?.toLowerCase().includes(ql) && !r.id.toLowerCase().includes(ql) && !r.region?.toLowerCase().includes(ql)) return false;
     if (source && r.source !== source) return false;
     if (region && r.region !== region) return false;
@@ -194,7 +197,8 @@ export default async function AdminPage({
                       {r.price ? `RM ${r.price.toLocaleString('en-MY')}` : <span className="text-gray-300">—</span>}
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex gap-1 items-center">
+                      <div className="flex gap-1 items-center flex-wrap">
+                        <StatusToggle id={r.id} isSupabase={r.isSupabase} isHidden={r.source === 'Hidden'} adminKey={key} />
                         <a href={r.publicUrl} target="_blank" rel="noopener noreferrer"
                           className="px-2 py-1 text-[11px] rounded-lg border border-gray-200 text-gray-500 hover:text-[#1e3a5f] hover:border-[#1e3a5f]/30 whitespace-nowrap transition-colors">
                           ↗ Open

@@ -51,6 +51,7 @@ export default function AdminFilters({ adminKey, regions, currentQ, currentSourc
         <option value="Agency">Agency</option>
         <option value="Sale">Sale</option>
         <option value="Rent">Rent</option>
+        <option value="Hidden">⊘ Hidden</option>
       </select>
       <select
         value={region}

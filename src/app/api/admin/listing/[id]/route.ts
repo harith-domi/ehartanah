@@ -53,7 +53,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
   const body = await req.json() as Record<string, unknown>;
   const source = String(body.source ?? '');
-  if (!['New', 'Agency', 'Sale', 'Rent', 'Auction'].includes(source))
+  if (!['New', 'Agency', 'Sale', 'Rent', 'Auction', 'Hidden'].includes(source))
     return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
 
   const sb = createAdminSupabase();
