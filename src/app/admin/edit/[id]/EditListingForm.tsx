@@ -41,6 +41,26 @@ export default function EditListingForm({ listing, adminKey }: Props) {
     if (clean !== k) { url.searchParams.set('key', clean); window.history.replaceState({}, '', url.toString()); }
   }, []);
 
+  useEffect(() => {
+    function onPaste(e: ClipboardEvent) {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const images: File[] = [];
+      for (const item of items) {
+        if (item.type.startsWith('image/')) {
+          const file = item.getAsFile();
+          if (file) images.push(file);
+        }
+      }
+      if (images.length === 0) return;
+      e.preventDefault();
+      setNewPhotos(p => [...p, ...images]);
+      setNewPreviews(p => [...p, ...images.map(f => URL.createObjectURL(f))]);
+    }
+    document.addEventListener('paste', onPaste);
+    return () => document.removeEventListener('paste', onPaste);
+  }, []);
+
   function handleFiles(files: FileList | null) {
     if (!files) return;
     const added = Array.from(files).filter(f => f.type.startsWith('image/'));
