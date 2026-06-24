@@ -26,9 +26,9 @@ export default function PhotoGallery({ photos, title }: Props) {
       {/* Grid layout */}
       <div className="rounded-2xl overflow-hidden">
         {photos.length === 1 ? (
-          <div className="relative h-72 sm:h-[420px] cursor-pointer" onClick={() => open(0)}>
+          <div className="relative h-72 sm:h-[420px] cursor-pointer overflow-hidden" onClick={() => open(0)}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={photos[0]} alt={title} className="w-full h-full object-cover" />
+            <img src={photos[0]} alt={title} className="w-full h-[115%] object-cover object-top" />
             <EhBadge />
           </div>
         ) : (
@@ -40,7 +40,7 @@ export default function PhotoGallery({ photos, title }: Props) {
               <img
                 src={photos[0]}
                 alt={title}
-                className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                className="w-full h-[115%] object-cover object-top group-hover:scale-[1.02] transition-transform duration-300"
               />
               <EhBadge />
             </div>
@@ -66,7 +66,7 @@ export default function PhotoGallery({ photos, title }: Props) {
                     <img
                       src={src}
                       alt={`${title} — ${i + 2}`}
-                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                      className="w-full h-[115%] object-cover object-top group-hover:scale-[1.02] transition-transform duration-300"
                     />
                     {isLast && hasMore && (
                       <div className="absolute inset-0 bg-black/50 flex items-end justify-end p-3">
@@ -109,12 +109,15 @@ export default function PhotoGallery({ photos, title }: Props) {
               onClick={prev}
               className="absolute left-3 text-white bg-white/10 hover:bg-white/25 rounded-full w-11 h-11 flex items-center justify-center text-2xl transition-colors"
             >‹</button>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={photos[active]}
-              alt={`${title} — photo ${active + 1}`}
-              className="max-h-full max-w-full object-contain select-none"
-            />
+            <div className="relative flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photos[active]}
+                alt={`${title} — photo ${active + 1}`}
+                className="max-h-full max-w-full object-contain select-none"
+              />
+              <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+            </div>
             <button
               onClick={next}
               className="absolute right-3 text-white bg-white/10 hover:bg-white/25 rounded-full w-11 h-11 flex items-center justify-center text-2xl transition-colors"
@@ -135,7 +138,7 @@ export default function PhotoGallery({ photos, title }: Props) {
                 }`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt="" className="w-full h-full object-cover" />
+                <img src={src} alt="" className="w-full h-[115%] object-cover object-top" />
               </button>
             ))}
           </div>
