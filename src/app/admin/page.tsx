@@ -182,10 +182,10 @@ export default async function AdminPage({
                   <tr key={r.id} className={`border-b border-gray-50 hover:bg-blue-50/40 transition-colors ${i % 2 === 0 ? '' : 'bg-gray-50/30'}`}>
                     <td className="px-4 py-3 text-gray-300 text-xs">{(page - 1) * PER_PAGE + i + 1}</td>
                     <td className="px-4 py-3">
-                      {r.isSupabase ? (
-                        <SourceBadge id={r.id} source={r.source} adminKey={key} />
+                      {r.isSupabase && r.source !== 'Hidden' ? (
+                        <SourceBadge id={r.id} source={r.source as 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'} adminKey={key} />
                       ) : (
-                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${SOURCE_COLORS[r.source] ?? 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${SOURCE_COLORS[r.source] ?? 'bg-gray-100 text-gray-500'}`}>
                           {r.source}
                         </span>
                       )}
