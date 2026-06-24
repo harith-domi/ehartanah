@@ -127,10 +127,8 @@ export default function EditListingForm({ listing, adminKey }: Props) {
       });
       const json = await res.json();
       if (json.success) {
-        setResult({ success: true });
-        setExistingPhotos(allPhotos);
-        setNewPhotos([]);
-        setNewPreviews([]);
+        const cleanKey = encodeURIComponent((adminKey ?? '').replace(/[^\x20-\x7e]/g, ''));
+        window.location.href = `/admin?key=${cleanKey}#my-listings`;
       } else {
         setResult({ error: json.error ?? 'Unknown error' });
       }

@@ -108,6 +108,40 @@ export default async function AdminPage({
           </div>
         </div>
 
+        {/* My Listings — Supabase-backed edited/added listings */}
+        {supabaseRows.length > 0 && (
+          <div id="my-listings" className="mb-8 scroll-mt-6">
+            <h2 className="text-sm font-bold text-gray-700 mb-3">My Listings <span className="text-gray-400 font-normal">({supabaseRows.length})</span></h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+              {supabaseRows.map((r) => (
+                <div key={r.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex flex-col gap-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-1 ${SOURCE_COLORS[r.source] ?? 'bg-gray-100 text-gray-600'}`}>{r.source}</span>
+                      <p className="text-xs font-semibold text-gray-800 truncate">{r.propertyType || '—'}</p>
+                      <p className="text-[11px] text-gray-500 truncate">{r.region}</p>
+                      <p className="text-[11px] text-gray-400 truncate">{r.address || '—'}</p>
+                    </div>
+                    <p className="text-sm font-black text-[#1e3a5f] whitespace-nowrap shrink-0">
+                      {r.price ? `RM ${r.price.toLocaleString('en-MY')}` : '—'}
+                    </p>
+                  </div>
+                  <div className="flex gap-1.5 mt-auto">
+                    <a href={r.publicUrl} target="_blank" rel="noopener noreferrer"
+                      className="flex-1 text-center text-[11px] py-1.5 rounded-lg border border-gray-200 text-gray-500 hover:border-gray-300 hover:text-[#1e3a5f]">
+                      ↗ View
+                    </a>
+                    <Link href={`/admin/edit/${r.id}?key=${encodeURIComponent(key)}`}
+                      className="flex-1 text-center text-[11px] py-1.5 rounded-lg bg-[#0f2540] text-white hover:bg-[#1e3a5f]">
+                      ✏ Edit
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Source breakdown */}
         <div className="flex gap-2 text-xs flex-wrap mb-4">
             {(['New', 'Agency', 'Sale', 'Rent', 'Auction'] as const).map((s) => (
