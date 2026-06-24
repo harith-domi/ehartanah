@@ -26,6 +26,7 @@ export interface TableRow {
   source: RowSource;
   publicUrl: string;
   isSupabase: boolean;
+  imageCount?: number | null;
 }
 
 interface Props {
@@ -204,7 +205,16 @@ export default function AdminTable({ rows, adminKey, page, totalPages, perPage, 
                     </span>
                   )}
                 </td>
-                <td className="px-4 py-2.5 text-gray-600 whitespace-nowrap text-xs">{r.propertyType}</td>
+                <td className="px-4 py-2.5 text-xs">
+                  <p className="text-gray-600 whitespace-nowrap">{r.propertyType}</p>
+                  <span className={`inline-block mt-0.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
+                    (r.imageCount ?? 0) > 0
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-red-100 text-red-500'
+                  }`}>
+                    {(r.imageCount ?? 0) > 0 ? `${r.imageCount} photos` : 'No photo'}
+                  </span>
+                </td>
                 <td className="px-4 py-2.5 text-gray-400 whitespace-nowrap text-xs">{r.region}</td>
                 <td className="px-4 py-2.5 text-gray-800 text-xs max-w-[260px] truncate">{r.address || '—'}</td>
 
