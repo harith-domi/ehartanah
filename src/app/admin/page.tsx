@@ -66,10 +66,10 @@ export default async function AdminPage({
 
   const allRows = [
     ...allSupabaseRows,
-    ...auctionListings.filter(jsonFilter).map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
-    ...ownListings.filter(jsonFilter).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
-    ...saleListings.filter((l) => !l.featured && jsonFilter(l)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
-    ...rentListings.filter((l) => !l.featured && jsonFilter(l)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.imageCount ?? 0 })),
+    ...auctionListings.filter(jsonFilter).map((l) => ({ id: l.id, propertyType: l.propertyType, region: l.region, address: l.address, price: l.reservePrice, source: 'Auction' as const, publicUrl: `${DOMAIN}/auction/${l.id}`, isSupabase: false as const, imageCount: l.photos?.length ?? l.imageCount ?? 0 })),
+    ...ownListings.filter(jsonFilter).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Agency' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.photos?.length ?? l.imageCount ?? 0 })),
+    ...saleListings.filter((l) => !l.featured && jsonFilter(l)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Sale' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.photos?.length ?? l.imageCount ?? 0 })),
+    ...rentListings.filter((l) => !l.featured && jsonFilter(l)).map((l) => ({ id: l.id, propertyType: l.category, region: l.region, address: l.location, price: l.price ?? 0, source: 'Rent' as const, publicUrl: `${DOMAIN}/listings/${l.id}`, isSupabase: false as const, imageCount: l.photos?.length ?? l.imageCount ?? 0 })),
   ];
 
   const regions = [...new Set(allRows.map((r) => r.region).filter(Boolean))].sort();
