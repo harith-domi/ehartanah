@@ -63,8 +63,23 @@ export const ownListings = ownData as Listing[];
 export const ownSaleListings = ownListings.filter((l) => l.listingType === 'sale');
 export const ownRentListings = ownListings.filter((l) => l.listingType === 'rent');
 
+// Residential rent prices above RM 30,000/month are almost certainly sale prices
+// or annual figures accidentally placed in the rent file — filter them out.
+const RESIDENTIAL_CATEGORIES = new Set([
+  'Apartment / Condominium', 'Serviced Residence', 'Terrace / Link House',
+  'Semi-Detached House', 'Bungalow', 'Townhouse', 'Flat', 'Studio',
+  'SOHO', 'Duplex', 'Penthouse', 'Room',
+]);
+
+function plausibleRentPrice(l: Listing): boolean {
+  if (!l.price) return true;
+  if (RESIDENTIAL_CATEGORIES.has(l.category)) return l.price <= 30000;
+  // Commercial / industrial / land — allow higher but cap at RM 300k/month
+  return l.price <= 300000;
+}
+
 export const saleListings: Listing[] = [...ownSaleListings, ...(saleData as Listing[])];
-export const rentListings: Listing[] = [...ownRentListings, ...(rentData as Listing[])];
+export const rentListings: Listing[] = [...ownRentListings, ...(rentData as Listing[])].filter(plausibleRentPrice);
 
 export const allListings: Listing[] = [...saleListings, ...rentListings];
 export const totalListings = allListings.length;
