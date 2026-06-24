@@ -43,11 +43,11 @@ export default async function AdminPage({
   }
 
   // Fetch Supabase admin-added listings
-  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string; isSupabase: true; updatedAt?: string | null }[] = [];
+  let supabaseRows: { id: string; propertyType: string; region: string; address: string; price: number; source: 'New' | 'Agency' | 'Sale' | 'Rent' | 'Auction'; publicUrl: string; isSupabase: true; updatedAt?: string | null; thumbnailUrl?: string | null }[] = [];
   const hiddenIds = new Set<string>();
   try {
     const sb = createAdminSupabase();
-    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source,updated_at').order('updated_at', { ascending: false });
+    const { data } = await sb.from('admin_listings').select('id,category,region,location,price,source,updated_at,thumbnail_url').order('updated_at', { ascending: false });
     if (data) {
       (data as AdminListing[]).forEach((l) => { if (l.source === 'Hidden') hiddenIds.add(l.id); });
       supabaseRows = (data as AdminListing[])
@@ -62,6 +62,7 @@ export default async function AdminPage({
           publicUrl: `${DOMAIN}/listings/${l.id}`,
           isSupabase: true as const,
           updatedAt: l.updated_at ?? null,
+          thumbnailUrl: l.thumbnail_url ?? null,
         }));
     }
   } catch {}
@@ -92,118 +93,144 @@ export default async function AdminPage({
   const prevParams = new URLSearchParams(baseParams); prevParams.set('page', String(page - 1));
   const nextParams = new URLSearchParams(baseParams); nextParams.set('page', String(page + 1));
 
+  const counts = {
+    Agency:  allRows.filter(r => r.source === 'Agency').length,
+    Sale:    allRows.filter(r => r.source === 'Sale').length,
+    Rent:    allRows.filter(r => r.source === 'Rent').length,
+    Auction: allRows.filter(r => r.source === 'Auction').length,
+  };
+
   return (
-    <main className="min-h-screen bg-gray-50 p-4 sm:p-6">
-      <div className="max-w-7xl mx-auto">
+    <main className="min-h-screen bg-slate-100">
+
+      {/* Top nav bar */}
+      <header className="bg-[#0f2540] text-white px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center text-sm font-black">eH</div>
+          <div>
+            <p className="text-sm font-bold leading-none">eHartanah Admin</p>
+            <p className="text-blue-300 text-[11px] mt-0.5">ehartanahmalaysia.com</p>
+          </div>
+        </div>
+        <Link
+          href={`/admin/new?key=${encodeURIComponent(key)}`}
+          className="bg-white text-[#0f2540] text-xs font-bold px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors"
+        >
+          + Add Listing
+        </Link>
+      </header>
+
+      <div className="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
+
+        {/* KPI cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: 'For Sale',  value: counts.Sale,    color: 'bg-emerald-50 border-emerald-100', num: 'text-emerald-700' },
+            { label: 'For Rent',  value: counts.Rent,    color: 'bg-amber-50 border-amber-100',    num: 'text-amber-700'   },
+            { label: 'Auction',   value: counts.Auction, color: 'bg-red-50 border-red-100',        num: 'text-red-700'     },
+            { label: 'My Listings', value: supabaseRows.length, color: 'bg-blue-50 border-blue-100', num: 'text-blue-700' },
+          ].map(({ label, value, color, num }) => (
+            <div key={label} className={`${color} border rounded-2xl p-4`}>
+              <p className="text-[11px] text-gray-500 font-medium mb-1">{label}</p>
+              <p className={`text-2xl font-black ${num}`}>{value.toLocaleString('en-MY')}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* My Listings */}
         <AdminMyListings rows={supabaseRows} adminKey={key} />
 
-        <div className="bg-[#0f2540] text-white rounded-2xl px-6 py-5 mb-6 flex items-center justify-between flex-wrap gap-3">
-          <div>
-            <h1 className="text-xl font-bold">All Listings</h1>
-            <p className="text-blue-200 text-sm mt-0.5">Private — not visible to customers · {allRows.length.toLocaleString('en-MY')} total</p>
+        {/* All Listings section */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h2 className="text-sm font-bold text-gray-800">All Listings</h2>
+              <p className="text-[11px] text-gray-400">{allRows.length.toLocaleString('en-MY')} total · private</p>
+            </div>
           </div>
-          <div className="flex items-center gap-3 flex-wrap">
-            <Link
-              href={`/admin/new?key=${encodeURIComponent(key)}`}
-              className="bg-white text-[#0f2540] text-sm font-bold px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors whitespace-nowrap"
-            >
-              + Add Listing
-            </Link>
+
+          {/* Filters */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-3">
+            <AdminFilters adminKey={key} regions={regions} currentQ={q} currentSource={source} currentRegion={region} />
+            <p className="text-[11px] text-gray-400 mt-2.5">
+              {filtered.length.toLocaleString('en-MY')} results · page {page} of {totalPages}
+              {(q || source || region) && <span className="ml-2 text-amber-600 font-medium">· filters active</span>}
+            </p>
           </div>
-        </div>
 
-        {/* Source breakdown */}
-        <div className="flex gap-2 text-xs flex-wrap mb-4">
-            {(['New', 'Agency', 'Sale', 'Rent', 'Auction'] as const).map((s) => (
-              <span key={s} className={`px-2 py-1 rounded-full font-semibold ${SOURCE_COLORS[s] ?? ''}`}>
-                {s}: {allRows.filter((r) => r.source === s).length.toLocaleString('en-MY')}
-              </span>
-            ))}
-        </div>
-
-        {/* Filters (client component for live URL update) */}
-        <AdminFilters adminKey={key} regions={regions} currentQ={q} currentSource={source} currentRegion={region} />
-
-        {/* Result count */}
-        <p className="text-xs text-gray-400 mb-3">
-          {filtered.length.toLocaleString('en-MY')} results · showing {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, filtered.length)} · page {page} of {totalPages}
-        </p>
-
-        {/* Table */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-100">
-              <tr>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600 w-8">#</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">Source</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">Type</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">Region</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">Address / Location</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600 whitespace-nowrap">Price</th>
-                <th className="text-left px-4 py-3 font-semibold text-gray-600">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {rows.length === 0 ? (
-                <tr><td colSpan={7} className="px-4 py-10 text-center text-gray-400">No listings match your search.</td></tr>
-              ) : rows.map((r, i) => (
-                <tr key={r.id} className="hover:bg-blue-50/30">
-                  <td className="px-4 py-2.5 text-gray-400 text-xs">{(page - 1) * PER_PAGE + i + 1}</td>
-                  <td className="px-4 py-2.5">
-                    {r.isSupabase ? (
-                      <SourceBadge id={r.id} source={r.source} adminKey={key} />
-                    ) : (
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${SOURCE_COLORS[r.source] ?? 'bg-gray-100 text-gray-600'}`}>
-                        {r.source}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-2.5 text-gray-700 whitespace-nowrap text-xs">{r.propertyType}</td>
-                  <td className="px-4 py-2.5 text-gray-500 whitespace-nowrap text-xs">{r.region}</td>
-                  <td className="px-4 py-2.5 text-gray-900 text-xs">{r.address || '—'}</td>
-                  <td className="px-4 py-2.5 font-semibold text-[#1e3a5f] whitespace-nowrap text-xs">
-                    {r.price ? `RM ${r.price.toLocaleString('en-MY')}` : '—'}
-                  </td>
-                  <td className="px-4 py-2.5">
-                    <div className="flex gap-1.5 items-center">
-                      <a
-                        href={r.publicUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-2 py-1 text-xs rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#1e3a5f] hover:border-gray-300 whitespace-nowrap"
-                      >
-                        ↗ Open
-                      </a>
-                      <CopyButton url={r.publicUrl} />
-                      <Link
-                        href={`/admin/edit/${r.id}?key=${encodeURIComponent(key)}`}
-                        className="px-2 py-1 text-xs rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-[#1e3a5f] hover:border-gray-300 whitespace-nowrap"
-                      >
-                        ✏ Edit
-                      </Link>
-                      <DeleteButton id={r.id} adminKey={key} isSupabase={r.isSupabase} />
-                    </div>
-                  </td>
+          {/* Table */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-100">
+                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide w-8">#</th>
+                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Source</th>
+                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Type</th>
+                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Region</th>
+                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Address</th>
+                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Price</th>
+                  <th className="text-left px-4 py-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rows.length === 0 ? (
+                  <tr><td colSpan={7} className="px-4 py-14 text-center text-gray-400 text-sm">No listings match your search.</td></tr>
+                ) : rows.map((r, i) => (
+                  <tr key={r.id} className={`border-b border-gray-50 hover:bg-blue-50/40 transition-colors ${i % 2 === 0 ? '' : 'bg-gray-50/30'}`}>
+                    <td className="px-4 py-3 text-gray-300 text-xs">{(page - 1) * PER_PAGE + i + 1}</td>
+                    <td className="px-4 py-3">
+                      {r.isSupabase ? (
+                        <SourceBadge id={r.id} source={r.source} adminKey={key} />
+                      ) : (
+                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${SOURCE_COLORS[r.source] ?? 'bg-gray-100 text-gray-600'}`}>
+                          {r.source}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">{r.propertyType}</td>
+                    <td className="px-4 py-3 text-gray-400 whitespace-nowrap text-xs">{r.region}</td>
+                    <td className="px-4 py-3 text-gray-800 text-xs max-w-xs truncate">{r.address || '—'}</td>
+                    <td className="px-4 py-3 font-bold text-[#1e3a5f] whitespace-nowrap text-xs">
+                      {r.price ? `RM ${r.price.toLocaleString('en-MY')}` : <span className="text-gray-300">—</span>}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex gap-1 items-center">
+                        <a href={r.publicUrl} target="_blank" rel="noopener noreferrer"
+                          className="px-2 py-1 text-[11px] rounded-lg border border-gray-200 text-gray-500 hover:text-[#1e3a5f] hover:border-[#1e3a5f]/30 whitespace-nowrap transition-colors">
+                          ↗ Open
+                        </a>
+                        <CopyButton url={r.publicUrl} />
+                        <Link href={`/admin/edit/${r.id}?key=${encodeURIComponent(key)}`}
+                          className="px-2 py-1 text-[11px] rounded-lg border border-gray-200 text-gray-500 hover:text-[#1e3a5f] hover:border-[#1e3a5f]/30 whitespace-nowrap transition-colors">
+                          ✏ Edit
+                        </Link>
+                        <DeleteButton id={r.id} adminKey={key} isSupabase={r.isSupabase} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-5">
+              {page > 1
+                ? <a href={`/admin?${prevParams}`} className="px-4 py-2 text-sm border border-gray-200 rounded-xl bg-white hover:bg-gray-50 text-gray-600">← Prev</a>
+                : <span className="px-4 py-2 text-sm rounded-xl text-gray-300">← Prev</span>
+              }
+              <span className="px-4 py-2 text-sm text-gray-500 bg-white border border-gray-100 rounded-xl">
+                {page} <span className="text-gray-300">/ {totalPages}</span>
+              </span>
+              {page < totalPages
+                ? <a href={`/admin?${nextParams}`} className="px-4 py-2 text-sm border border-gray-200 rounded-xl bg-white hover:bg-gray-50 text-gray-600">Next →</a>
+                : <span className="px-4 py-2 text-sm rounded-xl text-gray-300">Next →</span>
+              }
+            </div>
+          )}
         </div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex justify-center gap-3 mt-6">
-            {page > 1 && (
-              <a href={`/admin?${prevParams}`} className="px-4 py-2 text-sm border border-gray-200 rounded-xl bg-white hover:bg-gray-50">← Prev</a>
-            )}
-            <span className="px-4 py-2 text-sm text-gray-500">Page {page} / {totalPages}</span>
-            {page < totalPages && (
-              <a href={`/admin?${nextParams}`} className="px-4 py-2 text-sm border border-gray-200 rounded-xl bg-white hover:bg-gray-50">Next →</a>
-            )}
-          </div>
-        )}
-
-        <p className="text-xs text-gray-400 mt-4 text-center">eHartanah Admin</p>
       </div>
     </main>
   );
