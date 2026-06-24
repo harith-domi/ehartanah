@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createAdminSupabase } from '@/lib/supabase';
 import type { AdminListing } from '@/lib/supabase';
-import { getListing } from '@/lib/listings';
+import { getListing, getAuctionListing } from '@/lib/listings';
 import EditListingForm from './EditListingForm';
 
 export const dynamic = 'force-dynamic';
@@ -66,6 +66,36 @@ export default async function EditPage({
         posted_at: staticListing.postedAt ?? '',
         featured: staticListing.featured ?? false,
         tenure: '',
+      };
+    }
+  }
+
+  // Fall back to auction listing
+  if (!listing) {
+    const auctionListing = getAuctionListing(id);
+    if (auctionListing) {
+      listing = {
+        id: auctionListing.id,
+        title: auctionListing.title,
+        listing_type: 'sale',
+        price: auctionListing.reservePrice ?? null,
+        category: auctionListing.category ?? '',
+        property_type: auctionListing.propertyType ?? '',
+        size: auctionListing.size ?? null,
+        size_unit: auctionListing.sizeUnit ?? 'sq.ft.',
+        bedrooms: null,
+        bathrooms: null,
+        subarea: '',
+        region: auctionListing.region ?? '',
+        location: auctionListing.address ?? '',
+        phone: '',
+        image_count: auctionListing.imageCount ?? 0,
+        thumbnail_url: auctionListing.photos?.[0] ?? '',
+        photos: auctionListing.photos ?? [],
+        description: '',
+        posted_at: auctionListing.postedAt ?? '',
+        featured: auctionListing.featured ?? false,
+        tenure: auctionListing.tenure ?? '',
       };
     }
   }
